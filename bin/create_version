@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+git checkout $(echo $1 | cut -d'.' -f 1,2)
+
+echo "Creating new version-branch ($1)"
+
+# create new branch
+git checkout --track -B "$1"
+
+# update version number
+perl -pi -e "s;\d+\.\d+(\.\d+)?;$1;g" Dockerfile
+
+# perform integration tests on the new version
+rspec
+
+if [ $? -eq 0 ]; then
+
+	echo "Integration tests succeeded, committing changes to branch $1"
+
+	git add Dockerfile
+  git commit -m "Update to version $1"
+  # git push
+
+  echo "Updating master branch to reflect latest version"
+	
+	git checkout master
+  git reset --hard "$1"
+	# git push
+
+else
+	echo "Integration tests of version $1 failed."
+fi
