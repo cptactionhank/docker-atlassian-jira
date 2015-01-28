@@ -24,6 +24,21 @@ module DockerHelper
 		thread[:errors]
 	end
 
+	def print_stdout(out, opts={})
+		opts = { container: $container, timeout: TIMEOUT }.merge(opts)
+
+		thread = Thread.new do
+			Timeout::timeout(opts[:timeout]) do
+				Thread.handle_interrupt(TimeoutError => :on_blocking) {
+					opts[:container].attach(stream: false, logs: true, stdout: true, stderr: true) do |stream, chunk|
+						puts "#{stream}: #{chunk}"
+					end
+				}
+			end
+		end
+		thread.join
+	end
+
 	def wait_stdout(regex, opts={})
 		opts = { container: $container, timeout: TIMEOUT }.merge(opts)
 

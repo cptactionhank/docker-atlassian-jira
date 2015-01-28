@@ -51,7 +51,7 @@ describe "Atlassian JIRA acceptance" do
 
   context "when Atlassian JIRA is shut down" do
 
-    it "has shut down" do
+    it "has shut down successful" do
       # send term signal and expect container to shut down
       $container.kill signal: "SIGTERM"
       # give the container up to 5 minutes to successfully shutdown
@@ -60,17 +60,17 @@ describe "Atlassian JIRA acceptance" do
       expect($container.wait 300).to including("StatusCode" => 0, "StatusCode" => 143)
     end
 
-    it "has no severe in the stdout" do
-      expect(scan_stdout regex_severe).to be_empty
-    end
+    # it "has no severe in the stdout" do
+    #   expect(scan_stdout regex_severe).to be_empty
+    # end
 
-    it "has no warning in the stdout" do
-      expect((scan_stdout regex_warn).select{|v| v !~ regex_filter}).to be_empty
-    end
+    # it "has no warning in the stdout" do
+    #   expect((scan_stdout regex_warn).select{|v| v !~ regex_filter}).to be_empty
+    # end
 
-    it "has no errors in the stdout" do
-      expect(scan_stdout regex_error).to be_empty
-    end
+    # it "has no errors in the stdout" do
+    #   expect(scan_stdout regex_error).to be_empty
+    # end
 
   end
 

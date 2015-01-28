@@ -20,6 +20,10 @@ describe "Docker building" do
       expect(Docker.version).to_not be_nil
     end
 
+    it "has a library supported docker version" do
+      Docker.validate_version!
+    end
+
     it "has a compatible version" do
       Gem::Version.new(Docker::version["Version"]) >= Gem::Version.new('1.3.0')
     end
