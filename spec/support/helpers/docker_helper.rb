@@ -9,8 +9,10 @@ class Docker::Container
 
   def setup_capybara_url(port)
     docker_url = URI.parse Docker.url
+    docker_url.host = 'localhost' if docker_url.scheme == 'unix'
     docker_url.scheme = 'http'
     docker_url.port = mapped_port port
+    puts "Capybara URL: #{docker_url.to_s}"
     Capybara.app_host = docker_url.to_s
   end
 
