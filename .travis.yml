@@ -6,9 +6,8 @@ rvm:
 env:
   global:
     - "HOST_IP=$(/sbin/ifconfig venet0:0 | grep 'inet addr' | awk -F: '{print $2}' | awk '{print $1}')"
-    - DOCKER_HOST=tcp://$HOST_IP:2375
-    - DOCKER_PORT_RANGE=2375:2500
-    - SLIRP_PORTS=$(seq 2375 2500)
+    - 'DOCKER_HOST="tcp://$HOST_IP:2375"'
+    - 'SLIRP_PORTS="2375 $(seq 49153 50153)"'
 
 before_install:
   - sudo sh -c "wget -qO- https://get.docker.io/gpg | apt-key add -"
