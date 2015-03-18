@@ -3,7 +3,7 @@ FROM java:7
 # Configuration variables.
 ENV JIRA_HOME     /var/local/atlassian/jira
 ENV JIRA_INSTALL  /usr/local/atlassian/jira
-ENV JIRA_VERSION  6.3.14
+ENV JIRA_VERSION  6.4
 
 # Install Atlassian Confluence and helper tools and setup initial home 
 # directory structure.
