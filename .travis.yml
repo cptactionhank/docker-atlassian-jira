@@ -1,7 +1,6 @@
 language: ruby
 rvm:
   - 2.2.0
-cache: bundler
 
 env:
   global:
@@ -20,6 +19,7 @@ install:
   - sudo apt-get -y install lxc-docker-1.6.0 slirp
   - sudo sudo usermod -aG docker "$USER"
   - git clone git://github.com/cptactionhank/sekexe
+  - bundle install
 
 before_script:
   - "sekexe/run 'docker -d -H tcp://0.0.0.0:2375' &"
