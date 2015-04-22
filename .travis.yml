@@ -4,9 +4,9 @@ rvm:
 
 env:
   global:
-    - HOST_IP="$(/sbin/ifconfig venet0:0 | grep 'inet addr' | awk -F: '{print $2}' | awk '{print $1}')"
-    - DOCKER_HOST="tcp://$HOST_IP:2375"
-    - SLIRP_PORTS="2375 80 443 $(seq -s ' ' $(cat /proc/sys/net/ipv4/ip_local_port_range | awk '{print $1, ($1+30) }'))"
+    - "HOST_IP=$(/sbin/ifconfig venet0:0 | grep 'inet addr' | awk -F: '{print $2}' | awk '{print $1}')"
+    - "DOCKER_HOST=tcp://$HOST_IP:2375"
+    - "SLIRP_PORTS=\"2375 80 443 $(seq -s ' ' $(cat /proc/sys/net/ipv4/ip_local_port_range | awk '{print $1, ($1+30) }'))\""
 
 before_install:
   - sudo sh -c "wget -qO- https://get.docker.io/gpg | apt-key add -"
