@@ -1,8 +1,5 @@
 language: ruby
 
-rvm:
-  - 2.2.0
-
 env:
   global:
     - "HOST_IP=$(/sbin/ifconfig venet0:0 | grep 'inet addr' | awk -F: '{print $2}' | awk '{print $1}')"
