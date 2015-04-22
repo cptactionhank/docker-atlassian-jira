@@ -22,7 +22,7 @@ module Docker
       end
 
       def description
-        'be empty'
+        "match #{@expected.inspect} in console output"
       end
     end
 

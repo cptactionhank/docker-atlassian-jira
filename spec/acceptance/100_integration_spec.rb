@@ -2,7 +2,7 @@ require 'timeout'
 require 'spec_helper'
 
 describe 'Atlassian JIRA instance' do
-  include_context 'a buildable docker image', '.', Env: ['CATALINA_OPTS=-Xms64m -Datlassian.plugins.enable.wait=600']
+  include_context 'a buildable docker image', '.', Env: ["CATALINA_OPTS=-Xms64m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout}"]
 
   describe 'when starting a JIRA instance' do
     before(:all) { @container.start! PublishAllPorts: true }
@@ -25,8 +25,8 @@ describe 'Atlassian JIRA instance' do
     context 'when visiting root page' do
       it { expect(current_path).to match '/secure/SetupWelcome!default.jspa' }
       it { is_expected.to have_title 'JIRA - JIRA Setup' }
-      it { is_expected.to have_content 'Welcome To Your JIRA Setup' }
-      it { is_expected.to have_content 'I\'ll set it up myself' }
+      it { is_expected.to have_css 'form#jira-setupwizard' }
+      it { is_expected.to have_css 'div[data-choice-value=classic]' }
     end
 
     context 'when processing welcome setup' do
@@ -38,8 +38,9 @@ describe 'Atlassian JIRA instance' do
       end
 
       it { expect(current_path).to match '/secure/SetupDatabase!default.jspa' }
-      it { is_expected.to have_content 'Set Up Database' }
-      it { is_expected.to have_content 'Built In (for evaluation or demonstration)' }
+      it { is_expected.to have_title 'JIRA - JIRA Setup' }
+      it { is_expected.to have_css 'form#jira-setupwizard' }
+      it { is_expected.to have_selector :radio_button, 'jira-setupwizard-database-internal' }
     end
 
     context 'when processing database setup' do

@@ -5,7 +5,7 @@ ENV JIRA_HOME     /var/local/atlassian/jira
 ENV JIRA_INSTALL  /usr/local/atlassian/jira
 ENV JIRA_VERSION  6.3.14
 
-# Install Atlassian Confluence and helper tools and setup initial home 
+# Install Atlassian JIRA and helper tools and setup initial home
 # directory structure.
 RUN set -x \
     && apt-get update --quiet \

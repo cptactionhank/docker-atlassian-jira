@@ -53,17 +53,8 @@ RSpec.configure do |config|
   Excon.defaults[:read_timeout]  = timeout
 
   Capybara.configure do |conf|
-    suppressor = Capybara::Poltergeist::Suppressor.new(patterns: [
-      # suppress ToggleBlock JavaScript console warnings
-      /Your are trying to create a ToggleBlock with selector '.(twixi|toggle-trigger)'.One already exists with this trigger so has been ignored./
-    ])
-    # create poltergeist driver with message suppressing
     conf.register_driver :poltergeist_debug do |app|
-      Capybara::Poltergeist::Driver.new(
-        app,
-        phantomjs_logger: suppressor,
-        timeout: timeout
-      )
+      Capybara::Poltergeist::Driver.new app, timeout: timeout
     end
 
     conf.run_server = false

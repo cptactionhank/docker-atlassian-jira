@@ -25,7 +25,7 @@ module Docker
       end
 
       def description
-        'be empty'
+        "match #{@expected.inspect} in file content"
       end
 
       private
