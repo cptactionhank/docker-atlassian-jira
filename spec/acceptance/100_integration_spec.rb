@@ -23,7 +23,7 @@ describe 'Atlassian JIRA instance' do
     subject { page }
 
     context 'when visiting root page' do
-      it { expect(current_path).to match '/secure/SetupWelcome!default.jspa' }
+      it { expect(current_path).to match '/secure/SetupMode!default.jspa' }
       it { is_expected.to have_title 'JIRA - JIRA Setup' }
       it { is_expected.to have_css 'form#jira-setupwizard' }
       it { is_expected.to have_css 'div[data-choice-value=classic]' }
