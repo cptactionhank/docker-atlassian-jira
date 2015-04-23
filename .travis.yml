@@ -1,14 +1,12 @@
 language: ruby
-
 rvm:
-  - 2.1.3
+  - 2.2.0
 
 env:
   global:
     - "HOST_IP=$(/sbin/ifconfig venet0:0 | grep 'inet addr' | awk -F: '{print $2}' | awk '{print $1}')"
-    - DOCKER_HOST=tcp://$HOST_IP:2375
-    - DOCKER_PORT_RANGE=2400:2500
-    - SLIRP_PORTS=$(seq 2375 2500)
+    - "DOCKER_HOST=tcp://$HOST_IP:2375"
+    - "SLIRP_PORTS=\"2375 80 443 $(seq -s ' ' $(cat /proc/sys/net/ipv4/ip_local_port_range | awk '{print $1, ($1+30) }'))\""
 
 before_install:
   - sudo sh -c "wget -qO- https://get.docker.io/gpg | apt-key add -"
@@ -17,17 +15,17 @@ before_install:
   - sudo chmod +x /usr/sbin/policy-rc.d
 
 install:
-  - bundle install
-  - sudo apt-get -qqy update
-  - sudo apt-get -qqy install lxc-docker-1.4.1 slirp
+  - sudo apt-get -y update
+  - sudo apt-get -y install lxc-docker-1.6.0 slirp
   - sudo sudo usermod -aG docker "$USER"
   - git clone git://github.com/cptactionhank/sekexe
+  - bundle install
 
 before_script:
-  - "VERBOSE=1 sekexe/run 'export DOCKER_CERT_PATH=/var/lib/docker && mount -t tmpfs -o size=8g tmpfs /var/lib/docker && docker -d -H tcp://0.0.0.0:2375' &"
-  - "while ! docker info &> /dev/null ; do sleep 1; done"
-  - docker pull java:7
+  - "sekexe/run 'docker -d -H tcp://0.0.0.0:2375' &"
+  - "while ! docker info &> /dev/null ; do sleep 5; done"
 
 script:
   - docker version
-  - bundle exec rspec
+  - docker pull java:7
+  - bundle exec rspec --format documentation --fail-fast

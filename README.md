@@ -7,6 +7,10 @@ A containerized installation of Atlassian JIRA setup with a goal of keeping the 
 
 Want to help out, check out the contribution section.
 
+## Important changes
+
+The installation directory `/usr/local/atlassian/jira` is not mounted as a volume as standard anymore. Should you need to persist changes in this directory run the container with the additional argument `--volume /usr/local/atlassian/jira`.
+
 ## I'm in the fast lane! Get me started
 
 To quickly get started with running a JIRA instance, first run the following command:

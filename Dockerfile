@@ -5,7 +5,7 @@ ENV JIRA_HOME     /var/local/atlassian/jira
 ENV JIRA_INSTALL  /usr/local/atlassian/jira
 ENV JIRA_VERSION  6.3
 
-# Install Atlassian Confluence and helper tools and setup initial home 
+# Install Atlassian JIRA and helper tools and setup initial home
 # directory structure.
 RUN set -x \
     && apt-get update --quiet \
@@ -37,10 +37,10 @@ EXPOSE 8080
 # Set volume mount points for installation and home directory. Changes to the
 # home directory needs to be persisted as well as parts of the installation
 # directory due to eg. logs.
-VOLUME ["/var/local/atlassian/jira", "/usr/local/atlassian/jira"]
+VOLUME ["/var/local/atlassian/jira"]
 
 # Set the default working directory as the installation directory.
-WORKDIR ${JIRA_INSTALL}
+WORKDIR ${JIRA_HOME}
 
 # Run Atlassian JIRA as a foreground process by default.
-CMD ["bin/start-jira.sh", "-fg"]
+CMD ["/usr/local/atlassian/jira/bin/start-jira.sh", "-fg"]
