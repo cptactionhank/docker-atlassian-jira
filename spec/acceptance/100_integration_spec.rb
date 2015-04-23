@@ -23,15 +23,15 @@ describe 'Atlassian JIRA instance' do
     subject { page }
 
     context 'when visiting root page' do
-      it { expect(current_path).to match '/secure/SetupWelcome!default.jspa' }
+      it { expect(current_path).to match '/secure/SetupMode!default.jspa' }
       it { is_expected.to have_title 'JIRA - JIRA Setup' }
-      it { is_expected.to have_css 'form#jira-setupwizard' }
+      it { is_expected.to have_css 'form#jira-setup-mode' }
       it { is_expected.to have_css 'div[data-choice-value=classic]' }
     end
 
     context 'when processing welcome setup' do
       before :all do
-        within 'form#jira-setupwizard' do
+        within 'form#jira-setup-mode' do
           find(:css, 'div[data-choice-value=classic]').trigger('click')
           click_button 'Next'
         end
@@ -39,13 +39,13 @@ describe 'Atlassian JIRA instance' do
 
       it { expect(current_path).to match '/secure/SetupDatabase!default.jspa' }
       it { is_expected.to have_title 'JIRA - JIRA Setup' }
-      it { is_expected.to have_css 'form#jira-setupwizard' }
-      it { is_expected.to have_selector :radio_button, 'jira-setupwizard-database-internal' }
+      it { is_expected.to have_css 'form#jira-setup-database' }
+      it { is_expected.to have_selector :radio_button, 'jira-setup-database-field-database-internal' }
     end
 
     context 'when processing database setup' do
       # before :all do
-      #   within 'form#jira-setupwizard' do
+      #   within 'form#jira-setup-database' do
       #     choose 'jira-setupwizard-database-internal'
       #     click_button 'Next'
       #   end
