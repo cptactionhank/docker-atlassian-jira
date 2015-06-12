@@ -9,14 +9,13 @@ env:
     - "SLIRP_PORTS=\"2375 80 443 $(seq -s ' ' $(cat /proc/sys/net/ipv4/ip_local_port_range | awk '{print $1, ($1+30) }'))\""
 
 before_install:
-  - sudo sh -c "wget -qO- https://get.docker.io/gpg | apt-key add -"
-  - sudo sh -c "echo deb http://get.docker.io/ubuntu docker main > /etc/apt/sources.list.d/docker.list"
   - echo exit 101 | sudo tee /usr/sbin/policy-rc.d
   - sudo chmod +x /usr/sbin/policy-rc.d
 
 install:
   - sudo apt-get -y update
-  - sudo apt-get -y install lxc-docker-1.6.0 slirp
+  - sudo apt-get -y install slirp
+  - curl https://get.docker.com/ | sudo sh
   - sudo sudo usermod -aG docker "$USER"
   - git clone git://github.com/cptactionhank/sekexe
   - bundle install
