@@ -9,7 +9,9 @@ Want to help out, check out the contribution section.
 
 ## Important changes
 
-The installation directory `/usr/local/atlassian/jira` is not mounted as a volume as standard anymore. Should you need to persist changes in this directory run the container with the additional argument `--volume /usr/local/atlassian/jira`.
+The Java Runtime Environment has been updated to use OpenJDK 8 and there has been some changes to the installation and home directory to better follow the [Filesystem Hierarchy Standard](http://refspecs.linuxfoundation.org/FHS_3.0/fhs-3.0.txt). Thanks @frederickding for noticing and suggesting some changes. The environment variable values has been changed accordingly.
+
+The installation directory `/opt/atlassian/jira` is not mounted as a volume as standard anymore. Should you need to persist changes in this directory run the container with the additional argument `--volume /opt/atlassian/jira`.
 
 ## I'm in the fast lane! Get me started
 
@@ -68,18 +70,18 @@ Here will be information on how to run as a different user
 --user "docker-user:docker-group"
 ```
 
-make sure the home directory `/var/local/atlassian/jira` is set up with full read, write, and execute permissions on the directory.
+make sure the home directory `/var/atlassian/jira` is set up with full read, write, and execute permissions on the directory.
 
 If not mounting the home directory volume yourself you can change the folder permissions by
 
 ```bash
-$ docker exec [container] chown docker-user:docker-group /var/local/atlassian/jira
+$ docker exec [container] chown docker-user:docker-group /var/atlassian/jira
 ```
 
 Please note that the exec will be executed as the supplied user in the `docker create` command, ie. `docker-user:docker-group`. You can circumvent this by
 
 ```bash
-$ docker run -ti --rm --user root:root --volumes-from [container] java:7 chown docker-user:docker-group /var/local/atlassian/jira
+$ docker run -ti --rm --user root:root --volumes-from [container] java:7 chown docker-user:docker-group /var/atlassian/jira
 ```
 
 ### Customizations
@@ -87,19 +89,19 @@ $ docker run -ti --rm --user root:root --volumes-from [container] java:7 chown d
 Example mounting files to change log4j logging output:
 
 ```
---volume "[hostpath]/log4j.properties:/usr/local/atlassian/jira/atlassian-jira/WEB-INF/classes/log4j.properties"
+--volume "[hostpath]/log4j.properties:/opt/atlassian/jira/atlassian-jira/WEB-INF/classes/log4j.properties"
 ```
 
 This should also be modifiable to suit your needs.
 
 ### Reverse Proxy Support
 
-You need to change the `/usr/local/atlassian/jira/conf/server.xml` file inside the container to include a couple of Connector [attributes](http://tomcat.apache.org/tomcat-8.0-doc/config/http.html#Proxy_Support).
+You need to change the `/opt/atlassian/jira/conf/server.xml` file inside the container to include a couple of Connector [attributes](http://tomcat.apache.org/tomcat-8.0-doc/config/http.html#Proxy_Support).
 
 Gaining access to the `server.xml` file on a running container use the following docker command edited to suit your setup
 
 ```bash
-$ docker run -ti --rm --volumes-from <container> ubuntu:latest vi /usr/local/atlassian/jira/conf/server.xml
+$ docker run -ti --rm --volumes-from <container> ubuntu:latest vi /opt/atlassian/jira/conf/server.xml
 ```
 
 Within this container the file can be accessed and edited to match your configuration (remember to restart the JIRA container after).

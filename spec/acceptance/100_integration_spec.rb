@@ -103,6 +103,6 @@ describe 'Atlassian JIRA instance' do
     end
 
     include_examples 'a clean console'
-    include_examples 'a clean logfile', '/var/local/atlassian/jira/log/atlassian-jira.log'
+    include_examples 'a clean logfile', '/var/atlassian/jira/log/atlassian-jira.log'
   end
 end

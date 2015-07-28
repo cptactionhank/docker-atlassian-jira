@@ -1,9 +1,9 @@
-FROM java:7
+FROM java:8
 
 # Configuration variables.
-ENV JIRA_HOME     /var/local/atlassian/jira
-ENV JIRA_INSTALL  /usr/local/atlassian/jira
-ENV JIRA_VERSION  6.4.2
+ENV JIRA_HOME     /var/atlassian/jira
+ENV JIRA_INSTALL  /opt/atlassian/jira
+ENV JIRA_VERSION  6.4.6
 
 # Install Atlassian JIRA and helper tools and setup initial home
 # directory structure.
@@ -37,10 +37,10 @@ EXPOSE 8080
 # Set volume mount points for installation and home directory. Changes to the
 # home directory needs to be persisted as well as parts of the installation
 # directory due to eg. logs.
-VOLUME ["/var/local/atlassian/jira"]
+VOLUME ["/var/atlassian/jira"]
 
 # Set the default working directory as the installation directory.
 WORKDIR ${JIRA_HOME}
 
 # Run Atlassian JIRA as a foreground process by default.
-CMD ["/usr/local/atlassian/jira/bin/start-jira.sh", "-fg"]
+CMD ["/opt/atlassian/jira/bin/start-jira.sh", "-fg"]
