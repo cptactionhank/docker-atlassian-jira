@@ -14,4 +14,5 @@ group :test do
   # libraries for Docker
   gem 'docker-api', '~> 1.21.1', require: 'docker'
   gem 'archive-tar-minitar', '~> 0.5.2'
+  gem 'rspec_junit_formatter', '~> 0.2.3'
 end
