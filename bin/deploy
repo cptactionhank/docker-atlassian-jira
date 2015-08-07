@@ -8,13 +8,13 @@ VERSION=$(curl -Ls 'https://my.atlassian.com/download/feeds/current/jira.json' |
 git fetch origin
 
 # Checkout a new branch with no starting point
-git checkout --orphan "${VERSION}"
+git checkout --orphan "${VERSION}" || exit 254
 
 if [[ $? == 0 ]]; then
 
 	# setup git information
-	git config --global user.email circleci@circleci
-	git config --global user.name CircleCI
+	git config --global user.email "circleci@circleci"
+	git config --global user.name "Circle CI Automated Builder"
 
 	echo "Committing changes"
 
@@ -24,7 +24,7 @@ if [[ $? == 0 ]]; then
 
 	echo "Pushing new branch ${VERSION}"
 
-	git push origin "${VERSION}"
+	git push origin "${VERSION}" || exit 255
 
 	echo "Deployed new version to new branch ${VERSION}"
 
