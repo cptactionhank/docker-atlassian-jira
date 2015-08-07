@@ -13,6 +13,6 @@ echo "Preparing branch for version new Atlassian JIRA version"
 
 # Edit the `Dockerfile` by changing the string `@@VERSION@@` to the obtained
 # version from the Atlassian JIRA version feed.
-sed "s/@@VERSION@@/$VERSION/g" Dockerfile > /dev/null
+sed --in-place "s/@@VERSION@@/$VERSION/g" Dockerfile
 
 echo "Ready for acceptance testing"
