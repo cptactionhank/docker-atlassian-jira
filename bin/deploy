@@ -5,13 +5,14 @@
 # the actual content and then get the version number from the first entry.
 VERSION=$(curl -Ls 'https://my.atlassian.com/download/feeds/current/jira.json' | sed 's/downloads(\(.*\))/\1/g' | jq -r '.[0].version')
 
-git fetch origin "${VERSION}"
+git fetch --all
+git show-branch "origin/${VERSION}"
 
 # Checkout a new branch with no starting point
-git checkout --orphan "${VERSION}"
 
 if [[ $? == 0 ]]; then
 
+	git checkout --orphan "${VERSION}"
 	# setup git information
 	git config --global user.email "circleci@circleci"
 	git config --global user.name "Circle CI Automated Builder"
