@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+echo "Obtaining latest Atlassian JIRA version number"
+
+# Obtain the latest Atlassian JIRA version by going to the JSON version feed
+# information to get a JSONP formatted response, strip the output to retrieve
+# the actual content and then get the version number from the first entry.
+VERSION=$(curl -Ls 'https://my.atlassian.com/download/feeds/current/jira.json' | sed 's/downloads(\(.*\))/\1/g' | jq -r '.[0].version')
+
+echo "Found the newest version to be: $VERSION"
+
+echo "Preparing branch for version new Atlassian JIRA version"
+
+# Edit the `Dockerfile` by changing the string `@@VERSION@@` to the obtained
+# version from the Atlassian JIRA version feed.
+sed "s/@@VERSION@@/$VERSION/g" Dockerfile > /dev/null
+
+echo "Ready for acceptance testing"

@@ -6,3 +6,7 @@ general:
 machine:
   services:
     - docker
+
+test:
+  pre:
+    - bin/prepare_test
