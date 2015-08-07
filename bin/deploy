@@ -8,7 +8,7 @@ VERSION=$(curl -Ls 'https://my.atlassian.com/download/feeds/current/jira.json' |
 git fetch origin
 
 # Checkout a new branch with no starting point
-git checkout --orphan "${VERSION}" || exit 254
+git checkout --orphan "${VERSION}"
 
 if [[ $? == 0 ]]; then
 
