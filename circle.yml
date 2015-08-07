@@ -9,7 +9,8 @@ machine:
 
 dependencies:
   pre:
-    - sudo apt-get update && sudo apt-get install jq
+    - sudo apt-get --yes -qq update
+    - sudo apt-get --yes -qq install jq
 
 test:
   pre:
