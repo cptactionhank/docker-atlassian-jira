@@ -14,3 +14,9 @@ dependencies:
 test:
   pre:
     - bin/prepare_test
+
+deployment:
+  newest-version:
+    branch: builder
+    commands:
+      - bin/deploy
