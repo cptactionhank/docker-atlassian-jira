@@ -12,15 +12,19 @@ git show-branch "origin/${VERSION}"
 
 if [[ $? == 0 ]]; then
 
+	echo "Branch '${VERSION}' already exist. Skipping..."
+
+else
+
+	echo "Creating new branch ${VERSION}"
+
 	git checkout --orphan "${VERSION}"
-	# setup git information
 	git config --global user.email "circleci@circleci"
 	git config --global user.name "Circle CI Automated Builder"
 
 	echo "Committing changes"
 
 	git add --all
-
 	git commit --message "Created new Atlassian JIRA branch for version ${VERSION}"
 
 	echo "Pushing new branch ${VERSION}"
@@ -28,9 +32,5 @@ if [[ $? == 0 ]]; then
 	git push origin "${VERSION}" || exit 255
 
 	echo "Deployed new version to new branch ${VERSION}"
-
-else
-
-	echo "Branch '${VERSION}' already exist. Skipping..."
 
 fi
