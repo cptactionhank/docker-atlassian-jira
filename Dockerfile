@@ -1,4 +1,4 @@
-FROM java:8
+FROM airdock/oracle-jdk
 
 # Configuration variables.
 ENV JIRA_HOME     /var/atlassian/jira
