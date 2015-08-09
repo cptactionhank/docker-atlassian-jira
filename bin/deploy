@@ -14,7 +14,7 @@ if [[ $? == 1 ]]; then
 
 	echo "Pushing new branch ${VERSION}"
 
-	git push origin .
+	git push origin eap
 
 else
 

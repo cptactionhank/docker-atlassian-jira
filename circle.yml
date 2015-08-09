@@ -21,3 +21,7 @@ deployment:
     branch: builder
     commands:
       - bin/deploy
+  newest-version-eap:
+    branch: eap
+    commands:
+      - bin/deploy
