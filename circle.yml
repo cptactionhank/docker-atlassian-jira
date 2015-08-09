@@ -1,0 +1,23 @@
+general:
+  branches:
+    ignore:
+      - gh-pages
+
+machine:
+  services:
+    - docker
+
+dependencies:
+  pre:
+    - sudo apt-get --yes -qq update
+    - sudo apt-get --yes -qq install jq
+
+test:
+  pre:
+    - bin/prepare_test
+
+deployment:
+  newest-version:
+    branch: builder
+    commands:
+      - bin/deploy

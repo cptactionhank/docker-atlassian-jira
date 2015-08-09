@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+echo "Obtaining latest Atlassian JIRA Early Access Preview version number"
+
+# Obtain the latest Atlassian JIRA version by going to the JSON version feed
+# information to get a JSONP formatted response, strip the output to retrieve
+# the actual content and then get the version number from the first entry.
+VERSION=$(curl -Ls 'https://my.atlassian.com/download/feeds/eap/jira.json' | sed 's/downloads(\(.*\))/\1/g' | jq -r '.[0].version')
+
+echo "Found the newest version to be: $VERSION"
+
+echo "Preparing branch for version new Atlassian JIRA version"
+
+# Edit the `Dockerfile` by changing the version string to the obtained
+# version from the Atlassian JIRA Early Access Preview version feed.
+sed --in-place "s/\(JIRA_VERSION[[:space:]]*\)\([[:digit:]].*\)/\1${VERSION}/g" Dockerfile
+
+echo "Ready for acceptance testing"

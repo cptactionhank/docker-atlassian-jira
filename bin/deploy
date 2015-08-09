@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+git config --global user.email "circleci@circleci"
+git config --global user.name "Circle CI Automated Builder"
+
+echo "Committing changes"
+
+git add --all
+git commit --message "Updated to Atlassian JIRA Early Access Preview version ${VERSION}"
+
+echo "Pushing new branch ${VERSION}"
+
+git push origin .
