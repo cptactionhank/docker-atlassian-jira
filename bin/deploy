@@ -3,11 +3,21 @@
 git config --global user.email "circleci@circleci"
 git config --global user.name "Circle CI Automated Builder"
 
-echo "Committing changes"
+git diff --exit-code Dockerfile
 
-git add --all
-git commit --message "Updated to Atlassian JIRA Early Access Preview version ${VERSION}"
+if [[ $? == 1 ]]; then
 
-echo "Pushing new branch ${VERSION}"
+	echo "Committing changes"
 
-git push origin .
+	git add --all
+	git commit --message "Updated to Atlassian JIRA Early Access Preview version ${VERSION}"
+
+	echo "Pushing new branch ${VERSION}"
+
+	git push origin .
+
+else
+
+	echo "There was no changes, skipping deployment..."
+
+fi
