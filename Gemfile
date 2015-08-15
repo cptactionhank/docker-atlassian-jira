@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 # currently used ruby version
-ruby '2.2.0'
+ruby '2.2.2'
 
 group :test do
   gem 'rake', '~> 10.4.2'
