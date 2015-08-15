@@ -1,17 +1,18 @@
 # Atlassian JIRA in a Docker container
 
-[![Build Status](https://img.shields.io/circleci/project/cptactionhank/docker-atlassian-jira.svg)](https://circleci.com/gh/cptactionhank/docker-atlassian-jira)
-[![Open Issues](https://img.shields.io/github/issues/cptactionhank/docker-atlassian-jira.svg)](https://github.com/cptactionhank/docker-atlassian-jira)
-[![Stars on GitHub](https://img.shields.io/github/stars/cptactionhank/docker-atlassian-jira.svg)](https://github.com/cptactionhank/docker-atlassian-jira)
-[![Forks on GitHub](https://img.shields.io/github/forks/cptactionhank/docker-atlassian-jira.svg)](https://github.com/cptactionhank/docker-atlassian-jira)
-[![Stars on Docker Hub](https://img.shields.io/docker/stars/cptactionhank/atlassian-jira.svg)](https://registry.hub.docker.com/u/cptactionhank/atlassian-jira)
-[![Pulls on Docker Hub](https://img.shields.io/docker/pulls/cptactionhank/atlassian-jira.svg)](https://registry.hub.docker.com/u/cptactionhank/atlassian-jira)
+> Version 6.4.10
+
+[![Build Status](https://img.shields.io/circleci/project/cptactionhank/docker-atlassian-jira/master.svg)](https://circleci.com/gh/cptactionhank/docker-atlassian-jira) [![Open Issues](https://img.shields.io/github/issues/cptactionhank/docker-atlassian-jira.svg)](https://github.com/cptactionhank/docker-atlassian-jira) [![Stars on GitHub](https://img.shields.io/github/stars/cptactionhank/docker-atlassian-jira.svg)](https://github.com/cptactionhank/docker-atlassian-jira) [![Forks on GitHub](https://img.shields.io/github/forks/cptactionhank/docker-atlassian-jira.svg)](https://github.com/cptactionhank/docker-atlassian-jira) [![Stars on Docker Hub](https://img.shields.io/docker/stars/cptactionhank/atlassian-jira.svg)](https://registry.hub.docker.com/u/cptactionhank/atlassian-jira) [![Pulls on Docker Hub](https://img.shields.io/docker/pulls/cptactionhank/atlassian-jira.svg)](https://registry.hub.docker.com/u/cptactionhank/atlassian-jira)
 
 A containerized installation of Atlassian JIRA setup with a goal of keeping the installation as default as possible, but with a few Docker related twists.
 
 Want to help out, check out the contribution section.
 
 ## Important changes
+
+Here you can read about significant changes to the repository/Docker image.
+
+### Since 6.4.6
 
 The Java Runtime Environment has been updated to use OpenJDK 8 and there has been some changes to the installation and home directory to better follow the [Filesystem Hierarchy Standard](http://refspecs.linuxfoundation.org/FHS_3.0/fhs-3.0.txt). Thanks @frederickding for noticing and suggesting some changes. The environment variable values has been changed accordingly.
 
@@ -27,6 +28,8 @@ docker run --detach --publish 8080:8080 cptactionhank/atlassian-jira:latest
 Then use your browser to nagivate to `http://[dockerhost]:8080` and finish the configuration.
 
 ## The slower road to get started
+
+> The following documentation is outdated and might be obsolete, this is kept until a wiki or webpage is setup with better documentation.
 
 An assumption is made that the docker version is at least 1.3.0 for the additional methods `docker exec` and `docker create`.
 
@@ -137,11 +140,11 @@ For a reverse proxy server listening on port 443 (HTTPS) for inbound connections
 ```
 
 ## Contributions
-[![Docker Build Status](http://hubstatus.container42.com/cptactionhank/atlassian-jira)](https://registry.hub.docker.com/u/cptactionhank/atlassian-jira)
-[![Build Status](https://travis-ci.org/cptactionhank/docker-atlassian-jira.svg)](https://travis-ci.org/cptactionhank/docker-atlassian-jira)
 
-This has been made with the best intentions and current knowledge so it shouldn't be expected to be flawless. However you can support this too with best practices and other additions. Travis-CI has been setup to build the Dockerfile and run acceptance tests on the application image to ensure it is tested and working.
+This has been made with the best intentions and current knowledge and thus it shouldn't be expected to be flawless. However you can support this repository with best-practices and other additions. Cirlce-CI has been setup to build the Dockerfile and run acceptance tests on the Atlassian JIRA image to ensure it is working.
 
-Out of date documentation, version, lack of tests, etc. why not help out by either creating an issue and open a discussion or sending a pull request with modifications.
+Circle-CI has been setup to automatically deploy new version branches when successfully building a new version of Atlassian JIRA in the `master` branch and serves as the base. Futhermore an `eap` branch has been setup to automatically build and commit updates to ensure the `eap` branch contains the latest version of Atlassian JIRA Early Access Preview.
 
-Acceptance tests are performed by Travis-CI in Ruby using the RSpec framework.
+Out of date documentation, lack of tests, etc. you can help out by either creating an issue and open a discussion or sending a pull request with modifications to the appropiate branch.
+
+Acceptance tests are performed by Circle-CI with Ruby using the RSpec, Capybara, and phantomjs frameworks.
