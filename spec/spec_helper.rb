@@ -3,24 +3,31 @@ require 'capybara'
 require 'capybara/poltergeist'
 require 'poltergeist/suppressor'
 
-REGEX_SEVERE  = /SEVERE|FATAL/
 REGEX_WARN    = /WARNING|WARN/
 REGEX_ERROR   = /ERROR|ERR/
+REGEX_SEVERE  = /SEVERE|FATAL/
 REGEX_STARTUP = /Server startup in \d+ ms/
-REGEX_FILTER  =
-[
-  # when `dbconfig.xml` does not exists when starting up instance
-  /no\ defaultDS\ datasource/,
-  # https://jira.atlassian.com/browse/JRA-42576
-  /\[atlassian\.jira\.tenancy\.PluginKeyPredicateLoader\]\ Could\ not\ read\ tenant\-smart\ pattern\ file\ '\/opt\/atlassian\/jira\/atlassian\-jira\/WEB\-INF\/classes\/tenant\-smart\-patterns\.txt'\ \(using\ defaults\)/
-].inject { |*args| Regexp.union(*args) }
+REGEX_FILTER  = Regexp.compile (Regexp.union [
+  # For some reason when setting up the database the indexing path is not set
+  # yielding the following errors.
+  %r{\[atlassian\.jira\.upgrade\.ConsistencyCheckImpl\]\ Indexing\ is\ turned\ on,\ but\ index\ path\ \[null\]\ invalid\ \-\ disabling\ indexing},
+  %r{\[jira\.issue\.index\.DefaultIndexManager\]\ File\ path\ not\ set\ \-\ not\ indexing},
+  # This error message is excused since we're using a Continuous Integration
+  # agent.
+  %r{\[atlassian\.labs\.botkiller\.BotKiller\]\ Error\ occurred\ when\ figuring\ out\ if\ the\ session\ has\ a\ user,\ assuming\ there\ is\ no\ user\.},
+  # ignore this error?
+  %r{\[atlassian\.event\.internal\.AsynchronousAbleEventDispatcher\]\ There\ was\ an\ exception\ thrown\ trying\ to\ dispatch\ event\ \[com\.atlassian\.plugin\.event\.events\.PluginModuleUnavailableEvent@.+\]\ from\ the\ invoker\ \[SingleParameterMethodListenerInvoker\{method=public\ void\ com\.atlassian\.plugin\.manager\.DefaultPluginManager\.onPluginModuleUnavailable\(com\.atlassian\.plugin\.event\.events\.PluginModuleUnavailableEvent\),\ listener=com\.atlassian\.jira\.plugin\.JiraPluginManager@.+\}\]}
+])
 
+puts "Autoloading directory: #{"#{File.dirname(__FILE__)}/support/**/*.rb"}"
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |file| require file }
 
 RSpec.configure do |config|
   config.include Capybara::DSL
   config.include Docker::DSL
+  config.include WaitingHelper
 
+  # set the default timeout to 10 minutes.
   timeout = 600
 
   # rspec-expectations config goes here. You can use an alternate
@@ -56,9 +63,12 @@ RSpec.configure do |config|
 
   Capybara.configure do |conf|
     conf.register_driver :poltergeist_debug do |app|
-      Capybara::Poltergeist::Driver.new app, timeout: timeout
+      Capybara::Poltergeist::Driver.new app, timeout: timeout,
+        phantomjs_logger: Capybara::Poltergeist::Suppressor.new
     end
 
+    # Since we're connecting to a running Docker container, Capybara should
+    # not startup a Rails server.
     conf.run_server = false
     conf.default_driver = :poltergeist_debug
     conf.default_wait_time = timeout
