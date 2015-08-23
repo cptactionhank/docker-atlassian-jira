@@ -1,178 +1,332 @@
 <!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>Docker-atlassian-jira by cptactionhank</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-  </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">Docker-atlassian-jira</h1>
-      <h2 class="project-tagline">Docker container running Atlassian JIRA</h2>
-      <a href="https://github.com/cptactionhank/docker-atlassian-jira" class="btn">View on GitHub</a>
-      <a href="https://github.com/cptactionhank/docker-atlassian-jira/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/cptactionhank/docker-atlassian-jira/tarball/master" class="btn">Download .tar.gz</a>
-    </section>
+<html lang="en-us" ng-app="docker-configurator">
+<head>
+  <meta charset="UTF-8">
+  <title>docker-atlassian-jira by cptactionhank</title>
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <link href="stylesheets/normalize.css" media="screen" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link href="stylesheets/stylesheet.css" media="screen" rel="stylesheet" type="text/css">
+  <link href="stylesheets/github-light.css" media="screen" rel="stylesheet" type="text/css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha256-k2/8zcNbxVIh5mnQ52A0r3a6jAgMGxFJFE2707UxGCk= sha512-ZV9KawG2Legkwp3nAlxLIVFudTauWuBpC10uEafMHYL0Sarrz5A7G79kXh5+5+woxQ5HM559XX2UZjMJ36Wplg==" crossorigin="anonymous">
+</head>
 
-    <section class="main-content">
-      <h1>
-<a id="atlassian-jira-in-a-docker-container" class="anchor" href="#atlassian-jira-in-a-docker-container" aria-hidden="true"><span class="octicon octicon-link"></span></a>Atlassian JIRA in a Docker container</h1>
+<body>
+  <section class="page-header">
+    <h1 class="project-name">docker-atlassian-jira</h1>
+    <h2 class="project-tagline">Docker container running Atlassian JIRA</h2>
+    <a class="btn" href="https://cptactionhank.github.io/docker-atlassian-jira/">View on Configurator</a> <a class="btn" href="https://github.com/cptactionhank/docker-atlassian-jira">View on GitHub</a> <a class="btn" href="https://hub.docker.com/r/cptactionhank/atlassian-jira/">View on DockerHub</a>
+  </section>
 
-<p><a href="https://circleci.com/gh/cptactionhank/docker-atlassian-jira"><img src="https://img.shields.io/circleci/project/cptactionhank/docker-atlassian-jira.svg" alt="Build Status"></a>
-<a href="https://github.com/cptactionhank/docker-atlassian-jira"><img src="https://img.shields.io/github/issues/cptactionhank/docker-atlassian-jira.svg" alt="Open Issues"></a>
-<a href="https://github.com/cptactionhank/docker-atlassian-jira"><img src="https://img.shields.io/github/stars/cptactionhank/docker-atlassian-jira.svg" alt="Stars on GitHub"></a>
-<a href="https://github.com/cptactionhank/docker-atlassian-jira"><img src="https://img.shields.io/github/forks/cptactionhank/docker-atlassian-jira.svg" alt="Forks on GitHub"></a>
-<a href="https://registry.hub.docker.com/u/cptactionhank/atlassian-jira"><img src="https://img.shields.io/docker/stars/cptactionhank/atlassian-jira.svg" alt="Stars on Docker Hub"></a>
-<a href="https://registry.hub.docker.com/u/cptactionhank/atlassian-jira"><img src="https://img.shields.io/docker/pulls/cptactionhank/atlassian-jira.svg" alt="Pulls on Docker Hub"></a></p>
 
-<p>A containerized installation of Atlassian JIRA setup with a goal of keeping the installation as default as possible, but with a few Docker related twists.</p>
+  <article class="main-content1 container">
+    <div class="alert alert-warning" role="alert"><strong>Heads up!</strong> While the configurator for now is very much a work in progress you should be able to infer what's missing to get you up and running</div>
 
-<p>Want to help out, check out the contribution section.</p>
+    <h1><a class="anchor" href="#atlassian-jira-in-a-docker-container" id="atlassian-jira-in-a-docker-container"><span class="octicon octicon-link"></span></a> Atlassian JIRA in a Docker container</h1>
 
-<h2>
-<a id="important-changes" class="anchor" href="#important-changes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Important changes</h2>
+    <p>
+      <a href="https://circleci.com/gh/cptactionhank/docker-atlassian-jira"><img alt="Build Status" src="https://img.shields.io/circleci/project/cptactionhank/docker-atlassian-jira.svg"></a>
+      <a href="https://github.com/cptactionhank/docker-atlassian-jira"><img alt="Open Issues" src="https://img.shields.io/github/issues/cptactionhank/docker-atlassian-jira.svg"></a>
+      <a href="https://github.com/cptactionhank/docker-atlassian-jira"><img alt="Stars on GitHub" src="https://img.shields.io/github/stars/cptactionhank/docker-atlassian-jira.svg"></a>
+      <a href="https://github.com/cptactionhank/docker-atlassian-jira"><img alt="Forks on GitHub" src="https://img.shields.io/github/forks/cptactionhank/docker-atlassian-jira.svg"></a>
+      <a href="https://registry.hub.docker.com/u/cptactionhank/atlassian-jira"><img alt="Stars on Docker Hub" src="https://img.shields.io/docker/stars/cptactionhank/atlassian-jira.svg"></a>
+      <a href="https://registry.hub.docker.com/u/cptactionhank/atlassian-jira"><img alt="Pulls on Docker Hub" src="https://img.shields.io/docker/pulls/cptactionhank/atlassian-jira.svg"></a></p>
 
-<p>The Java Runtime Environment has been updated to use OpenJDK 8 and there has been some changes to the installation and home directory to better follow the <a href="http://refspecs.linuxfoundation.org/FHS_3.0/fhs-3.0.txt">Filesystem Hierarchy Standard</a>. Thanks <a href="https://github.com/frederickding" class="user-mention">@frederickding</a> for noticing and suggesting some changes. The environment variable values has been changed accordingly.</p>
 
-<p>The installation directory <code>/opt/atlassian/jira</code> is not mounted as a volume as standard anymore. Should you need to persist changes in this directory run the container with the additional argument <code>--volume /opt/atlassian/jira</code>.</p>
+    <p>A containerized installation of Atlassian JIRA setup with a goal of keeping the installation as default as possible, but with a few Docker related twists.</p>
 
-<h2>
-<a id="im-in-the-fast-lane-get-me-started" class="anchor" href="#im-in-the-fast-lane-get-me-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>I'm in the fast lane! Get me started</h2>
 
-<p>To quickly get started with running a JIRA instance, first run the following command:</p>
+    <p>Want to help out, check out the contribution section.</p>
 
-<div class="highlight highlight-bash"><pre>docker run --detach --publish 8080:8080 cptactionhank/atlassian-jira:latest</pre></div>
+    <section ng-controller="ConfigurationController">
+      <h2><a class="anchor" href="#important-changes" id="important-changes"><span class="octicon octicon-link"></span></a>Docker image selector</h2>
 
-<p>Then use your browser to nagivate to <code>http://[dockerhost]:8080</code> and finish the configuration.</p>
+      <div class="form-horizontal">
+      <div class="form-group">
+        <label for="jira-version" class="col-sm-2 control-label">JIRA version:</label>
+        <div class="col-sm-10">
+          <select name="jira-version" class="form-control"ng-model="jira.version" ng-init="jira.version = 'latest'" ng-change="update(jira.version)">
+            <option ng-repeat="tag in tags | orderBy: 'name'">{{tag.name}}</option>
+          </select>
+          <span class="help-block">
+            <i class="fa fa-circle-o-notch fa-spin" ng-show="status == 'loading'"></i>
+            <i class="fa fa-exclamation-triangle" ng-show="status == 'error'"></i>
+            {{ status }}
+          </span>
+        </div>
+      </div>
 
-<h2>
-<a id="the-slower-road-to-get-started" class="anchor" href="#the-slower-road-to-get-started" aria-hidden="true"><span class="octicon octicon-link"></span></a>The slower road to get started</h2>
+      <div class="form-group">
+        <label for="jira-home" class="col-sm-2 control-label">JIRA Home location:</label>
+        <div class="col-sm-10"><p class="form-control-static">{{ jira.home }}</p></div>
+      </div>
 
-<p>An assumption is made that the docker version is at least 1.3.0 for the additional methods <code>docker exec</code> and <code>docker create</code>.</p>
+      <div class="form-group">
+        <label for="jira-install" class="col-sm-2 control-label">JIRA Installation location:</label>
+        <div class="col-sm-10"><p class="form-control-static">{{ jira.install }}</p></div>
+      </div>
 
-<p>This is how to create the container for running an Atlassian JIRA instance and before you run the command as is take note of the <code>[your settings]</code> which should be left out or filled to suit your needs.</p>
+      <div class="form-group">
+        <label for="jira-install" class="col-sm-2 control-label">Docker host:</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" ng-model="jira.host" ng-init="jira.host = 'localhost'" />
+          <span class="help-block">Write your IP or Hostname of the Docker host machine</span>
+        </div>
+      </div>
 
-<div class="highlight highlight-bash"><pre>docker create [your settings] cptactionhank/atlassian-jira:latest</pre></div>
+      <div class="form-group">
+        <label for="jira-install" class="col-sm-2 control-label">JIRA port:</label>
+        <div class="col-sm-10">
+          <input type="number" class="form-control" ng-model="jira.port" ng-init="jira.port = 8080" />
+          <span class="help-block">Write the port you wish to have Atlassian JIRA be available on</span>
+        </div>
+      </div>
+      </div>
 
-<p>Below is some documentation for additional configuration of the JIRA application, keep in mind this is the only tested configuration to suit own needs.</p>
-
-<h3>
-<a id="additional-jira-settings" class="anchor" href="#additional-jira-settings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Additional JIRA settings</h3>
-
-<p>Use the <code>CATALINA_OPTS</code> environment variable for changing advanced settings eg. changing memory consumption or extending plugin loading timeout. All possible configuration settings can be found at the Atlassian JIRA <a href="https://confluence.atlassian.com/display/JIRA/Recognized+System+Properties+for+JIRA">documentation</a>.</p>
-
-<p>Use with Docker add <code>--env 'CATALINA_OPTS=[settings]'</code> as part of your container configuration flags.</p>
-
-<h4>
-<a id="jvm-memory-configuration" class="anchor" href="#jvm-memory-configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>JVM memory configuration</h4>
-
-<p>To change the default memory configuration to your machine with extended memory usage settings add the following string to your <code>CATALINA_OPTS</code> environment variable. This will setup the JVM to be running with 128MB as minimum and 1GB as maximum allocatable memory.</p>
-
-<pre><code>-Xms128m -Xmx1024m
-</code></pre>
-
-<p>More information about <a href="http://docs.oracle.com/cd/E13150_01/jrockit_jvm/jrockit/jrdocs/refman/optionX.html#wp999528"><code>-Xms</code></a> and <a href="http://docs.oracle.com/cd/E13150_01/jrockit_jvm/jrockit/jrdocs/refman/optionX.html#wp999527"><code>-Xmx</code></a> visit <a href="http://docs.oracle.com/cd/E13150_01/jrockit_jvm/jrockit/jrdocs/refman/optionX.html">here</a>.</p>
-
-<h4>
-<a id="plugin-loading-timeout" class="anchor" href="#plugin-loading-timeout" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plugin loading timeout</h4>
-
-<p>To change the plugin loading timeout to <em>5 minutes</em> the following string should be added to the <code>CATALINA_OPTS</code> environment variable.</p>
-
-<pre><code>-Datlassian.plugins.enable.wait=300
-</code></pre>
-
-<h4>
-<a id="apache-portable-runtime-apr-based-native-library-for-tomcat" class="anchor" href="#apache-portable-runtime-apr-based-native-library-for-tomcat" aria-hidden="true"><span class="octicon octicon-link"></span></a>Apache Portable Runtime (APR) based Native library for Tomcat</h4>
-
-<p>This is enabled by default.</p>
-
-<h3>
-<a id="running-as-a-different-user" class="anchor" href="#running-as-a-different-user" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running as a different user</h3>
-
-<p>Here will be information on how to run as a different user</p>
-
-<pre><code>--user "docker-user:docker-group"
-</code></pre>
-
-<p>make sure the home directory <code>/var/atlassian/jira</code> is set up with full read, write, and execute permissions on the directory.</p>
-
-<p>If not mounting the home directory volume yourself you can change the folder permissions by</p>
-
-<div class="highlight highlight-bash"><pre>$ docker <span class="pl-c1">exec</span> [container] chown docker-user:docker-group /var/atlassian/jira</pre></div>
-
-<p>Please note that the exec will be executed as the supplied user in the <code>docker create</code> command, ie. <code>docker-user:docker-group</code>. You can circumvent this by</p>
-
-<div class="highlight highlight-bash"><pre>$ docker run -ti --rm --user root:root --volumes-from [container] java:7 chown docker-user:docker-group /var/atlassian/jira</pre></div>
-
-<h3>
-<a id="customizations" class="anchor" href="#customizations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Customizations</h3>
-
-<p>Example mounting files to change log4j logging output:</p>
-
-<pre><code>--volume "[hostpath]/log4j.properties:/opt/atlassian/jira/atlassian-jira/WEB-INF/classes/log4j.properties"
-</code></pre>
-
-<p>This should also be modifiable to suit your needs.</p>
-
-<h3>
-<a id="reverse-proxy-support" class="anchor" href="#reverse-proxy-support" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reverse Proxy Support</h3>
-
-<p>You need to change the <code>/opt/atlassian/jira/conf/server.xml</code> file inside the container to include a couple of Connector <a href="http://tomcat.apache.org/tomcat-8.0-doc/config/http.html#Proxy_Support">attributes</a>.</p>
-
-<p>Gaining access to the <code>server.xml</code> file on a running container use the following docker command edited to suit your setup</p>
-
-<div class="highlight highlight-bash"><pre>$ docker run -ti --rm --volumes-from <span class="pl-k">&lt;</span>container<span class="pl-k">&gt;</span> ubuntu:latest vi /opt/atlassian/jira/conf/server.xml</pre></div>
-
-<p>Within this container the file can be accessed and edited to match your configuration (remember to restart the JIRA container after).</p>
-
-<h4>
-<a id="http" class="anchor" href="#http" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTTP</h4>
-
-<p>For a reverse proxy server listening on port 80 (HTTP) for inbound connections add and edit the following connector attributes to suit your setup.</p>
-
-<div class="highlight highlight-xml"><pre>&lt;<span class="pl-ent">connector</span> ...
-   <span class="pl-e">proxyName</span>=<span class="pl-s"><span class="pl-pds">"</span>example.com<span class="pl-pds">"</span></span>
-   <span class="pl-e">proxyPort</span>=<span class="pl-s"><span class="pl-pds">"</span>80<span class="pl-pds">"</span></span>
-   <span class="pl-e">scheme</span>=<span class="pl-s"><span class="pl-pds">"</span>http<span class="pl-pds">"</span></span>
-   ...
-&gt;&lt;/<span class="pl-ent">connector</span>&gt;</pre></div>
-
-<h4>
-<a id="https" class="anchor" href="#https" aria-hidden="true"><span class="octicon octicon-link"></span></a>HTTPS</h4>
-
-<p>For a reverse proxy server listening on port 443 (HTTPS) for inbound connections add and edit the following connector attributes to suit your setup.</p>
-
-<div class="highlight highlight-xml"><pre>&lt;<span class="pl-ent">connector</span> ...
-   <span class="pl-e">proxyName</span>=<span class="pl-s"><span class="pl-pds">"</span>example.com<span class="pl-pds">"</span></span>
-   <span class="pl-e">proxyPort</span>=<span class="pl-s"><span class="pl-pds">"</span>443<span class="pl-pds">"</span></span>
-   <span class="pl-e">scheme</span>=<span class="pl-s"><span class="pl-pds">"</span>https<span class="pl-pds">"</span></span>
-   ...
-&gt;&lt;/<span class="pl-ent">connector</span>&gt;</pre></div>
-
-<h2>
-<a id="contributions" class="anchor" href="#contributions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributions</h2>
-
-<p><a href="https://registry.hub.docker.com/u/cptactionhank/atlassian-jira"><img src="http://hubstatus.container42.com/cptactionhank/atlassian-jira" alt="Docker Build Status"></a>
-<a href="https://travis-ci.org/cptactionhank/docker-atlassian-jira"><img src="https://travis-ci.org/cptactionhank/docker-atlassian-jira.svg" alt="Build Status"></a></p>
-
-<p>This has been made with the best intentions and current knowledge so it shouldn't be expected to be flawless. However you can support this too with best practices and other additions. Travis-CI has been setup to build the Dockerfile and run acceptance tests on the application image to ensure it is tested and working.</p>
-
-<p>Out of date documentation, version, lack of tests, etc. why not help out by either creating an issue and open a discussion or sending a pull request with modifications.</p>
-
-<p>Acceptance tests are performed by Travis-CI in Ruby using the RSpec framework.</p>
-
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/cptactionhank/docker-atlassian-jira">Docker-atlassian-jira</a> is maintained by <a href="https://github.com/cptactionhank">cptactionhank</a>.</span>
-
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
+      <p>Once set up you can go on an read the updated documentation for your specific configuration.</p>
 
     </section>
 
-  
-  </body>
+    <section>
+      <h2><a class="anchor" href="#im-in-the-fast-lane-get-me-started" id="im-in-the-fast-lane-get-me-started"><span class="octicon octicon-link"></span></a>I'm in the fast lane! Get me started</h2>
+
+      <p>To quickly get started with running a JIRA instance, first run the following command:</p>
+
+      <div class="highlight highlight-bash">
+        <pre>
+  docker run --detach --publish 8080:{{ jira.port }} cptactionhank/atlassian-jira:{{jira.version}}</pre>
+      </div>
+
+      <p>Then use your browser to nagivate to <a href="http://{{ jira.host }}:{{ jira.port }}" target="_blank">http://{{ jira.host }}:{{ jira.port }}</a> and finish the configuration.</p>
+    </section>
+
+    <h2><a class="anchor" href="#the-slower-road-to-get-started" id="the-slower-road-to-get-started"><span class="octicon octicon-link"></span></a>The slower road to get started</h2>
+
+    <p>An assumption is made that the docker version is at least 1.3.0 for the additional methods <code>docker exec</code> and <code>docker create</code>.</p>
+
+    <p>This is how to create the container for running an Atlassian JIRA instance and before you run the command as is take note of the <code>[your settings]</code> which should be left out or filled to suit your needs.</p>
+
+    <div class="highlight highlight-bash">
+      <pre>
+docker create [your settings] cptactionhank/atlassian-jira:{{jira.version}}</pre>
+    </div>
+
+    <p>Below is some documentation for additional configuration of the JIRA application, keep in mind this is the only tested configuration to suit own needs.</p>
+
+    <h3><a class="anchor" href="#additional-jira-settings" id="additional-jira-settings"><span class="octicon octicon-link"></span></a>Additional JIRA settings</h3>
+
+    <p>Use the <code>CATALINA_OPTS</code> environment variable for changing advanced settings eg. changing memory consumption or extending plugin loading timeout. All possible configuration settings can be found at the Atlassian JIRA <a href="https://confluence.atlassian.com/display/JIRA/Recognized+System+Properties+for+JIRA">documentation</a>.</p>
+
+    <p>Use with Docker add <code>--env 'CATALINA_OPTS=[settings]'</code> as part of your container configuration flags.</p>
+
+    <h4><a class="anchor" href="#jvm-memory-configuration" id="jvm-memory-configuration"><span class="octicon octicon-link"></span></a>JVM memory configuration</h4>
+
+    <p>To change the default memory configuration to your machine with extended memory usage settings add the following string to your <code>CATALINA_OPTS</code> environment variable. This will setup the JVM to be running with 128MB as minimum and 1GB as maximum allocatable memory.</p>
+
+    <pre>-Xms128m -Xmx1024m</pre>
+
+    <p>More information about <a href="http://docs.oracle.com/cd/E13150_01/jrockit_jvm/jrockit/jrdocs/refman/optionX.html#wp999528"><code>-Xms</code></a> and <a href="http://docs.oracle.com/cd/E13150_01/jrockit_jvm/jrockit/jrdocs/refman/optionX.html#wp999527"><code>-Xmx</code></a> visit <a href="http://docs.oracle.com/cd/E13150_01/jrockit_jvm/jrockit/jrdocs/refman/optionX.html">here</a>.</p>
+
+
+    <h4><a class="anchor" href="#plugin-loading-timeout" id="plugin-loading-timeout"><span class="octicon octicon-link"></span></a>Atlassian JIRA settings</h4>
+
+
+    <p>To change the plugin loading timeout to <em>5 minutes</em> the following string should be added to the <code>CATALINA_OPTS</code> environment variable.</p>
+
+    <pre>
+-Datlassian.plugins.enable.wait=300</pre>
+
+    <h4><a class="anchor" href="#apache-portable-runtime-apr-based-native-library-for-tomcat" id="apache-portable-runtime-apr-based-native-library-for-tomcat"><span class="octicon octicon-link"></span></a>Apache Portable Runtime (APR) based Native library for Tomcat</h4>
+
+
+    <p>This is enabled by default.</p>
+
+
+    <h3><a class="anchor" href="#running-as-a-different-user" id="running-as-a-different-user"><span class="octicon octicon-link"></span></a>Running as a different user</h3>
+
+
+    <p>Here will be information on how to run as a different user</p>
+
+    <pre>
+--user "docker-user:docker-group"</pre>
+
+    <p>make sure the home directory <code>{{ jira.home }}</code> is set up with full read, write, and execute permissions on the directory.</p>
+
+
+    <p>If not mounting the home directory volume yourself you can change the folder permissions by</p>
+
+
+    <div class="highlight highlight-bash">
+      <pre>
+$ docker <span class="pl-c1">exec</span> [container] chown docker-user:docker-group {{ jira.home }}</pre>
+    </div>
+
+
+    <p>Please note that the exec will be executed as the supplied user in the <code>docker create</code> command, ie. <code>docker-user:docker-group</code>. You can circumvent this by</p>
+
+
+    <div class="highlight highlight-bash">
+      <pre>
+$ docker run -ti --rm --user root:root --volumes-from [container] java:7 chown docker-user:docker-group {{ jira.home }}</pre>
+    </div>
+
+
+    <h3><a class="anchor" href="#customizations" id="customizations"><span class="octicon octicon-link"></span></a>Customizations</h3>
+
+
+    <p>Example mounting files to change log4j logging output:</p>
+
+    <pre>
+--volume "[hostpath]/log4j.properties:{{ jira.install }}/atlassian-jira/WEB-INF/classes/log4j.properties"</pre>
+
+    <p>This should also be modifiable to suit your needs.</p>
+
+
+    <h3><a class="anchor" href="#reverse-proxy-support" id="reverse-proxy-support"><span class="octicon octicon-link"></span></a>Reverse Proxy Support</h3>
+
+
+    <p>You need to change the <code>{{ jira.install }}/conf/server.xml</code> file inside the container to include a couple of Connector <a href="http://tomcat.apache.org/tomcat-8.0-doc/config/http.html#Proxy_Support">attributes</a>.</p>
+
+
+    <p>Gaining access to the <code>server.xml</code> file on a running container use the following docker command edited to suit your setup</p>
+
+
+    <div class="highlight highlight-bash">
+      <pre>
+$ docker run -ti --rm --volumes-from <span class="pl-k">&lt;</span>container<span class="pl-k">&gt;</span> ubuntu:latest vi {{ jira.install }}/conf/server.xml</pre>
+    </div>
+
+
+    <p>Within this container the file can be accessed and edited to match your configuration (remember to restart the JIRA container after).</p>
+
+
+    <h4><a class="anchor" href="#http" id="http"><span class="octicon octicon-link"></span></a>HTTP</h4>
+
+
+    <p>For a reverse proxy server listening on port 80 (HTTP) for inbound connections add and edit the following connector attributes to suit your setup.</p>
+
+
+    <div class="highlight highlight-xml">
+      <pre>
+&lt;<span class="pl-ent">connector</span> ...
+  <span class="pl-e">proxyName</span>=<span class="pl-s"><span class="pl-pds">"</span>example.com<span class="pl-pds">"</span></span>
+  <span class="pl-e">proxyPort</span>=<span class="pl-s"><span class="pl-pds">"</span>80<span class="pl-pds">"</span></span>
+  <span class="pl-e">scheme</span>=<span class="pl-s"><span class="pl-pds">"</span>http<span class="pl-pds">"</span></span>
+  ...
+  &gt;&lt;/<span class="pl-ent">connector</span>&gt;</pre>
+    </div>
+
+
+    <h4><a class="anchor" href="#https" id="https"><span class="octicon octicon-link"></span></a>HTTPS</h4>
+
+
+    <p>For a reverse proxy server listening on port 443 (HTTPS) for inbound connections add and edit the following connector attributes to suit your setup.</p>
+
+
+    <div class="highlight highlight-xml">
+      <pre>
+&lt;<span class="pl-ent">connector</span> ...
+  <span class="pl-e">proxyName</span>=<span class="pl-s"><span class="pl-pds">"</span>example.com<span class="pl-pds">"</span></span>
+  <span class="pl-e">proxyPort</span>=<span class="pl-s"><span class="pl-pds">"</span>443<span class="pl-pds">"</span></span>
+  <span class="pl-e">scheme</span>=<span class="pl-s"><span class="pl-pds">"</span>https<span class="pl-pds">"</span></span>
+  ...
+  &gt;&lt;/<span class="pl-ent">connector</span>&gt;</pre>
+    </div>
+
+    <section>
+      <h2><a class="anchor" href="#contributions" id="contributions"><span class="octicon octicon-link"></span></a>Service Configurations</h2>
+
+      <p>asdasdasdasdasdasd</p>
+
+      <h3>Systemd</h3>
+      <pre><span class="pl-c1">[Unit]</span>
+Description=Atlassian JIRA in a Docker container
+Documentation=https://confluence.atlassian.com/display/JIRA064/JIRA+Installation+and+Upgrade+Guide
+Requires=docker.service
+After=docker.service
+
+<span class="pl-c1">[Service]</span>
+Restart=always
+TimeoutStartSec=0
+
+<span class="pl-c"># Pull down the latest image version, remove old container if it exists, and</span>
+<span class="pl-c"># create an Atlassian JIRA image instance.</span>
+ExecStartPre=/usr/bin/docker pull cptactionhank/atlassian-jira:{{ jira.version }}
+ExecStartPre=-/usr/bin/docker rm --volumes --force "atlassian-jira.service"
+ExecStartPre=/usr/bin/docker create --restart=no --name "atlassian-jira.service" \
+      --volume hostpath:/var/atlassian/jira \
+      --env "CATALINA_OPTS=-Xms64m -Xmx768m -Datlassian.plugins.enable.wait=300" \
+      cptactionhank/atlassian-jira:{{ jira.version }}
+
+ExecStart=/usr/bin/docker start --attach "atlassian-jira.service"
+ExecStop=/usr/bin/docker stop --time 10 "atlassian-jira.service"
+
+<span class="pl-c1">[Install]</span>
+WantedBy=multi-user.target</pre>
+
+      <h3>Upstart</h3>
+      <pre><span class="pl-k">description</span> "Atlassian JIRA in a Docker container"
+
+<span class="pl-k">start on</span> filesystem and started docker and started docker-skydns and started docker-skydock and started docker-postgres
+<span class="pl-k">stop on</span> stopping docker
+
+<span class="pl-c"># if the service unexpectedly stops then restart it</span>
+<span class="pl-k">respawn</span>
+
+<span class="pl-k">kill signal</span> SIGTERM
+
+<span class="pl-c"># allow exit code to be 0, 128+SIGHUP, 128+SIGINT, and 128+SIGTERM</span>
+<span class="pl-k">normal exit</span> 0 129 130 143
+
+<span class="pl-k">pre-start script</span>
+  <span class="pl-c"># this fixes a weird stopping service bug</span>
+  sleep 1
+  <span class="pl-c"># if the container does not exist; create one</span>
+  if !(docker ps -a | grep -q "atlassian-jira.service"); then
+    logger "Container cptactionhank/atlassian-jira was not found."
+    <span class="pl-c"># get the latest build of the image (this is necessary for non-official images)</span>
+    logger "Pulling latest build of the image cptactionhank/atlassian-jira:{{ jira.version }}"
+    /usr/bin/docker pull cptactionhank/atlassian-jira:{{ jira.version }}
+    <span class="pl-c"># create docker container with the following parameters</span>
+    logger "Creating container for image $IMAGE:{{ jira.version }}"
+    /usr/bin/docker run --restart=no --detach --name "atlassian-jira.service" \
+      --user daemon:daemon \
+      --volume /srv/atlassian/jira:/var/local/atlassian/jira \
+      --volume /srv/atlassian/jira.server.xml:/usr/local/atlassian/jira/conf/server.xml \
+      --env "CATALINA_OPTS=-Xms64m -Xmx768m -Datlassian.plugins.enable.wait=300" \
+      cptactionhank/atlassian-jira:{{ jira.version }}
+    logger "Success"
+  fi
+<span class="pl-k">end script</span>
+
+<span class="pl-k">post-start script</span>
+  /usr/bin/docker restart haproxy.service
+<span class="pl-k">end script</span>
+
+<span class="pl-k">script</span>
+  <span class="pl-c"># start the container</span>
+  logger "Starting and attaching to container "atlassian-jira.service""
+  /usr/bin/docker start -a "atlassian-jira.service"
+<span class="pl-k">end script</span></pre>
+
+    </section>
+
+    <h2><a class="anchor" href="#contributions" id="contributions"><span class="octicon octicon-link"></span></a>Contributions</h2>
+
+    <p>This has been made with the best intentions and current knowledge and thus it shouldn't be expected to be flawless. However you can support this repository with best-practices and other additions. Cirlce-CI has been setup to build the Dockerfile and run acceptance tests on the Atlassian JIRA image to ensure it is working.</p>
+
+    <p>Circle-CI has been setup to automatically deploy new version branches when successfully building a new version of Atlassian JIRA in the <code>master</code> branch and serves as the base. Futhermore an <code>eap</code> branch has been setup to automatically build and commit updates to ensure the <code>eap</code> branch contains the latest version of Atlassian JIRA Early Access Preview.</p>
+
+    <p>Out of date documentation, lack of tests, etc. you can help out by either creating an issue and open a discussion or sending a pull request with modifications to the appropiate branch.</p>
+
+    <p>Acceptance tests are performed by Circle-CI with Ruby using the RSpec, Capybara, and phantomjs frameworks.</p>
+
+    <footer class="site-footer">
+      <span class="site-footer-owner"><a href="https://github.com/cptactionhank/docker-atlassian-jira">docker-atlassian-jira</a> is maintained by <a href="https://github.com/cptactionhank">Martin Jensen</a>.</span> <span class="site-footer-credits">This page was originally generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+    </footer>
+  </article>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+  <script src="javascripts/docker-configurator.js"></script>
+</body>
 </html>
