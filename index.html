@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>docker-atlassian-jira by cptactionhank</title>
   <meta content="width=device-width, initial-scale=1" name="viewport">
-  <link href="stylesheets/normalize.css" media="screen" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
   <link href="stylesheets/stylesheet.css" media="screen" rel="stylesheet" type="text/css">
@@ -16,11 +15,11 @@
   <section class="page-header">
     <h1 class="project-name">docker-atlassian-jira</h1>
     <h2 class="project-tagline">Docker container running Atlassian JIRA</h2>
-    <a class="btn" href="https://cptactionhank.github.io/docker-atlassian-jira/">View on Configurator</a> <a class="btn" href="https://github.com/cptactionhank/docker-atlassian-jira">View on GitHub</a> <a class="btn" href="https://hub.docker.com/r/cptactionhank/atlassian-jira/">View on DockerHub</a>
+    <a class="btn" href="https://cptactionhank.github.io/docker-atlassian-jira/">View on Configurator</a> <a class="btn" href="https://github.com/cptactionhank/docker-atlassian-jira">View on GitHub</a> <a class="btn" href="https://hub.docker.com/r/cptactionhank/atlassian-jira/">View on Docker Hub</a>
   </section>
 
 
-  <article class="main-content1 container">
+  <article class="main-content container">
     <div class="alert alert-warning" role="alert"><strong>Heads up!</strong> While the configurator for now is very much a work in progress you should be able to infer what's missing to get you up and running</div>
 
     <h1><a class="anchor" href="#atlassian-jira-in-a-docker-container" id="atlassian-jira-in-a-docker-container"><span class="octicon octicon-link"></span></a> Atlassian JIRA in a Docker container</h1>
@@ -42,12 +41,14 @@
     <section ng-controller="ConfigurationController">
       <h2><a class="anchor" href="#important-changes" id="important-changes"><span class="octicon octicon-link"></span></a>Docker image selector</h2>
 
+      <p>Numinous film receding drone chrome courier monofilament hacker pre-spook beef noodles disposable. Drugs network nano-apophenia vehicle concrete warehouse. Motion soul-delay camera construct nano-knife render-farm media sunglasses youtube dolphin network 8-bit car. Long-chain hydrocarbons dead network kanji paranoid neural tank-traps. Urban corrupted nodality apophenia futurity gang vehicle neon katana dolphin. J-pop youtube nodal point katana crypto-boy bridge sunglasses Kowloon savant physical. Render-farm city denim faded carbon Shibuya cyber-marketing woman Legba industrial grade modem hotdog construct Tokyo pen.</p>
+
       <div class="form-horizontal">
       <div class="form-group">
-        <label for="jira-version" class="col-sm-2 control-label">JIRA version:</label>
-        <div class="col-sm-10">
+        <label for="jira-version" class="col-sm-3 control-label">JIRA version:</label>
+        <div class="col-sm-9">
           <select name="jira-version" class="form-control"ng-model="jira.version" ng-init="jira.version = 'latest'" ng-change="update(jira.version)">
-            <option ng-repeat="tag in tags | orderBy: 'name'">{{tag.name}}</option>
+            <option ng-repeat="tag in tags">{{tag.name}}</option>
           </select>
           <span class="help-block">
             <i class="fa fa-circle-o-notch fa-spin" ng-show="status == 'loading'"></i>
@@ -58,26 +59,26 @@
       </div>
 
       <div class="form-group">
-        <label for="jira-home" class="col-sm-2 control-label">JIRA Home location:</label>
-        <div class="col-sm-10"><p class="form-control-static">{{ jira.home }}</p></div>
+        <label for="jira-home" class="col-sm-3 control-label">JIRA Home location:</label>
+        <div class="col-sm-9"><p class="form-control-static">{{ jira.home }}</p></div>
       </div>
 
       <div class="form-group">
-        <label for="jira-install" class="col-sm-2 control-label">JIRA Installation location:</label>
-        <div class="col-sm-10"><p class="form-control-static">{{ jira.install }}</p></div>
+        <label for="jira-install" class="col-sm-3 control-label">JIRA Installation location:</label>
+        <div class="col-sm-9"><p class="form-control-static">{{ jira.install }}</p></div>
       </div>
 
       <div class="form-group">
-        <label for="jira-install" class="col-sm-2 control-label">Docker host:</label>
-        <div class="col-sm-10">
+        <label for="jira-install" class="col-sm-3 control-label">Docker host:</label>
+        <div class="col-sm-9">
           <input type="text" class="form-control" ng-model="jira.host" ng-init="jira.host = 'localhost'" />
           <span class="help-block">Write your IP or Hostname of the Docker host machine</span>
         </div>
       </div>
 
       <div class="form-group">
-        <label for="jira-install" class="col-sm-2 control-label">JIRA port:</label>
-        <div class="col-sm-10">
+        <label for="jira-install" class="col-sm-3 control-label">JIRA port:</label>
+        <div class="col-sm-9">
           <input type="number" class="form-control" ng-model="jira.port" ng-init="jira.port = 8080" />
           <span class="help-block">Write the port you wish to have Atlassian JIRA be available on</span>
         </div>
@@ -128,34 +129,12 @@ docker create [your settings] cptactionhank/atlassian-jira:{{jira.version}}</pre
 
     <p>More information about <a href="http://docs.oracle.com/cd/E13150_01/jrockit_jvm/jrockit/jrdocs/refman/optionX.html#wp999528"><code>-Xms</code></a> and <a href="http://docs.oracle.com/cd/E13150_01/jrockit_jvm/jrockit/jrdocs/refman/optionX.html#wp999527"><code>-Xmx</code></a> visit <a href="http://docs.oracle.com/cd/E13150_01/jrockit_jvm/jrockit/jrdocs/refman/optionX.html">here</a>.</p>
 
-
     <h4><a class="anchor" href="#plugin-loading-timeout" id="plugin-loading-timeout"><span class="octicon octicon-link"></span></a>Atlassian JIRA settings</h4>
-
 
     <p>To change the plugin loading timeout to <em>5 minutes</em> the following string should be added to the <code>CATALINA_OPTS</code> environment variable.</p>
 
     <pre>
 -Datlassian.plugins.enable.wait=300</pre>
-
-    <h4><a class="anchor" href="#apache-portable-runtime-apr-based-native-library-for-tomcat" id="apache-portable-runtime-apr-based-native-library-for-tomcat"><span class="octicon octicon-link"></span></a>Apache Portable Runtime (APR) based Native library for Tomcat</h4>
-
-
-    <p>This is enabled by default.</p>
-
-
-    <h3><a class="anchor" href="#running-as-a-different-user" id="running-as-a-different-user"><span class="octicon octicon-link"></span></a>Running as a different user</h3>
-
-
-    <p>Here will be information on how to run as a different user</p>
-
-    <pre>
---user "docker-user:docker-group"</pre>
-
-    <p>make sure the home directory <code>{{ jira.home }}</code> is set up with full read, write, and execute permissions on the directory.</p>
-
-
-    <p>If not mounting the home directory volume yourself you can change the folder permissions by</p>
-
 
     <div class="highlight highlight-bash">
       <pre>
@@ -235,11 +214,18 @@ $ docker run -ti --rm --volumes-from <span class="pl-k">&lt;</span>container<spa
     </div>
 
     <section>
-      <h2><a class="anchor" href="#contributions" id="contributions"><span class="octicon octicon-link"></span></a>Service Configurations</h2>
+      <h2><a class="anchor" href="#contributions" id="contributions"><span class="octicon octicon-link"></span></a>Run Configurations</h2>
 
-      <p>asdasdasdasdasdasd</p>
+      <p>Paranoid sentient hotdog corporation motion Shibuya euro-pop numinous meta-drone smart. Gang ablative Tokyo market render-farm long-chain hydrocarbons man. Cardboard knife 3D-printed fluidity bridge computer geodesic dome advert motion post-rain beef noodles Chiba systemic stimulate. Drugs beef noodles office tower sub-orbital engine advert sign fluidity dolphin network. Rebar pen fluidity drone shoes Kowloon claymore mine beef noodles. Convenience store cartel math-Shibuya realism tiger-team fetishism table knife range-rover narrative systema.</p>
+
+      <h3>Manual</h3>
+
+      <p>Table nodality film woman crypto-render-farm 8-bit office. Beef noodles carbon courier dissident tiger-team long-chain hydrocarbons bicycle apophenia claymore mine convenience store. Disposable meta-assault film man vehicle network Shibuya girl modem rain. Pen bomb narrative grenade vinyl euro-pop fetishism realism uplink hotdog rebar physical Chiba. Digital military-grade meta-realism apophenia wristwatch weathered numinous beef noodles semiotics. Order-flow range-rover saturation point advert wristwatch rifle into.-ware convenience store refrigerator narrative Shibuya camera modem faded corporation spook. Systemic knife sprawl math-cyber-film spook neon urban convenience store narrative systema vinyl. </p>
 
       <h3>Systemd</h3>
+
+      <p>Faded footage pen into carbon assassin meta-film tube corrupted. Saturation point youtube savant jeans DIY convenience store hacker soul-delay artisanal market sentient warehouse refrigerator. Kowloon singularity uplink decay tower shoes futurity man refrigerator nodal point silent marketing construct skyscraper. Warehouse savant tanto media modem Tokyo lights. DIY spook human rebar San Francisco film Tokyo concrete drone face forwards tube rifle construct denim dolphin. Motion spook drugs man nodal point order-flow kanji silent tanto katana post-A.I. corporation denim. Sunglasses face forwards uplink physical Tokyo j-pop dolphin. Neural sensory pre-urban military-grade grenade sub-orbital tanto saturation point BASE jump. Geodesic tiger-team youtube sign paranoid shrine faded footage Legba nodality apophenia-ware Tokyo. </p>
+
       <pre><span class="pl-c1">[Unit]</span>
 Description=Atlassian JIRA in a Docker container
 Documentation=https://confluence.atlassian.com/display/JIRA064/JIRA+Installation+and+Upgrade+Guide
@@ -266,6 +252,9 @@ ExecStop=/usr/bin/docker stop --time 10 "atlassian-jira.service"
 WantedBy=multi-user.target</pre>
 
       <h3>Upstart</h3>
+
+      <p>Into DIY Kowloon smart-car realism pre-gang Chiba. Warehouse pistol into faded franchise bridge knife marketing footage rebar DIY narrative Kowloon construct. Courier hotdog carbon nodal point-ware dissident Legba physical table. Hacker post-drone San Francisco motion cartel tank-traps face forwards assassin. Rain fetishism receding nodal point dead bridge Chiba geodesic decay drugs spook Tokyo sign math. Kowloon claymore mine papier-mache cyber-grenade 3D-printed artisanal Tokyo pistol tank-traps sign narrative augmented reality. </p>
+
       <pre><span class="pl-k">description</span> "Atlassian JIRA in a Docker container"
 
 <span class="pl-k">start on</span> filesystem and started docker and started docker-skydns and started docker-skydock and started docker-postgres
@@ -316,7 +305,7 @@ WantedBy=multi-user.target</pre>
 
     <p>This has been made with the best intentions and current knowledge and thus it shouldn't be expected to be flawless. However you can support this repository with best-practices and other additions. Cirlce-CI has been setup to build the Dockerfile and run acceptance tests on the Atlassian JIRA image to ensure it is working.</p>
 
-    <p>Circle-CI has been setup to automatically deploy new version branches when successfully building a new version of Atlassian JIRA in the <code>master</code> branch and serves as the base. Futhermore an <code>eap</code> branch has been setup to automatically build and commit updates to ensure the <code>eap</code> branch contains the latest version of Atlassian JIRA Early Access Preview.</p>
+    <p>Circle-CI has been setup to automatically deploy new version branches when successfully building a new version of Atlassian JIRA in the <code>master</code> branch and serves as the base. Futhermore an <code>eap</code> branch has been setup to automatically build and commit updates to ensure it contains the latest version of Atlassian JIRA Early Access Preview.</p>
 
     <p>Out of date documentation, lack of tests, etc. you can help out by either creating an issue and open a discussion or sending a pull request with modifications to the appropiate branch.</p>
 
@@ -327,6 +316,7 @@ WantedBy=multi-user.target</pre>
     </footer>
   </article>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+  <script src="javascripts/naturalSortVersion.js"></script>
   <script src="javascripts/docker-configurator.js"></script>
 </body>
 </html>
