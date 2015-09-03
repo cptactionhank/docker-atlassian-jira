@@ -7,14 +7,13 @@ REGEX_WARN    = /WARNING|WARN/
 REGEX_ERROR   = /ERROR|ERR/
 REGEX_SEVERE  = /SEVERE|FATAL/
 REGEX_STARTUP = /Server startup in \d+ ms/
-REGEX_FILTER  = Regexp.compile (Regexp.union [
+REGEX_FILTER  = Regexp.compile Regexp.union [
   # For some reason when setting up the database the indexing path is not set
   # yielding the following errors.
   %r{\[c\.a\.jira\.upgrade\.ConsistencyCheckImpl\]\ Indexing\ is\ turned\ on,\ but\ index\ path\ \[null\]\ invalid\ \-\ disabling\ indexing},
   %r{\[c\.a\.j\.issue\.index\.DefaultIndexManager\]\ File\ path\ not\ set\ \-\ not\ indexing}
-])
+]
 
-puts "Autoloading directory: #{"#{File.dirname(__FILE__)}/support/**/*.rb"}"
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |file| require file }
 
 RSpec.configure do |config|
@@ -58,7 +57,9 @@ RSpec.configure do |config|
 
   Capybara.configure do |conf|
     conf.register_driver :poltergeist_debug do |app|
-      Capybara::Poltergeist::Driver.new app, timeout: timeout,
+      Capybara::Poltergeist::Driver.new app,
+        timeout: timeout,
+        js_errors: false,
         phantomjs_logger: Capybara::Poltergeist::Suppressor.new
     end
 
