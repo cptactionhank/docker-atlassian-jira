@@ -18,6 +18,12 @@ The Java Runtime Environment has been updated to use OpenJDK 8 and there has bee
 
 The installation directory `/opt/atlassian/jira` is not mounted as a volume as standard anymore. Should you need to persist changes in this directory run the container with the additional argument `--volume /opt/atlassian/jira`.
 
+## Patches
+
+### 20. september 2015
+
+Now bundles the MySQL Connector/J driver which is the official JDBC driver for MySQL. This means that you can now use MySQL as a database backend since it was not bundled by default with the Atlassian JIRA distribution. It looks like Oracle 11g and Microsoft SQL Server drivers are bundled as well as drivers for HyperSQL and PostgreSQL.
+
 ## I'm in the fast lane! Get me started
 
 To quickly get started with running a JIRA instance, first run the following command:
