@@ -20,6 +20,8 @@ The installation directory `/opt/atlassian/jira` is not mounted as a volume as s
 
 ## Patches
 
+Here you can read about significant changes to the repository/Docker image.
+
 ### 20. september 2015
 
 Now bundles the MySQL Connector/J driver which is the official JDBC driver for MySQL. This means that you can now use MySQL as a database backend since it was not bundled by default with the Atlassian JIRA distribution. It looks like Oracle 11g and Microsoft SQL Server drivers are bundled as well as drivers for HyperSQL and PostgreSQL.
