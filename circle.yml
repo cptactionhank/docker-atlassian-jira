@@ -11,10 +11,17 @@ dependencies:
   pre:
     - sudo apt-get --yes -qq update
     - sudo apt-get --yes -qq install jq
+    - docker pull postgres:9.3
+    - docker pull mysql:5.6
+    - docker pull java:8
+
+database:
+  override:
+    - bin/setup_databases
 
 test:
   pre:
-    - bin/prepare_test
+    - bin/prepare
 
 deployment:
   newest-version:
