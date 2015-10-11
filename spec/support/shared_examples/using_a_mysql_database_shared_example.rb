@@ -21,10 +21,4 @@ shared_examples 'using a mysql database' do
       save_and_open_screenshot
     end
   end
-
-	it { expect(current_path).to match '/secure/SetupApplicationProperties!default.jspa' }
-  it { is_expected.to have_css 'form#jira-setupwizard' }
-  it { is_expected.to have_field 'title' }
-  it { is_expected.to have_selector :radio_button, 'jira-setupwizard-mode-public' }
-  it { is_expected.to have_button 'Next' }
 end

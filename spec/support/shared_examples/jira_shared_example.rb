@@ -47,11 +47,11 @@ shared_examples 'an acceptable JIRA instance' do |database_examples|
     context 'when processing database setup' do
       include_examples database_examples
 
-      # it { expect(current_path).to match '/secure/SetupApplicationProperties!default.jspa' }
-      # it { is_expected.to have_css 'form#jira-setupwizard' }
-      # it { is_expected.to have_field 'title' }
-      # it { is_expected.to have_selector :radio_button, 'jira-setupwizard-mode-public' }
-      # it { is_expected.to have_button 'Next' }
+      it { expect(current_path).to match '/secure/SetupApplicationProperties!default.jspa' }
+      it { is_expected.to have_css 'form#jira-setupwizard' }
+      it { is_expected.to have_field 'title' }
+      it { is_expected.to have_selector :radio_button, 'jira-setupwizard-mode-public' }
+      it { is_expected.to have_button 'Next' }
     end
 
     context 'when processing application properties setup' do
@@ -59,20 +59,6 @@ shared_examples 'an acceptable JIRA instance' do |database_examples|
         within 'form#jira-setupwizard' do
           fill_in 'title', with: 'JIRA Test instance'
           choose 'jira-setupwizard-mode-public'
-          click_button 'Next'
-        end
-      end
-
-      it { expect(current_path).to match '/secure/SetupProductBundle!default.jspa' }
-      it { is_expected.to have_css 'form#jira-setup-product-bundle' }
-      it { is_expected.to have_css 'div[data-choice-value=TRACKING]' }
-      it { is_expected.to have_button 'Next' }
-    end
-
-    context 'when processing product bundle setup' do
-      before :all do
-        within 'form#jira-setup-product-bundle' do
-          find(:css, 'div[data-choice-value=TRACKING]').trigger('click')
           click_button 'Next'
         end
       end

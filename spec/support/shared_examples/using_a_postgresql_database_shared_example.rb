@@ -6,8 +6,8 @@ shared_examples 'using a postgresql database' do
     within 'form#jira-setup-database' do
     	# select using external database
     	choose 'jira-setup-database-field-database-external'
-			wait_for_page
-			# fill in database configuration
+		wait_for_page
+		# fill in database configuration
     	# select "PostgreSQL", :from => 'databaseType'
     	fill_in 'jira-setup-database-field-database-type-field', with: 'PostgreSQL'
     	fill_in 'jdbcHostname', with: $container_postgres.host
@@ -20,10 +20,4 @@ shared_examples 'using a postgresql database' do
       wait_for_page
     end
   end
-
-	it { expect(current_path).to match '/secure/SetupApplicationProperties!default.jspa' }
-  it { is_expected.to have_css 'form#jira-setupwizard' }
-  it { is_expected.to have_field 'title' }
-  it { is_expected.to have_selector :radio_button, 'jira-setupwizard-mode-public' }
-  it { is_expected.to have_button 'Next' }
 end
