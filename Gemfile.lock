@@ -101,6 +101,3 @@ DEPENDENCIES
   rspec (~> 3.2.0)
   rspec_junit_formatter (~> 0.2.3)
   serverspec (~> 2.9.1)
-
-BUNDLED WITH
-   1.10.6
