@@ -18,7 +18,6 @@ shared_examples 'using a mysql database' do
     	# continue database setup
       click_button 'Next'
       wait_for_page
-      save_and_open_screenshot
     end
   end
 end
