@@ -4,8 +4,12 @@ general:
       - gh-pages
 
 machine:
-  services:
-    - docker
+  pre:
+    - sudo curl -L -o /usr/bin/docker 'http://s3-external-1.amazonaws.com/circle-downloads/docker-1.8.3-circleci'
+    - sudo chmod 0755 /usr/bin/docker
+    - sudo service docker start
+#  services:
+#    - docker
 
 dependencies:
   pre:
