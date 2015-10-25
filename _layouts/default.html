@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en-us" ng-app="dockerConfigurator">
+
+  {% include head.html %}
+
+  <body>
+
+    {% include header.html %}
+
+    <div class="page-content">
+
+      <div class="wrapper">
+        {{ content }}
+      </div>
+
+    </div>
+
+    {% include footer.html %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <script src="{{ "/javascripts/naturalSortVersion.js" | prepend: site.baseurl }}"></script>
+    <script src="{{ "/javascripts/docker-configurator.js" | prepend: site.baseurl }}"></script>
+
+  </body>
+
+</html>
