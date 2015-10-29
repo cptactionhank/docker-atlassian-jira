@@ -23,7 +23,7 @@ describe 'Atlassian JIRA with PostgreSQL 9.3 Database' do
     end
 
     after :all do
-      $container_postgres.remove force: true, v: true unless $container_postgres.nil?
+      $container_postgres.remove force: true, v: true unless $container_postgres.nil? || ENV["CI"] == "true"
     end
   end
 end
@@ -46,7 +46,7 @@ describe 'Atlassian JIRA with MySQL 5.6 Database' do
     end
 
     after :all do
-      $container_mysql.remove force: true, v: true unless $container_mysql.nil?
+      $container_mysql.remove force: true, v: true unless $container_mysql.nil? || ENV["CI"] == "true"
     end
   end
 end
