@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+# Prepare Git committer information
+git config --global user.email "circleci@circleci"
+git config --global user.name "Circle CI Automated Builder"
+
+# Obtain the currently latest version of Atlassian JIRA version defined by the
+# Dockerfile in this repository.
+VERSION=$(sed -nr 's/ENV JIRA_VERSION[[:space:]]*(.+)/\1/p' Dockerfile)
+
+echo "Checking if there has been made any modifications"
+
+git diff --exit-code .
+
+if [[ $? == 0 ]]; then
+
+	# The specific branch already exists, consider committing a patch if there
+	# was actual changes to the repository.
+	echo "There was no changes detected. Skipping..."
+
+else
+
+	echo "Committing changes"
+
+	# add changes made to current branch
+	git add --all
+	git commit --message "Updated Atlassian JIRA Core master branch to latest version ${VERSION}"
+
+	# push changes made to current branch
+	git push origin master
+
+fi
+
+echo "Checking if branch is already available?"
+
+git fetch --all &> /dev/null
+git show-branch "origin/${VERSION}" &> /dev/null
+
+if [[ $? == 0 ]]; then
+
+	# The specific branch already exists, consider committing a patch if there
+	# was actual changes to the repository.
+	echo "Branch '${VERSION}' already exist. Skipping..."
+
+else
+
+	# Create a new orphaned version branch to the repository with the current
+	# changes performed in the master repository and thereby keeps the `master`
+	# and latest version branch in sync.
+	echo "Creating new branch '${VERSION}'"
+
+	git checkout --orphan "${VERSION}"
+
+	# Perform changes specifying branch information in various files in the
+	# directory where needed. For example the readme updates the Circle-CI Build
+	# status shield to the new branch keeping the build information in sync.
+	echo "Updating files with new branch information"
+
+	sed --in-place README.md \
+	    --expression "s/master.svg/${VERSION}.svg/g"
+
+	# Perform initial commit with the current directory as is (ie. prepared for
+	# the new version branch).
+	echo "Committing changes"
+
+	git add --all
+	git commit --message "Created new Atlassian JIRA branch for version ${VERSION}"
+
+	# Acutally push the new branch to the origin repository (GitHub) such that
+	# the changes are published for the Docker Hub repository and everyone else.
+	echo "Pushing new branch '${VERSION}'"
+
+	git push "origin" "${VERSION}" || exit 255
+
+	# Notify the new branch has been deployed.
+	echo "Deployed new version to new branch '${VERSION}'"
+
+fi
