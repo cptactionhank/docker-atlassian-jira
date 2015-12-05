@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+echo "Backporting changes to all $1.* branches"
+
+for branch in $(git branch | sed -n "/$1..*/p"); do
+  git checkout "$branch"
+  git rebase "$1"
+done
