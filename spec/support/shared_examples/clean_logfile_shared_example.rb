@@ -1,0 +1,7 @@
+shared_examples 'a clean logfile' do |log_file|
+  context "validating logfile \"#{log_file}\"" do
+    it { is_expected.to_not have_file_contain log_file, REGEX_SEVERE, filter: REGEX_FILTER }
+    it { is_expected.to_not have_file_contain log_file, REGEX_ERROR, filter: REGEX_FILTER }
+    it { is_expected.to_not have_file_contain log_file, REGEX_WARN, filter: REGEX_FILTER }
+  end
+end
