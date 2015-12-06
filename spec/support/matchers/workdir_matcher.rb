@@ -1,4 +1,3 @@
-require 'docker'
 require 'rspec'
 require 'rspec/expectations'
 

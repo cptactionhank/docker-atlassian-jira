@@ -1,5 +1,3 @@
-require 'docker'
-
 shared_examples 'a buildable docker image' do |path, options = {}|
   subject { @container }
 

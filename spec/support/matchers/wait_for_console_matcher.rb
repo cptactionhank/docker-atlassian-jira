@@ -1,5 +1,3 @@
-require 'docker'
-require 'timeout'
 require 'rspec'
 require 'rspec/expectations'
 
