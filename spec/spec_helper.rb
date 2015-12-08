@@ -70,7 +70,7 @@ RSpec.configure do |config|
     # not startup a Rails server.
     conf.run_server = false
     conf.default_driver = :poltergeist_debug
-    conf.default_wait_time = timeout
+    conf.default_max_wait_time = timeout
 
     # conf.ignore_hidden_elements = false
     # conf.visible_text_only = false
