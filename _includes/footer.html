@@ -1,22 +1,14 @@
-<footer class="site-footer">
+<footer class="s2-docs-footer" role="contentinfo">
+  <section class="container">
 
-  <div class="wrapper">
+    {% include social-buttons.html %}
 
-    <div class="footer-col-wrapper">
-      <div class="footer-col  footer-col-1">
-        <a href="https://github.com/cptactionhank/docker-atlassian-jira/" class="btn btn-default">
-          <i class="fa fa-fw fa-github"></i> GitHub
-        </a>
-        <a href="https://hub.docker.com/r/cptactionhank/atlassian-jira/" class="btn btn-default">
-          <i class="fa fa-fw fa-docker"></i> Docker
-        </a>
-      </div>
-
-      <div class="footer-col  footer-col-3">
-        <!-- <p class="text">{{ site.description }}</p> -->
-      </div>
-    </div>
-
-  </div>
-
+    <p>Docker image is licensed under <a href="http://choosealicense.com/licenses/mit/">MIT</a>, documentation under <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.</p>
+    <p>Maintained by <a href="{{site.author.url}}">{{site.author.name}}</a> with the help of <a href="https://github.com/{{site.author.github}}/{{site.repo.github}}/graphs/contributors">our contributors</a>.</p>
+    <ul class="s2-docs-footer-links">
+      <li><a href="https://github.com/{{site.author.github}}/{{site.repo.github}}">GitHub</a></li>
+      <li><a href="https://github.com/{{site.author.github}}/{{site.repo.github}}/issues">Issues</a></li>
+      <li><a href="https://hub.docker.com/r/{{site.author.dockerhub}}/{{site.repo.docker}}/tags/">Releases</a></li>
+    </ul>
+  </section>
 </footer>

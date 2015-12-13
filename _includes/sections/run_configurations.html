@@ -1,0 +1,103 @@
+<section>
+  <h1>Run Configurations</h1>
+
+  <p>Paranoid sentient hotdog corporation motion Shibuya euro-pop numinous meta-drone smart. Gang ablative Tokyo market render-farm long-chain hydrocarbons man. Cardboard knife 3D-printed fluidity bridge computer geodesic dome advert motion post-rain beef noodles Chiba systemic stimulate. Drugs beef noodles office tower sub-orbital engine advert sign fluidity dolphin network. Rebar pen fluidity drone shoes Kowloon claymore mine beef noodles. Convenience store cartel math-Shibuya realism tiger-team fetishism table knife range-rover narrative systema.</p>
+
+  <div class="form-horizontal">
+    <div class="form-group">
+      <label for="container-name" class="col-sm-3 control-label">Container name:</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" ng-model="container.name" ng-init="container.name = 'jira-container'" />
+        <span class="help-block">Write the name of the JIRA container</span>
+      </div>
+    </div>
+  </div>
+
+  <h2>Manual</h2>
+
+  <p>Table nodality film woman crypto-render-farm 8-bit office. Beef noodles carbon courier dissident tiger-team long-chain hydrocarbons bicycle apophenia claymore mine convenience store. Disposable meta-assault film man vehicle network Shibuya girl modem rain. Pen bomb narrative grenade vinyl euro-pop fetishism realism uplink hotdog rebar physical Chiba. Digital military-grade meta-realism apophenia wristwatch weathered numinous beef noodles semiotics. Order-flow range-rover saturation point advert wristwatch rifle into.-ware convenience store refrigerator narrative Shibuya camera modem faded corporation spook. Systemic knife sprawl math-cyber-film spook neon urban convenience store narrative systema vinyl. </p>
+
+  <pre><code code class="bash">docker pull cptactionhank/atlassian-jira:<span class="dynamic" ng-bind="jira.version.name" title="The JIRA image version"></span>
+docker create --restart=no --name "<span class="dynamic" ng-bind="container.name" title="The JIRA container name"></span>" \
+  --publish 8080:<span class="dynamic" ng-bind="jira.port" title="The exposed JIRA port"></span> \
+  --volume hostpath:/var/atlassian/jira \
+  --env "CATALINA_OPTS=-Xms64m -Xmx768m -Datlassian.plugins.enable.wait=300" \
+  cptactionhank/atlassian-jira:<span class="dynamic" ng-bind="jira.version.name" title="The JIRA image version"></span>
+
+docker start --attach "<span class="dynamic" ng-bind="container.name" title="The JIRA container name"></span>"
+</code></pre>
+
+  <h2>Systemd</h2>
+
+  <p>Below you can find an example file of how a systemd service unit could be defined for your Atlassian JIRA instance. For more information of service files click <a href="http://www.freedesktop.org/software/systemd/man/systemd.service.html">here</a>.</p>
+
+  <pre><code code class="ini">[Unit]
+Description=Atlassian JIRA in a Docker container
+Documentation=https://jira.atlassian.com/display/JIRA064/JIRA+Installation+and+Upgrade+Guide
+Requires=docker.service
+After=docker.service
+
+[Service]
+Restart=always
+TimeoutStartSec=0
+
+# Pull down the latest image version, remove old container if it exists, and
+# create an Atlassian JIRA image instance.
+ExecStartPre=/usr/bin/docker pull cptactionhank/atlassian-jira:<span class="dynamic" ng-bind="jira.version.name" title="The JIRA image version"></span>
+ExecStartPre=-/usr/bin/docker rm --volumes --force "<span class="dynamic" ng-bind="container.name" title="The JIRA container name"></span>"
+ExecStartPre=/usr/bin/docker create --restart=no --name "<span class="dynamic" ng-bind="container.name" title="The JIRA container name"></span>" \
+  --publish 8080:<span class="dynamic" ng-bind="jira.port" title="The exposed JIRA port"></span> \
+  --volume hostpath:/var/atlassian/jira \
+  --env "CATALINA_OPTS=-Xms64m -Xmx768m -Datlassian.plugins.enable.wait=300" \
+  cptactionhank/atlassian-jira:<span class="dynamic" ng-bind="jira.version.name" title="The JIRA image version"></span>
+
+ExecStart=/usr/bin/docker start --attach "<span class="dynamic" ng-bind="container.name" title="The JIRA container name"></span>"
+ExecStop=/usr/bin/docker stop --time 10 "<span class="dynamic" ng-bind="container.name" title="The JIRA container name"></span>"
+
+[Install]
+WantedBy=multi-user.target</code></pre>
+
+  <h2>Upstart</h2>
+
+  <p>Below you can find an example file of how an Upstart system job could be defined for your Atlassian JIRA instance. For more information of system job configuration files click <a href="http://upstart.ubuntu.com/cookbook/#system-job">here</a>.</p>
+
+  <pre><code class="sh">description "Atlassian JIRA in a Docker container"
+
+start on filesystem and started docker and started docker-skydns and started docker-skydock and started docker-postgres
+stop on stopping docker
+
+# if the service unexpectedly stops then restart it
+respawn
+
+kill signal SIGTERM
+
+# allow exit code to be 0, 128+SIGHUP, 128+SIGINT, and 128+SIGTERM
+normal exit 0 129 130 143
+
+pre-start script
+  # this fixes a weird stopping service bug
+  sleep 1
+  # if the container does not exist; create one
+  if !(docker ps -a | grep -q "<span class="dynamic" ng-bind="container.name" title="The JIRA container name"></span>"); then
+    # get the latest build of the image (this is necessary for non-official images)
+    /usr/bin/docker pull cptactionhank/atlassian-jira:<span class="dynamic" ng-bind="jira.version.name" title="The JIRA image version"></span>
+    # create docker container with the following parameters
+    /usr/bin/docker run --restart=no --detach --name "<span class="dynamic" ng-bind="container.name" title="The JIRA container name"></span>" \
+      --publish 8080:<span class="dynamic" ng-bind="jira.port" title="The exposed JIRA port"></span> \
+      --volume /srv/atlassian/jira:/var/local/atlassian/jira \
+      --volume /srv/atlassian/jira.server.xml:/usr/local/atlassian/jira/conf/server.xml \
+      --env "CATALINA_OPTS=-Xms64m -Xmx768m -Datlassian.plugins.enable.wait=300" \
+      cptactionhank/atlassian-jira:<span class="dynamic" ng-bind="jira.version.name" title="The JIRA image version"></span>
+  fi
+end script
+
+post-start script
+  /usr/bin/docker restart haproxy.service
+end script
+
+script
+  # start the container
+  /usr/bin/docker start -a "<span class="dynamic" ng-bind="container.name" title="The JIRA container name"></span>"
+end script</code></pre>
+
+</section>

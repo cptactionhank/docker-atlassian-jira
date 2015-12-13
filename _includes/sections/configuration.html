@@ -1,5 +1,5 @@
 <section ng-controller="ConfigurationController">
-  <h2><a class="anchor" href="#important-changes" id="important-changes"><span class="octicon octicon-link"></span></a>Docker image selector</h2>
+  <h1>Basic configuration</h1>
 
   <p>Fill in the basic configuration of your Atlassian JIRA instance, the values will be dynamicly updated throughout the page.</p>
 
@@ -7,7 +7,7 @@
     <div class="form-group">
       <label for="jira-version" class="col-sm-3 control-label">JIRA version:</label>
       <div class="col-sm-9">
-        <select name="jira-version" class="form-control" ng-init="jira.version = 'latest'" ng-model="jira.version" ng-change="update(jira.version)" ng-options="tag.name for tag in tags">
+        <select name="jira-version" class="form-control" ng-model="jira.version" ng-change="update(jira.version)" ng-options="tag.name for tag in tags">
         </select>
         <span class="help-block">
           <i class="fa fa-circle-o-notch fa-spin" ng-show="status == 'loading'"></i>

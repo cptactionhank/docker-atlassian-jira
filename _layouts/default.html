@@ -1,29 +1,65 @@
-<!DOCTYPE html>
-<html lang="en-us" ng-app="dockerConfigurator">
-
-  {% include head.html %}
-
+<!doctype html>
+<html lang="en">
+  <head>
+    {% include head.html %}
+  </head>
   <body>
+    {% include navigation.html %}
 
-    {% include header.html %}
-
-    <div class="page-content">
-
-      <div class="wrapper">
-        {{ content }}
-      </div>
-
-    </div>
+    {{ content }}
 
     {% include footer.html %}
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script>
+      (function ($) {
+        'use strict';
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
-    <script src="{{ "/javascripts/naturalSortVersion.js" | prepend: site.baseurl }}"></script>
-    <script src="{{ "/javascripts/docker-configurator.js" | prepend: site.baseurl }}"></script>
+        $(function () {
+          var $window = $(window);
+          var $body = $(document.body);
+          var $sidebar = $('.s2-docs-sidebar');
 
+          $body.scrollspy({
+            target: '.s2-docs-sidebar',
+            offset: 40
+          });
+
+          $window.on('load', function () {
+            $body.scrollspy('refresh');
+          });
+
+          $sidebar.affix({
+            offset: {
+              top: function () {
+                var offsetTop = $sidebar.offset().top;
+                var navOuterHeight = $('.s2-docs-nav').height();
+
+                return (this.top = offsetTop - navOuterHeight);
+              },
+              bottom: function () {
+                return (this.bottom = $('.s2-docs-footer').outerHeight(true));
+              }
+            }
+          });
+        });
+      })(jQuery);
+
+      (function () {
+        'use strict';
+
+        anchors.options.placement = 'left';
+        anchors.add('.s2-docs-container h1, .s2-docs-container h2, .s2-docs-container h3, .s2-docs-container h4, .s2-docs-container h5');
+      })();
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.0.0/highlight.min.js"></script>
+
+    {% include ga.html %}
+
+    <script src="vendor/js/natural-sort.js"></script>
+    <script src="vendor/js/docker-configurator.js"></script>
   </body>
-
 </html>

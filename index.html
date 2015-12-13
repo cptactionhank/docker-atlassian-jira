@@ -1,38 +1,36 @@
 ---
 layout: default
+title: JIRA ♥ Docker
+excerpt: Atlassian JIRA wrapped in a Docker image.
+slug: documentation
 ---
 
-<article>
-  <section class="alert alert-warning" role="alert">
-    <strong>Heads up!</strong> While the configurator for now is very much a work in progress you but this content already should help you get running in some way. For the best results it is expected that you have knowledge both Docker and installing and configuring Atlassian JIRA.
-  </section>
-
-  <section>
-    <p><a href="https://circleci.com/gh/cptactionhank/docker-atlassian-jira"><img alt="Build Status" src="https://img.shields.io/circleci/project/cptactionhank/docker-atlassian-jira/master.svg"></a> <a href="https://github.com/cptactionhank/docker-atlassian-jira"><img alt="Open Issues" src="https://img.shields.io/github/issues/cptactionhank/docker-atlassian-jira.svg"></a> <a href="https://github.com/cptactionhank/docker-atlassian-jira"><img alt="Stars on GitHub" src="https://img.shields.io/github/stars/cptactionhank/docker-atlassian-jira.svg"></a> <a href="https://github.com/cptactionhank/docker-atlassian-jira"><img alt="Forks on GitHub" src="https://img.shields.io/github/forks/cptactionhank/docker-atlassian-jira.svg"></a> <a href="https://registry.hub.docker.com/u/cptactionhank/atlassian-jira"><img alt="Stars on Docker Hub" src="https://img.shields.io/docker/stars/cptactionhank/atlassian-jira.svg"></a> <a href="https://registry.hub.docker.com/u/cptactionhank/atlassian-jira"><img alt="Pulls on Docker Hub" src="https://img.shields.io/docker/pulls/cptactionhank/atlassian-jira.svg"></a></p>
-  </section>
-
-  {% include_relative sections/configuration.html %}
-
-  <section>
-    <h1><a class="anchor" href="#im-in-the-fast-lane-get-me-started" id="im-in-the-fast-lane-get-me-started"><span class="octicon octicon-link"></span></a>I'm in the fast lane! Get me started</h1>
-
-    <p>To quickly get started with running a JIRA instance, first run the following command:</p>
-
-    <div class="highlight highlight-bash">
-      <pre>docker run --detach --publish 8080:<span class="dynamic" ng-bind="jira.port"></span> cptactionhank/atlassian-jira:<span class="dynamic" ng-bind="jira.version.name"></span></pre>
-    </div>
-
-    <p>Then use your browser to nagivate to <code>http://<span class="dynamic" ng-bind="jira.host"></span>:<span class="dynamic" ng-bind="jira.port"></span></code> and finish the configuration.</p>
-  </section>
-
-  <h1><a class="anchor" href="#the-slower-road-to-get-started" id="the-slower-road-to-get-started"><span class="octicon octicon-link"></span></a>The slower road to get started</h1>
-
-  <p>This is how to create the container for running an Atlassian JIRA instance and before you run the command as is take note of the <code>[your settings]</code> which should be left out or filled to suit your needs.</p>
-
-  <div class="highlight highlight-bash">
-    <pre>docker create [your settings] cptactionhank/atlassian-jira:<span class="dynamic" ng-bind="jira.version.name"></pre>
+<section class="jumbotron">
+  <div class="container">
+    <h1>
+      {{ page.title }}
+    </h1>
+    <p class="lead">
+      {{ page.excerpt }}
+    </p>
   </div>
+</section>
 
-  {% include_relative sections/run_configurations.html %}
+<div class="container s2-docs-container">
+  <div class="row">
+    <div class="col-md-9" role="main">
 
-</article>
+      {% include sections/introduction.html %}
+      {% include sections/configuration.html %}
+      {% include sections/fast_lane.html %}
+      {% include sections/slow_road_intro.html %}
+      {% include sections/run_configurations.html %}
+
+    </div>
+    <div class="col-md-3" role="complementary">
+
+      {% include nav/generate.html %}
+
+    </div>
+  </div>
+</div>

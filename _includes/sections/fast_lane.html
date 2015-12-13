@@ -1,0 +1,9 @@
+<section>
+	<h1>I'm in the fast lane!</h1>
+
+	<p>To quickly get started with running a JIRA instance, first run the following command:</p>
+
+	<pre><code class="bash">docker run --detach --publish 8080:<span class="dynamic" ng-bind="jira.port" title="The exposed JIRA port"></span> cptactionhank/atlassian-jira:<span class="dynamic" ng-bind="jira.version.name" title="The JIRA image version"></span></code></pre>
+
+	<p>Then use your browser to nagivate to <code>http://<span class="dynamic" ng-bind="jira.host" title="The Docker host hostname"></span>:<span class="dynamic" ng-bind="jira.port" title="The exposed JIRA port"></span></code> and finish the configuration.</p>
+</section>

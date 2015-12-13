@@ -1,0 +1,44 @@
+<header class="s2-docs-nav navbar navbar-default navbar-static-top" id="top" role="banner">
+  <div class="container">
+    <div class="navbar-header">
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".select2-navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar top-bar"></span>
+        <span class="icon-bar middle-bar"></span>
+        <span class="icon-bar bottom-bar"></span>
+      </button>
+      <a href="./" class="navbar-brand">{{ site.title }}</a>
+    </div>
+
+    <nav class="collapse navbar-collapse select2-navbar-collapse" role="navigation">
+      <ul class="nav navbar-nav">
+        <li{% if page.slug == "documentation" %} class="active"{% endif %}>
+          <a href="./">Documentation</a>
+        </li>
+        <li{% if page.slug == "about" %} class="active"{% endif %}>
+          <a href="./about.html">About</a>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="https://github.com/{{site.author.github}}/">
+            <i class="fa fa-fw fa-github"></i> GitHub
+          </a>
+        </li><li>
+          <a href="https://bitbucket.org/{{site.author.bitbucket}}/">
+            <i class="fa fa-fw fa-bitbucket"></i> Bitbucket
+          </a>
+        </li><li>
+          <a href="https://hub.docker.com/u/{{site.author.dockerhub}}">
+            <i class="fa fa-fw fa-docker"></i> Docker
+          </a>
+        </li><li>
+          <a href="https://dk.linkedin.com/in/{{site.author.linkedin}}">
+            <i class="fa fa-fw fa-linkedin"></i> LinkedIn
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
