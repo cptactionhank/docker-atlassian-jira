@@ -3,22 +3,25 @@ require 'capybara'
 require 'capybara/poltergeist'
 require 'poltergeist/suppressor'
 
-REGEX_SEVERE  = /SEVERE|FATAL/
 REGEX_WARN    = /WARNING|WARN/
 REGEX_ERROR   = /ERROR|ERR/
+REGEX_SEVERE  = /SEVERE|FATAL/
 REGEX_STARTUP = /Server startup in \d+ ms/
-REGEX_FILTER  =
-[
+REGEX_FILTER  = Regexp.compile (Regexp.union [
   # when `dbconfig.xml` does not exists when starting up instance
-  /no\ defaultDS\ datasource/
-].inject { |*args| Regexp.union(*args) }
+  /no\ defaultDS\ datasource/,
+  /Didn't\ find\ any\ configuration\ service\ for\ bundle\ com\.atlassian\.jira\.plugins\.webhooks\.jira\-webhooks\-plugin\ nor\ any\ entities\ scanning\ for\ default\ AO\ packages/,
+  /from\ the\ invoker\ 'java\.lang\.RuntimeException:\ service\ proxy\ has\ been\ destroyed'/
+])
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |file| require file }
 
 RSpec.configure do |config|
   config.include Capybara::DSL
   config.include Docker::DSL
+  config.include WaitingHelper
 
+  # set the default timeout to 10 minutes.
   timeout = 600
 
   # rspec-expectations config goes here. You can use an alternate
@@ -54,12 +57,22 @@ RSpec.configure do |config|
 
   Capybara.configure do |conf|
     conf.register_driver :poltergeist_debug do |app|
-      Capybara::Poltergeist::Driver.new app, timeout: timeout
+      Capybara::Poltergeist::Driver.new app, timeout: timeout,
+                # we should't care about javascript errors since we did not make any
+        # implementation, but only deliver the software packages as best
+        # effort and this is more an Atlassian problem.
+        js_errors: false,
+        phantomjs_logger: Capybara::Poltergeist::Suppressor.new
     end
 
+    # Since we're connecting to a running Docker container, Capybara should
+    # not startup a Rails server.
     conf.run_server = false
     conf.default_driver = :poltergeist_debug
-    conf.default_wait_time = timeout
+    conf.default_max_wait_time = timeout
+
+    # conf.ignore_hidden_elements = false
+    # conf.visible_text_only = false
   end
 
   Docker::DSL.configure do |conf|
