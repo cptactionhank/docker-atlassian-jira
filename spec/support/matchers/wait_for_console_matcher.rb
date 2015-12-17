@@ -14,16 +14,7 @@ module Docker
       end
 
       def matches?(actual)
-        thread = Thread.new do
-          timeout(@options[:timeout]) do
-            Thread.handle_interrupt(TimeoutError => :on_blocking) do
-              actual.streaming_logs stdout: true, stderr: true, tail: 'all', follow: true do |_, chunk|
-                Thread.exit if chunk =~ @expected
-              end
-            end
-          end
-        end
-        thread.join
+        actual.wait_for_output @expected
       end
 
       def description
