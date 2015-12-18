@@ -19,7 +19,7 @@ module Docker
         @actual = []
         exception_filter = @options[:filter]
         read_lines_from_files actual do |file, chunk|
-          @actual << "[#{file}] #{chunk}" if @actual << chunk if (@expected =~ chunk) && (exception_filter !~ chunk)
+          @actual << "[#{file}] #{chunk}" if @actual << chunk if (chunk =~ @expected) and (not chunk =~ exception_filter)
         end
         !@actual.empty?
       end
