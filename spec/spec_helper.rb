@@ -8,18 +8,14 @@ REGEX_ERROR   = /ERROR|ERR/
 REGEX_SEVERE  = /SEVERE|FATAL/
 REGEX_STARTUP = /Server startup in \d+ ms/
 REGEX_FILTER  = Regexp.compile (Regexp.union [
-  # For some reason when setting up the database the indexing path is not set
-  # yielding the following errors.
-  %r{\[atlassian\.jira\.upgrade\.ConsistencyCheckImpl\]\ Indexing\ is\ turned\ on,\ but\ index\ path\ \[null\]\ invalid\ \-\ disabling\ indexing},
-  %r{\[jira\.issue\.index\.DefaultIndexManager\]\ File\ path\ not\ set\ \-\ not\ indexing},
-  # This error message is excused since we're using a Continuous Integration
-  # agent.
-  %r{\[atlassian\.labs\.botkiller\.BotKiller\]\ Error\ occurred\ when\ figuring\ out\ if\ the\ session\ has\ a\ user,\ assuming\ there\ is\ no\ user\.},
-  # ignore this error?
-  %r{\[atlassian\.event\.internal\.AsynchronousAbleEventDispatcher\]\ There\ was\ an\ exception\ thrown\ trying\ to\ dispatch\ event\ \[com\.atlassian\.plugin\.event\.events\.PluginModuleUnavailableEvent@.+\]\ from\ the\ invoker\ \[SingleParameterMethodListenerInvoker\{method=public\ void\ com\.atlassian\.plugin\.manager\.DefaultPluginManager\.onPluginModuleUnavailable\(com\.atlassian\.plugin\.event\.events\.PluginModuleUnavailableEvent\),\ listener=com\.atlassian\.jira\.plugin\.JiraPluginManager@.+\}\]}
+  # when `dbconfig.xml` does not exists when starting up instance
+  /no\ defaultDS\ datasource/,
+  /Didn't\ find\ any\ configuration\ service\ for\ bundle\ com\.atlassian\.jira\.plugins\.webhooks\.jira\-webhooks\-plugin\ nor\ any\ entities\ scanning\ for\ default\ AO\ packages/,
+  /from\ the\ invoker\ 'java\.lang\.RuntimeException:\ service\ proxy\ has\ been\ destroyed'/,
+  /\[atlassian\.jira\.upgrade\.ConsistencyCheckImpl\]\ Indexing\ is\ turned\ on,\ but\ index\ path\ \[null\]\ invalid\ \-\ disabling\ indexing/,
+  /\[jira\.issue\.index\.DefaultIndexManager\]\ File\ path\ not\ set\ \-\ not\ indexing/
 ])
 
-puts "Autoloading directory: #{"#{File.dirname(__FILE__)}/support/**/*.rb"}"
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |file| require file }
 
 RSpec.configure do |config|
@@ -64,6 +60,10 @@ RSpec.configure do |config|
   Capybara.configure do |conf|
     conf.register_driver :poltergeist_debug do |app|
       Capybara::Poltergeist::Driver.new app, timeout: timeout,
+                # we should't care about javascript errors since we did not make any
+        # implementation, but only deliver the software packages as best
+        # effort and this is more an Atlassian problem.
+        js_errors: false,
         phantomjs_logger: Capybara::Poltergeist::Suppressor.new
     end
 
@@ -71,7 +71,10 @@ RSpec.configure do |config|
     # not startup a Rails server.
     conf.run_server = false
     conf.default_driver = :poltergeist_debug
-    conf.default_wait_time = timeout
+    conf.default_max_wait_time = timeout
+
+    # conf.ignore_hidden_elements = false
+    # conf.visible_text_only = false
   end
 
   Docker::DSL.configure do |conf|
