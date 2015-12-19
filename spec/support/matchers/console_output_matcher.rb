@@ -16,7 +16,7 @@ module Docker
         @actual = []
         exception_filter = @options[:filter]
         actual.streaming_logs stdout: true, stderr: true, tail: 'all' do |_, chunk|
-          @actual << chunk if (@expected =~ chunk) && (exception_filter !~ chunk)
+          @actual << chunk if @actual << chunk if @actual << chunk if (chunk =~ @expected) and (not chunk =~ exception_filter)
         end
         !@actual.empty?
       end
