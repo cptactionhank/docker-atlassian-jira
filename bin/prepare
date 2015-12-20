@@ -36,4 +36,6 @@ sed --in-place "s/${CURRENT_VERSION}/${VERSION}/g" Dockerfile
 # Edit the `README.md` by changing the announced version in the content
 sed --in-place "s/> Version ${CURRENT_VERSION}/> Version ${VERSION}/g" README.md
 
+sed --in-place "s/${CURRENT_VERSION}/${VERSION}/g" README.md
+
 echo "Ready for acceptance testing"
