@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-curl -Ls https://my.atlassian.com/download/feeds/current/jira.json \
-  | sed 's/downloads(\(.*\))/\1/g' \
-  | json .[0].version

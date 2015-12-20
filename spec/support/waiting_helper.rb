@@ -1,25 +1,25 @@
 module WaitingHelper
   def wait_for_ajax
-    Timeout.timeout(Capybara.default_wait_time) do
+    Timeout.timeout(Capybara.default_max_wait_time) do
       loop until finished_all_ajax_requests?
     end
   end
 
   def wait_for_document
-    Timeout.timeout(Capybara.default_wait_time) do
+    Timeout.timeout(Capybara.default_max_wait_time) do
       loop until document_ready?
     end
   end
 
   def wait_for_page
-    Timeout.timeout(Capybara.default_wait_time) do
+    Timeout.timeout(Capybara.default_max_wait_time) do
       loop until finished_all_ajax_requests? && document_ready?
     end
   end
 
   def wait_for_location_change
     original = current_url
-    Timeout.timeout(Capybara.default_wait_time) do
+    Timeout.timeout(Capybara.default_max_wait_time) do
       loop until location_changed? original
     end
   end

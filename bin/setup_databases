@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+echo ">> Start PostgreSQL 9.3"
+docker run -d --name postgres postgres:9.3
+
+echo ">> Waiting for PostgreSQL to start"
+docker logs -f postgres 2>&1 | tee /dev/stderr | grep --color --silent 'PostgreSQL init process complete; ready for start up.'
+
+echo ">> Creating JIRA database on PostgreSQL"
+docker run --link postgres:db postgres:9.3 psql --host db --user postgres --command "create database jiradb owner postgres encoding 'utf8';"
+
+echo ">> Start MySQL 5.6"
+docker run -d --name mysql --volume /run -e MYSQL_ROOT_PASSWORD=mysecretpassword mysql:5.6
+
+echo ">> Waiting for MySQL to start"
+docker logs -f mysql 2>&1 | tee /dev/stderr | grep --silent 'MySQL init process done. Ready for start up.' # | grep --color --silent '3306  MySQL Community Server (GPL)'
+
+echo ">> Creating JIRA database on MySQL"
+docker run --link mysql:db mysql:5.6 mysql --host db --user=root --password=mysecretpassword --execute 'CREATE DATABASE jiradb CHARACTER SET utf8 COLLATE utf8_bin;'
