@@ -1,5 +1,15 @@
 var app = angular.module('dockerConfigurator', []);
 
+app.filter('prefix', function () {
+  return function (value, prefix) {
+    if (value) {
+      return prefix + value;
+    } else {
+      return undefined;
+    }
+  };
+});
+
 app.run(function($rootScope) {
 
   // configuration constants for the various Atlassian JIRA docker images

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: JIRA ♥ Docker
+title: JIRA ❤ Docker
 excerpt: Atlassian JIRA wrapped in a Docker image.
 slug: documentation
 ---
@@ -13,6 +13,18 @@ slug: documentation
     <p class="lead">
       {{ page.excerpt }}
     </p>
+    <p>
+      <a href="https://github.com/{{site.author.github}}/{{site.repo.github}}/issues">
+        <img src="https://img.shields.io/github/issues/{{site.author.github}}/{{site.repo.github}}.svg?style=social"></a>
+      <a href="https://github.com/{{site.author.github}}/{{site.repo.github}}/stargazers">
+        <img src="https://img.shields.io/github/stars/{{site.author.github}}/{{site.repo.github}}.svg?style=social"></a>
+      <a href="https://github.com/{{site.author.github}}/{{site.repo.github}}/network">
+        <img src="https://img.shields.io/github/forks/{{site.author.github}}/{{site.repo.github}}.svg?style=social"></a>
+      <a href="https://hub.docker.com/r/{{site.author.dockerhub}}/{{site.repo.docker}}">
+        <img src="https://img.shields.io/docker/stars/{{site.author.dockerhub}}/{{site.repo.docker}}.svg?style=social"></a>
+      <a href="https://hub.docker.com/r/{{site.author.dockerhub}}/{{site.repo.docker}}">
+        <img src="https://img.shields.io/docker/pulls/{{site.author.dockerhub}}/{{site.repo.docker}}.svg?style=social"></a>
+    </p>
   </div>
 </section>
 
@@ -24,13 +36,12 @@ slug: documentation
       {% include sections/configuration.html %}
       {% include sections/fast_lane.html %}
       {% include sections/slow_road_intro.html %}
+      {% include sections/system_properties.html %}
       {% include sections/run_configurations.html %}
 
     </div>
     <div class="col-md-3" role="complementary">
-
       {% include nav/generate.html %}
-
     </div>
   </div>
 </div>
