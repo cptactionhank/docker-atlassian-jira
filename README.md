@@ -4,6 +4,11 @@
 
 [![Build Status](https://img.shields.io/circleci/project/cptactionhank/docker-atlassian-jira/7.0.5.svg)](https://circleci.com/gh/cptactionhank/docker-atlassian-jira) [![Open Issues](https://img.shields.io/github/issues/cptactionhank/docker-atlassian-jira.svg)](https://github.com/cptactionhank/docker-atlassian-jira) [![Stars on GitHub](https://img.shields.io/github/stars/cptactionhank/docker-atlassian-jira.svg)](https://github.com/cptactionhank/docker-atlassian-jira) [![Forks on GitHub](https://img.shields.io/github/forks/cptactionhank/docker-atlassian-jira.svg)](https://github.com/cptactionhank/docker-atlassian-jira) [![Stars on Docker Hub](https://img.shields.io/docker/stars/cptactionhank/atlassian-jira.svg)](https://registry.hub.docker.com/u/cptactionhank/atlassian-jira) [![Pulls on Docker Hub](https://img.shields.io/docker/pulls/cptactionhank/atlassian-jira.svg)](https://registry.hub.docker.com/u/cptactionhank/atlassian-jira)
 
+* [Atlassian JIRA Core](https://github.com/cptactionhank/docker-atlassian-jira)
+* [Atlassian JIRA Software](https://github.com/cptactionhank/docker-atlassian-jira-software)
+* [Atlassian JIRA ServiceDesk](https://github.com/cptactionhank/docker-atlassian-service-desk)
+* [Atlassian JIRA Confluence](https://github.com/cptactionhank/docker-atlassian-confluence)
+
 A containerized installation of Atlassian JIRA setup with a goal of keeping the installation as default as possible, but with a few Docker related twists.
 
 Want to help out, check out the contribution section.
