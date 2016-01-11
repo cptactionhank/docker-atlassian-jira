@@ -1,4 +1,4 @@
-# Atlassian JIRA in a Docker container
+# Atlassian JIRA Core in a Docker container
 
 > Version 7.0.5
 
@@ -9,13 +9,13 @@
 * [Atlassian JIRA ServiceDesk](https://github.com/cptactionhank/docker-atlassian-service-desk)
 * [Atlassian JIRA Confluence](https://github.com/cptactionhank/docker-atlassian-confluence)
 
-A containerized installation of Atlassian JIRA setup with a goal of keeping the installation as default as possible, but with a few Docker related twists.
+A containerized installation of Atlassian JIRA Core setup with a goal of keeping the installation as default as possible, but with a few Docker related twists.
 
 Want to help out, check out the contribution section.
 
 ## I'm in the fast lane! Get me started
 
-To quickly get started with running a JIRA instance, first run the following command:
+To quickly get started with running a JIRA Core instance, first run the following command:
 ```bash
 docker run --detach --publish 8080:8080 cptactionhank/atlassian-jira:7.0.5
 ```
@@ -28,7 +28,7 @@ For a more in-depth documentation on how to get started please visit the website
 
 ## Contributions
 
-This has been made with the best intentions and current knowledge and thus it shouldn't be expected to be flawless. However you can support this repository with best-practices and other additions. Circle-CI has been setup to build the Dockerfile and run acceptance tests on the Atlassian JIRA image to ensure it is working.
+This has been made with the best intentions and current knowledge and thus it shouldn't be expected to be flawless. However you can support this repository with best-practices and other additions. Circle-CI has been setup to build the Dockerfile and run acceptance tests on the Atlassian JIRA Core image to ensure it is working.
 
 Circle-CI has been setup to automatically deploy new version branches when successfully building a new version of Atlassian JIRA in the `master` branch and serves as the base. Furthermore an `eap` branch has been setup to automatically build and commit updates to ensure the `eap` branch contains the latest version of Atlassian JIRA Early Access Preview.
 
