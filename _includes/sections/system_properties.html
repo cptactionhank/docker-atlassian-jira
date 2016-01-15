@@ -11,14 +11,14 @@
     <div class="form-group">
       <label for="container-name" class="col-sm-3 control-label">Minimum Memory:</label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" ng-model="container.java.memory.minimum" />
+        <input type="text" class="form-control" ng-model="container.java.memory.minimum" placeholder="Not defined"/>
         <span class="help-block">JVM minimum memory eg. <code>256m</code>. <a target="_blank" href="https://confluence.atlassian.com/adminjiraserver070/increasing-jira-application-memory-749383419.html">More information</a>.</span>
       </div>
     </div>
     <div class="form-group">
       <label for="container-name" class="col-sm-3 control-label">Maximum Memory:</label>
       <div class="col-sm-9">
-        <input type="text" class="form-control" ng-model="container.java.memory.maximum" />
+        <input type="text" class="form-control" ng-model="container.java.memory.maximum" placeholder="Not defined"/>
         <span class="help-block">JVM maximum memory eg. <code>1g</code>. <a target="_blank" href="https://confluence.atlassian.com/adminjiraserver070/increasing-jira-application-memory-749383419.html">More information</a>.</span>
       </div>
     </div>
@@ -32,7 +32,7 @@
     <div class="form-group">
       <label for="container-name" class="col-sm-3 control-label">Plugin timeout:</label>
       <div class="col-sm-9">
-        <input type="number" class="form-control" ng-model="container.environment.atlassian.plugins.enable.wait" />
+        <input type="number" class="form-control" ng-model="container.environment.atlassian.plugins.enable.wait" placeholder="Not defined"/>
         <span class="help-block">Time in seconds JIRA waits for plugins to load eg. <code>300</code>. <a target="_blank" href="https://confluence.atlassian.com/display/JIRAKB/JIRA+applications+System+Plugin+Timeout+While+Waiting+for+Add-ons+to+Enable">More information</a>.</span>
       </div>
     </div>
