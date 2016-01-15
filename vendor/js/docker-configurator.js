@@ -62,7 +62,7 @@ app.controller('ConfigurationController', function($rootScope, $scope, $http) {
   // populate the controllers model with the first 1000 available tags from
   // the Docker Hub repository.
   $http
-    .get('http://crossorigin.me/https://hub.docker.com/v2/repositories/cptactionhank/atlassian-jira/tags/?page_size=1000')
+    .get('//crossorigin.me/https://hub.docker.com/v2/repositories/cptactionhank/atlassian-jira/tags/?page_size=1000')
     .success(function(data, status) {
       $scope.tags = data.results.sort(function(a, b) {
         return String.naturalCompare(a.name, b.name);
