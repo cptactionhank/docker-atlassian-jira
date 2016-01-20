@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+# Usage: bin/prepare [VERSION]
+#
+# Prepares the current directory according to the given Atlassian JIRA
+# VERSION. If no VERSION information is specified the latest version is
+# retrieved from the Atlassian JIRA download feed.
+
+if [[ "$(git rev-parse --abbrev-ref HEAD)" != "master" ]]; then
+	echo "Not master branch and therefore nothing to prepare"
+	exit 0
+fi
+
+echo "Obtaining Altassian JIRA version information..."
+
+# Obtain the currently latest version of Atlassian JIRA version defined by the
+# Dockerfile in this repository.
+CURRENT_VERSION=$(sed -nr 's/ENV JIRA_VERSION[[:space:]]*(.+)/\1/p' Dockerfile)
+
+# Obtain the latest Atlassian JIRA version by going to the JSON version feed
+# information to get a JSONP formatted response, strip the output to retrieve
+# the actual content and then get the version number from the first entry.
+VERSION=$(curl -Ls 'https://my.atlassian.com/download/feeds/current/jira-core.json' | sed 's/downloads(\(.*\))/\1/g' | jq -r '.[0].version')
+
+echo "Found versions:"
+echo "  Current: ${CURRENT_VERSION}"
+echo "  Latest:  ${VERSION}"
+echo ""
+
+echo "Preparing branch for version new Atlassian JIRA version"
+
+# Edit the `Dockerfile` by changing the current version to the new obtained
+# version from the Atlassian JIRA version feed.
+sed --in-place "s/${CURRENT_VERSION}/${VERSION}/g" Dockerfile
+
+# Edit the `README.md` by changing the announced version in the content
+sed --in-place "s/> Version ${CURRENT_VERSION}/> Version ${VERSION}/g" README.md
+
+sed --in-place "s/${CURRENT_VERSION}/${VERSION}/g" README.md
+
+echo "Ready for acceptance testing"
