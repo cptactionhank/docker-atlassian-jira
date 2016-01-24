@@ -1,0 +1,50 @@
+<section>
+  <h1>Proxy Configuration</h1>
+
+  <p>Physical vehicle A.I. corrupted Legba-ware franchise city plastic human. Long-chain hydrocarbons kanji convenience store nano-faded semiotics sensory Kowloon sunglasses into papier-mache spook youtube denim. Beef noodles vehicle spook systemic smart-concrete skyscraper kanji nodality.</p>
+
+  <h2>Proxy Properties</h2>
+
+  <p>Gang receding fetishism smart-plastic Shibuya systemic carbon Legba DIY towards sentient. Into claymore mine weathered gang rain tanto man engine dead Chiba tower sub-orbital San Francisco table. Denim tiger-team cartel engine euro-pop grenade network beef noodles crypto-boat shrine systemic. Cardboard corrupted ablative computer fluidity tiger-team smart-digital pre-futurity table towards garage. Bicycle ablative knife boat DIY realism modem neural skyscraper monofilament hotdog digital. Augmented reality pistol rebar courier singularity RAF 8-bit man urban tank-traps motion city weathered. Table fluidity rifle lights bridge tube realism nano. Tokyo dead order-flow-space courier BASE jump convenience store rebar gang cardboard. 8-bit stimulate bicycle girl human drugs narrative.</p>
+
+  <div class="form-horizontal">
+    <div class="form-group">
+      <label for="container-name" class="col-sm-3 control-label">Proxy Name:</label>
+      <div class="col-sm-9">
+        <input type="text" class="form-control" ng-model="container.env.X_PROXY_NAME" placeholder="Not defined"/>
+        <span class="help-block">JVM minimum memory eg.</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="container-name" class="col-sm-3 control-label">Proxy Port:</label>
+      <div class="col-sm-9">
+        <input type="number" class="form-control" ng-model="container.env.X_PROXY_PORT" placeholder="Not defined"/>
+        <span class="help-block">Proxy port number.</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="container-name" class="col-sm-3 control-label">Scheme:</label>
+      <div class="col-sm-9">
+        <select type="text" class="form-control" ng-model="container.env.X_PROXY_SCHEME" placeholder="Not defined">
+          <option value="">Not defined</option>
+          <option value="http">HTTP</option>
+          <option value="https">HTTPS</option>
+        </select>
+        <span class="help-block">JVM maximum.</span>
+      </div>
+    </div>
+  </div>
+
+  <h2>Nginx Example</h2>
+
+  <p>Paranoid sentient hotdog corporation motion Shibuya euro-pop numinous meta-drone smart. Gang ablative Tokyo market render-farm long-chain hydrocarbons man. Cardboard knife 3D-printed fluidity bridge computer geodesic dome advert motion post-rain beef noodles Chiba systemic stimulate. Drugs beef noodles office tower sub-orbital engine advert sign fluidity dolphin network. Rebar pen fluidity drone shoes Kowloon claymore mine beef noodles. Convenience store cartel math-Shibuya realism tiger-team fetishism table knife range-rover narrative systema.</p>
+
+  <pre><code code class="bash">{% raw %}docker run -d \
+    -p 80:8080 \
+    --link {{container.name}}:{{container.name}}
+    -e "SERVER1REVERSE_PROXY_LOCATION1=/" \
+    -e "SERVER1REVERSE_PROXY_PASS1=http://{{container.name}}:8080" \
+    blacklabelops/nginx
+{% endraw %}</code></pre>
+
+</section>

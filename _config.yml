@@ -1,5 +1,5 @@
 # Site settings
-title: <i class="fa fa-fw fa-rocket"></i> cptactionhank ❤ Docker
+title: cptactionhank ❤ Docker
 email: maage@dotmaage.dk
 
 description: > # this means to ignore newlines until "baseurl:"
@@ -15,13 +15,10 @@ repo:
   docker: atlassian-jira
 
 author:
-  name: Martin Jensen
+  name: Martin Aksel Jensen
   email: martin@25144754.dk
-  url: "http://25144754.dk" # the base hostname & protocol for your site
-  # facebook: cptactionhank
-  # twitter: dotmaage
+  url: http://25144754.dk
   linkedin: martinakseljensen
-  instagram: cptactionhank
   github:  cptactionhank
-  bitbucket: maage
+  bitbucket: cptactionhank
   dockerhub: cptactionhank

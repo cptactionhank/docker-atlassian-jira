@@ -1,5 +1,5 @@
 <section>
-  <h1>Run Configurations</h1>
+  <h1>Using a Process Manager</h1>
 
   <p>Paranoid sentient hotdog corporation motion Shibuya euro-pop numinous meta-drone smart. Gang ablative Tokyo market render-farm long-chain hydrocarbons man. Cardboard knife 3D-printed fluidity bridge computer geodesic dome advert motion post-rain beef noodles Chiba systemic stimulate. Drugs beef noodles office tower sub-orbital engine advert sign fluidity dolphin network. Rebar pen fluidity drone shoes Kowloon claymore mine beef noodles. Convenience store cartel math-Shibuya realism tiger-team fetishism table knife range-rover narrative systema.</p>
 
@@ -13,19 +13,15 @@
     </div>
   </div>
 
-  <h2>Manual</h2>
+  <h2>Container creation</h2>
 
-  <p>Table nodality film woman crypto-render-farm 8-bit office. Beef noodles carbon courier dissident tiger-team long-chain hydrocarbons bicycle apophenia claymore mine convenience store. Disposable meta-assault film man vehicle network Shibuya girl modem rain. Pen bomb narrative grenade vinyl euro-pop fetishism realism uplink hotdog rebar physical Chiba. Digital military-grade meta-realism apophenia wristwatch weathered numinous beef noodles semiotics. Order-flow range-rover saturation point advert wristwatch rifle into.-ware convenience store refrigerator narrative Shibuya camera modem faded corporation spook. Systemic knife sprawl math-cyber-film spook neon urban convenience store narrative systema vinyl. </p>
+  <p>The first thing you need to do is creating the container instance that should be managed by a process manager. This is done by performing the following command below and after this, you should configure your service with the process manager of your choice. You can use the configuration file examples below for systemd and upstart.</p>
 
   <pre><code code class="bash">{% raw %}docker pull cptactionhank/atlassian-jira:{{ jira.version.name }}
-docker rm --volumes --force "{{ container.name }}"
 docker create --restart=no --name "{{ container.name }}" \
-  --publish "8080:{{ jira.port }}" \
-  --volume "hostpath:/var/atlassian/jira" \
-  --env "CATALINA_OPTS={{ container.java.memory.minimum | prefix:' -Xms' }}{{ container.java.memory.maximum | prefix:' -Xmx' }}{{ container.environment.atlassian.plugins.enable.wait | prefix:' -Datlassian.plugins.enable.wait=' }}" \
-  cptactionhank/atlassian-jira:{{ jira.version.name }}
-docker start --attach "{{ container.name }}"
-
+    --publish "{{ jira.port }}:8080" \
+    {{ container.env|formatEnvironment }}\
+    cptactionhank/atlassian-jira:{{ jira.version.name }}
 {% endraw %}</code></pre>
 
   <h2>Systemd</h2>
@@ -33,56 +29,30 @@ docker start --attach "{{ container.name }}"
   <p>Below you can find an example file of how a systemd service unit could be defined for your Atlassian JIRA instance. For more information of service files click <a href="http://www.freedesktop.org/software/systemd/man/systemd.service.html">here</a>.</p>
 
   <pre><code code class="ini">{% raw %}[Unit]
-Description=Atlassian JIRA container
+Description=Redis container
 Requires=docker.service
 After=docker.service
 
 [Service]
 Restart=always
-
-# Pull down the latest image version, remove old container if it exists, and
-# create an Atlassian JIRA image instance.
-ExecStartPre=/usr/bin/docker pull cptactionhank/atlassian-jira:{{ jira.version.name }}
-ExecStartPre=-/usr/bin/docker rm --volumes --force "{{ container.name }}"
-ExecStartPre=/usr/bin/docker create --restart=no --name "{{ container.name }}" \
-  --publish "8080:{{ jira.port }}" \
-  --volume "hostpath:/var/atlassian/jira" \
-  --env "CATALINA_OPTS={{ container.java.memory.minimum | prefix:' -Xms' }}{{ container.java.memory.maximum | prefix:' -Xmx' }}{{ container.environment.atlassian.plugins.enable.wait | prefix:' -Datlassian.plugins.enable.wait=' }}" \
-  cptactionhank/atlassian-jira:{{ jira.version.name }}
-
 ExecStart=/usr/bin/docker start --attach "{{ container.name }}"
-ExecStop=/usr/bin/docker stop --time 30 "{{ container.name }}"
+ExecStop=/usr/bin/docker stop --time 60 "{{ container.name }}"
 
 [Install]
-WantedBy=local.target
-{% endraw %}</code></pre>
+WantedBy=local.target{% endraw %}</code></pre>
 
   <h2>Upstart</h2>
 
   <p>Below you can find an example file of how an Upstart system job could be defined for your Atlassian JIRA instance. For more information of system job configuration files click <a href="http://upstart.ubuntu.com/cookbook/#system-job">here</a>.</p>
 
   <pre><code class="sh">{% raw %}description "Atlassian JIRA container"
-
 start on filesystem and started docker
 stop on runlevel [!2345]
 
 respawn
 
-pre-start script
-  # Pull down the latest image version, remove old container if it exists, and
-  # create an Atlassian JIRA image instance.
-  /usr/bin/docker pull cptactionhank/atlassian-jira:{{ jira.version.name }}
-  /usr/bin/docker rm --volumes --force "{{ container.name }}"
-  /usr/bin/docker create --restart=no --name "{{ container.name }}" \
-    --publish "8080:{{ jira.port }}" \
-    --volume "hostpath:/var/atlassian/jira" \
-    --env "CATALINA_OPTS={{ container.java.memory.minimum | prefix:' -Xms' }}{{ container.java.memory.maximum | prefix:' -Xmx' }}{{ container.environment.atlassian.plugins.enable.wait | prefix:' -Datlassian.plugins.enable.wait=' }}" \
-    cptactionhank/atlassian-jira:{{ jira.version.name }}
-end script
-
 script
   /usr/bin/docker start --attach "{{ container.name }}"
-end script
-{% endraw %}</code></pre>
+end script{% endraw %}</code></pre>
 
 </section>

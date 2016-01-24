@@ -10,7 +10,35 @@ app.filter('prefix', function () {
   };
 });
 
+app.filter('formatEnvironment', function() {
+  return function(input, prefix) {
+    prefix = prefix || "\\\n    ";
+    var items = []
+    angular.forEach(input, function(value, key) {
+      if (angular.isObject(value)) {
+        var string = [];
+        angular.forEach(value, function(value, key) {
+          string.push('-' + key.replace(/_/g, '.') + '=' + value)
+        });
+        value = string.join(' ');
+      }
+      items.push('--env "' + key + '=' + value + '" ');
+    });
+    return items.join(prefix);
+  }
+});
+
 app.run(function($rootScope) {
+
+  $rootScope.container = {
+    // env: {
+    //   X_PROXY_NAME: 'pname',
+    //   X_PROXY_PORT: 123,
+    //   CATALINA_OPTS: {
+    //     Datlassian_plugins_enable_wait: 300
+    //   }
+    // }
+  }
 
   // configuration constants for the various Atlassian JIRA docker images
   // where each key defines the most recent version that had that specific
@@ -58,7 +86,7 @@ app.run(function($rootScope) {
 
 app.controller('ConfigurationController', function($rootScope, $scope, $http) {
   $scope.tags = [];
-  $scope.status = "loading";
+  $scope.status = 'loading';
   // populate the controllers model with the first 1000 available tags from
   // the Docker Hub repository.
   $http
@@ -73,7 +101,7 @@ app.controller('ConfigurationController', function($rootScope, $scope, $http) {
       }).pop();
       // update the bindings with the latest version tag
       $scope.update($rootScope.jira.version);
-      $scope.status = "";
+      $scope.status = '';
   }).error(function(data, status) {
     $scope.status = "error"
   });
