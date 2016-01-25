@@ -25,7 +25,7 @@ RUN set -x \
     && chown -R daemon:daemon  "${JIRA_INSTALL}/logs" \
     && chown -R daemon:daemon  "${JIRA_INSTALL}/temp" \
     && chown -R daemon:daemon  "${JIRA_INSTALL}/work" \
-    && touch -d "@0"           "/opt/atlassian/jira/conf/server.xml" \
+    && touch -d "@0"           "${JIRA_INSTALL}/conf/server.xml" \
     && echo -e                 "\njira.home=$JIRA_HOME" >> "${JIRA_INSTALL}/atlassian-jira/WEB-INF/classes/jira-application.properties"
 
 # Use the default unprivileged account. This could be considered bad practice
