@@ -15,7 +15,7 @@ describe 'Docker image building' do
     it { is_expected.to have_exposed_port tcp: 8080 }
     it { is_expected.to_not have_exposed_port udp: 8080 }
     it { is_expected.to have_volume '/var/local/atlassian/jira' }
-    it { is_expected.not_to have_volume '/usr/local/atlassian/jira' }
+    it { is_expected.to have_volume '/usr/local/atlassian/jira' }
     it { is_expected.to have_working_directory '/var/local/atlassian/jira' }
   end
 end
