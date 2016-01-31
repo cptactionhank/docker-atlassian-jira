@@ -34,8 +34,8 @@ module WaitingHelper
   end
 
   def location_changed?(from, to = current_path)
+    sleep 1
     puts "not \"#{from}\".eql? \"#{to}\""
     not from.eql? to
-    sleep 1
   end
 end
