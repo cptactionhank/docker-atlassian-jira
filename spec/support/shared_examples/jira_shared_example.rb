@@ -1,5 +1,5 @@
 shared_examples 'an acceptable JIRA instance' do |database_examples|
-  include_context 'a buildable docker image', '.', Env: ["CATALINA_OPTS=-Xms64m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout} -Datlassian.darkfeature.jira.onboarding.feature.disabled=true"]
+  include_context 'a buildable docker image', '.', CpuShares: 10, Env: ["CATALINA_OPTS=-Xms64m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout} -Datlassian.darkfeature.jira.onboarding.feature.disabled=true"]
 
   describe 'when starting a JIRA instance' do
     before(:all) { @container.start! PublishAllPorts: true }
@@ -15,6 +15,7 @@ shared_examples 'an acceptable JIRA instance' do |database_examples|
     before :all do
       @container.setup_capybara_url tcp: 8080
       visit '/'
+      wait_for_page
     end
 
     subject { page }
