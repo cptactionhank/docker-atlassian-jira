@@ -6,10 +6,13 @@ services:
   - docker
 
 before_install:
+  - docker version
   - docker info
   - docker pull postgres:9.3
   - docker pull mysql:5.6
   - docker build .
+  - gem install bundler
+  - bundle install
 
 script:
   - bundle exec rspec
