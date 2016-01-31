@@ -15,7 +15,7 @@ shared_examples 'an acceptable JIRA instance' do |database_examples|
     before :all do
       @container.setup_capybara_url tcp: 8080
       visit '/'
-      wait_for_ajax
+      wait_for_location_change if current_path == '/startup.jsp'
     end
 
     subject { page }
