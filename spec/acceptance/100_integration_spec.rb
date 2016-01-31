@@ -7,7 +7,11 @@ end
 
 describe 'Atlassian JIRA with PostgreSQL 9.3 Database' do
   include_examples 'an acceptable JIRA instance', 'using a postgresql database' do
-    unless ENV["CI"] == "true"
+    if ENV["CI"] == "true"
+      before :all do
+        $container_postgres = Docker::Container.get 'postgres'
+      end
+    else
       before :all do
         Docker::Image.create fromImage: 'postgres:9.3'
         # Create and run a PostgreSQL 9.3 container instance
@@ -18,21 +22,20 @@ describe 'Atlassian JIRA with PostgreSQL 9.3 Database' do
         # Create Confluence database
         $container_postgres.exec ["psql", "--username", "postgres", "--command", "create database jiradb owner postgres encoding 'utf8';"]
       end
-    else
-      before :all do
-        $container_postgres = Docker::Container.get 'postgres'
+      after :all do
+        $container_postgres.remove force: true, v: true unless $container_postgres.nil?
       end
-    end
-
-    after :all do
-      $container_postgres.remove force: true, v: true unless $container_postgres.nil? || ENV["CI"] == "true"
     end
   end
 end
 
 describe 'Atlassian JIRA with MySQL 5.6 Database' do
   include_examples 'an acceptable JIRA instance', 'using a mysql database' do
-    unless ENV["CI"] == "true"
+    if ENV["CI"] == "true"
+      before :all do
+        $container_mysql = Docker::Container.get 'mysql'
+      end
+    else
       before :all do
         Docker::Image.create fromImage: 'mysql:5.6'
         # Create and run a MySQL 5.6 container instance
@@ -46,8 +49,6 @@ describe 'Atlassian JIRA with MySQL 5.6 Database' do
       after :all do
         $container_mysql.remove force: true, v: true unless $container_mysql.nil? || ENV["CI"] == "true"
       end
-    else
-      $container_mysql = Docker::Container.get 'mysql'
     end
   end
 end
