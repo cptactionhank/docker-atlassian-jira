@@ -15,12 +15,18 @@ shared_examples 'an acceptable JIRA instance' do |database_examples|
     before :all do
       @container.setup_capybara_url tcp: 8080
       visit '/'
-      wait_for_location_change if current_path == '/startup.jsp'
     end
 
     subject { page }
 
     context 'when visiting the root page' do
+      it 'Should wait for AJAX loader' do
+        puts "current_path: #{current_path}"
+        puts "waiting for location change"
+        wait_for_location_change if current_path == '/startup.jsp'
+        puts "waiting for page"
+        wait_for_page
+      end
       it { expect(current_path).to match '/secure/SetupMode!default.jspa' }
       it { is_expected.to have_css 'form#jira-setup-mode' }
       it { is_expected.to have_css 'div[data-choice-value=classic]' }

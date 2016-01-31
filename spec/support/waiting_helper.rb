@@ -17,7 +17,7 @@ module WaitingHelper
     end
   end
 
-  def wait_for_location_change(original = current_url)
+  def wait_for_location_change(original = current_path)
     Timeout.timeout(Capybara.default_max_wait_time) do
       loop until location_changed? original
     end
@@ -33,7 +33,9 @@ module WaitingHelper
     page.evaluate_script('document.readyState === "complete"')
   end
 
-  def location_changed?(from, to = current_url)
+  def location_changed?(from, to = current_path)
+    puts "not \"#{from}\".eql? \"#{to}\""
     not from.eql? to
+    sleep 1
   end
 end

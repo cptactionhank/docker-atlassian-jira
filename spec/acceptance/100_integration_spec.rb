@@ -7,7 +7,11 @@ end
 
 describe 'Atlassian JIRA with PostgreSQL 9.3 Database' do
   include_examples 'an acceptable JIRA instance', 'using a postgresql database' do
-    unless ENV["CI"] == "true"
+    if ENV["CI"] == "true"
+      before :all do
+        $container_postgres = Docker::Container.get 'postgres'
+      end
+    else
       before :all do
         # Create and run a PostgreSQL 9.3 container instance
         $container_postgres = Docker::Container.create image: 'postgres:9.3'
@@ -20,17 +24,17 @@ describe 'Atlassian JIRA with PostgreSQL 9.3 Database' do
       after :all do
         $container_postgres.remove force: true, v: true unless $container_postgres.nil?
       end
-    else
-      before :all do
-        $container_postgres = Docker::Container.get 'postgres'
-      end
     end
   end
 end
 
 describe 'Atlassian JIRA with MySQL 5.6 Database' do
   include_examples 'an acceptable JIRA instance', 'using a mysql database' do
-    unless ENV["CI"] == "true"
+    if ENV["CI"] == "true"
+      before :all do
+        $container_mysql = Docker::Container.get 'mysql'
+      end
+    else
       before :all do
         # Create and run a MySQL 5.6 container instance
         $container_mysql = Docker::Container.create image: 'mysql:5.6', env: ['MYSQL_ROOT_PASSWORD=mysecretpassword']
@@ -43,8 +47,6 @@ describe 'Atlassian JIRA with MySQL 5.6 Database' do
       after :all do
         $container_mysql.remove force: true, v: true unless $container_mysql.nil?
       end
-    else
-      $container_mysql = Docker::Container.get 'mysql'
     end
   end
 end
