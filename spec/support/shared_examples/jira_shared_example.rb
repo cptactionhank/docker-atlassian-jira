@@ -1,5 +1,5 @@
 shared_examples 'an acceptable JIRA instance' do |database_examples|
-  include_context 'a buildable docker image', '.', Env: ["CATALINA_OPTS=-Xms2048m -Xmx2048m -XX:MaxPermSize=1024m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout} -Datlassian.darkfeature.jira.onboarding.feature.disabled=true"]
+  include_context 'a buildable docker image', '.', Env: ["CATALINA_OPTS=-Datlassian.plugins.enable.wait=#{Docker::DSL.timeout} -Datlassian.darkfeature.jira.onboarding.feature.disabled=true"]
 
   describe 'when starting a JIRA instance' do
     before(:all) { @container.start! PublishAllPorts: true }
