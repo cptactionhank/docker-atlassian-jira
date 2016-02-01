@@ -22,7 +22,7 @@ script:
 
 deploy:
   provider: script
-	skip_cleanup: true
+  skip_cleanup: true
   script: bin/deploy
   on:
-  	branch: eap
+    branch: eap
