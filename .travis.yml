@@ -14,5 +14,15 @@ before_install:
   - gem install bundler
   - bundle install
 
+before_script:
+  - bin/prepare
+
 script:
   - bundle exec rspec
+
+deploy:
+  provider: script
+	skip_cleanup: true
+  script: bin/deploy
+  on:
+  	branch: eap
