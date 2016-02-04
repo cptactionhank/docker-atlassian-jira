@@ -1,24 +1,27 @@
 machine:
   ruby:
-    version: 2.2.2
+    version: "2.2.3"
   pre:
-    - gem install bundler
+    - "gem install bundler"
   services:
-    - docker
+    - "docker"
 
 dependencies:
   pre:
-    - docker pull postgres:9.3
-    - docker pull mysql:5.6
-    - docker pull java:8
+    - "docker pull postgres:9.3"
+    - "docker pull mysql:5.6"
+    - "docker pull java:8"
+    - "gem install bundler"
 
 database:
   override:
-    - bin/setup_databases
+    - "bin/setup_databases"
 
 test:
   pre:
-    - bin/prepare
+    - "bin/prepare"
+  override:
+    - "bundle exec rspec --format documentation --require rspec_junit_formatter --format RspecJunitFormatter --out $CIRCLE_TEST_REPORTS/rspec/junit.xml"
 
 deployment:
   newest-version:

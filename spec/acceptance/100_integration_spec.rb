@@ -7,7 +7,7 @@ end
 
 describe 'Atlassian JIRA with PostgreSQL 9.3 Database' do
   include_examples 'an acceptable JIRA instance', 'using a postgresql database' do
-    if ENV["CIRCLECI"] == "true"
+    if ENV["CIRCLECI"]
       before :all do
         $container_postgres = Docker::Container.get 'postgres'
       end
@@ -31,7 +31,7 @@ end
 
 describe 'Atlassian JIRA with MySQL 5.6 Database' do
   include_examples 'an acceptable JIRA instance', 'using a mysql database' do
-    if ENV["CIRCLECI"] == "true"
+    if ENV["CIRCLECI"]
       before :all do
         $container_mysql = Docker::Container.get 'mysql'
       end
@@ -47,7 +47,7 @@ describe 'Atlassian JIRA with MySQL 5.6 Database' do
         $container_mysql.exec ['mysql', '--user=root', '--password=mysecretpassword', '--execute', 'CREATE DATABASE jiradb CHARACTER SET utf8 COLLATE utf8_bin;']
       end
       after :all do
-        $container_mysql.remove force: true, v: true unless $container_mysql.nil? || ENV["CI"] == "true"
+        $container_mysql.remove force: true, v: true unless $container_mysql.nil?
       end
     end
   end
