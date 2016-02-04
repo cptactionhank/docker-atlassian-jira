@@ -16,7 +16,7 @@ class Docker::Container
 
   def setup_capybara_url(port)
     docker_url = URI.parse Docker.url
-    docker_url.host   = 'localhost' if docker_url.scheme == 'unix'
+    docker_url.host   = '172.0.0.1' if docker_url.scheme == 'unix'
     docker_url.scheme = 'http'
     docker_url.path   = ''
     docker_url.port   = mapped_port port
