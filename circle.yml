@@ -4,6 +4,8 @@ general:
       - gh-pages
 
 machine:
+  ruby:
+    version: 2.2.2
   # pre:
   #   # - sudo apt-get --yes -qq update
   #   # update version of PhantomJS
