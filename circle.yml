@@ -2,6 +2,7 @@ machine:
   ruby:
     version: "2.2.3"
   pre:
+    - "sudo apt-get install jq"
     - "gem install bundler"
   services:
     - "docker"
