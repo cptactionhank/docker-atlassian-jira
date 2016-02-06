@@ -1,12 +1,11 @@
 source 'https://rubygems.org'
 # currently used ruby version
-ruby '2.2.2'
+ruby '2.2.3'
 
 group :test do
   gem 'rake'
   # libraries for acceptance testing
   gem 'rspec'
-  gem 'serverspec'
   gem 'capybara'
   gem 'poltergeist'
   gem 'poltergeist-suppressor'
