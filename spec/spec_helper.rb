@@ -1,5 +1,6 @@
 require 'docker'
 require 'capybara'
+require 'capybara/dsl'
 require 'capybara/poltergeist'
 require 'poltergeist/suppressor'
 
@@ -59,7 +60,7 @@ RSpec.configure do |config|
   Capybara.configure do |conf|
     conf.register_driver :poltergeist_debug do |app|
       Capybara::Poltergeist::Driver.new app, timeout: timeout,
-                # we should't care about javascript errors since we did not make any
+        # we should't care about javascript errors since we did not make any
         # implementation, but only deliver the software packages as best
         # effort and this is more an Atlassian problem.
         js_errors: false,
