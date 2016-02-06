@@ -1,6 +1,5 @@
 require 'docker'
 require 'uri'
-require 'uri'
 require 'rspec'
 require 'rspec/expectations'
 
