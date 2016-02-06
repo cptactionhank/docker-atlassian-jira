@@ -6,9 +6,11 @@
 # VERSION. If no VERSION information is specified the latest version is
 # retrieved from the Atlassian JIRA download feed.
 
-if [[ "$(git rev-parse --abbrev-ref HEAD)" != "master" ]]; then
+if [[ "$(git rev-parse --abbrev-ref HEAD)" != "master" && -z "$1" ]]; then
 	echo "Not master branch and therefore nothing to prepare"
 	exit 0
+elif [[ -n "${1}" ]]; then
+	echo "Overriding latest Atlassian JIRA to ${1}"
 fi
 
 echo "Obtaining Altassian JIRA version information..."
@@ -32,8 +34,5 @@ echo "Preparing branch for version new Atlassian JIRA version"
 # Edit the `Dockerfile` by changing the current version to the new obtained
 # version from the Atlassian JIRA version feed.
 sed --in-place "s/${CURRENT_VERSION}/${VERSION}/g" Dockerfile
-
-# Edit the `README.md` by changing the announced version in the content
-sed --in-place "s/> Version ${CURRENT_VERSION}/> Version ${VERSION}/g" README.md
 
 echo "Ready for acceptance testing"

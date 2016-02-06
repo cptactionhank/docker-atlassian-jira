@@ -10,6 +10,6 @@ shared_examples 'a buildable docker image' do |path, options = {}|
   end
 
   after :all do
-    @container.remove force: true, v: true unless @container.nil?
+    @container.remove force: true, v: true unless @container.nil? || ENV['CIRCLECI']
   end
 end
