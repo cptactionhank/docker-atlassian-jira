@@ -1,161 +1,50 @@
 require 'timeout'
 require 'spec_helper'
 
-describe 'Atlassian JIRA instance' do
-  include_context 'a buildable docker image', '.', Env: ["CATALINA_OPTS=-Xms64m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout} -Datlassian.darkfeature.jira.onboarding.feature.disabled=true"]
+describe 'Atlassian JIRA with Embedded Database' do
+  include_examples 'an acceptable JIRA instance', 'using an embedded database'
+end
 
-  describe 'when starting a JIRA instance' do
-    before(:all) { @container.start! PublishAllPorts: true }
-
-    it { is_expected.to_not be_nil }
-    it { is_expected.to be_running }
-    it { is_expected.to have_mapped_ports tcp: 8080 }
-    it { is_expected.not_to have_mapped_ports udp: 8080 }
-    it { is_expected.to wait_until_output_matches REGEX_STARTUP }
-  end
-
-  describe 'Going through the setup process' do
+describe 'Atlassian JIRA with PostgreSQL 9.3 Database' do
+  include_examples 'an acceptable JIRA instance', 'using a postgresql database' do
     before :all do
-      @container.setup_capybara_url tcp: 8080
-      visit '/'
-    end
-
-    subject { page }
-
-    context 'when visiting the root page' do
-      it { expect(current_path).to match '/secure/SetupMode!default.jspa' }
-      it { is_expected.to have_css 'form#jira-setup-mode' }
-      it { is_expected.to have_css 'div[data-choice-value=classic]' }
-      it { is_expected.to have_button 'Next' }
-    end
-
-    context 'when manually setting up the instance' do
-      before :all do
-        within 'form#jira-setup-mode' do
-          find(:css, 'div[data-choice-value=classic]').trigger('click')
-          click_button 'Next'
-          wait_for_ajax
-        end
+      Docker::Image.create fromImage: 'postgres:9.3'
+      # Create and run a PostgreSQL 9.3 container instance
+      @container_db = Docker::Container.create image: 'postgres:9.3'
+      @container_db.start!
+      # Wait for the PostgreSQL instance to start
+      @container_db.wait_for_output %r{PostgreSQL\ init\ process\ complete;\ ready\ for\ start\ up\.}
+      # Create Confluence database
+      if ENV['CIRCLECI']
+        %x( docker run --link "#{@container_db.id}:db" postgres:9.3 psql --host "db" --user "postgres" --command "create database jiradb owner postgres encoding 'utf8';" )
+      else
+        @container_db.exec ["psql", "--username", "postgres", "--command", "create database jiradb owner postgres encoding 'utf8';"]
       end
-
-      it { expect(current_path).to match '/secure/SetupDatabase!default.jspa' }
-      it { is_expected.to have_css 'form#jira-setup-database' }
-      it { is_expected.to have_selector :radio_button, 'jira-setup-database-field-database-internal' }
-      it { is_expected.to have_button 'Next' }
     end
-
-    context 'when processing database setup' do
-      before :all do
-        within 'form#jira-setup-database' do
-          choose 'jira-setup-database-field-database-internal'
-          click_button 'Next'
-        end
-      end
-
-      it { expect(current_path).to match '/secure/SetupApplicationProperties!default.jspa' }
-      it { is_expected.to have_css 'form#jira-setupwizard' }
-      it { is_expected.to have_field 'title' }
-      it { is_expected.to have_selector :radio_button, 'jira-setupwizard-mode-public' }
-      it { is_expected.to have_button 'Next' }
-    end
-
-    context 'when processing application properties setup' do
-      before :all do
-        within 'form#jira-setupwizard' do
-          fill_in 'title', with: 'JIRA Test instance'
-          choose 'jira-setupwizard-mode-public'
-          click_button 'Next'
-        end
-      end
-
-      it { expect(current_path).to match '/secure/SetupProductBundle!default.jspa' }
-      it { is_expected.to have_css 'form#jira-setup-product-bundle' }
-      it { is_expected.to have_css 'div[data-choice-value=TRACKING]' }
-      it { is_expected.to have_button 'Next' }
-    end
-
-    context 'when processing product bundle setup' do
-      before :all do
-        within 'form#jira-setup-product-bundle' do
-          find(:css, 'div[data-choice-value=TRACKING]').trigger('click')
-          click_button 'Next'
-        end
-      end
-
-      it { expect(current_path).to match '/secure/SetupLicense!default.jspa' }
-      it { is_expected.to have_css 'form#jira-setupwizard' }
-      it { is_expected.to have_css '#jira-setupwizard-licenseSetupSelectorexistingLicense' }
-    end
-
-    context 'when processing license setup' do
-      before :all do
-        within '#jira-setupwizard' do
-          choose 'jira-setupwizard-licenseSetupSelectorexistingLicense'
-          wait_for_ajax
-          within '#importLicenseForm' do
-            fill_in 'licenseKey', with: 'AAABiQ0ODAoPeNp1kk9TwjAQxe/9FJnxXKYpeoCZHqCtgsqfgaIO4yWELURD0tm0KN/eWOjYdvD68vbtb3dzM9GKTBgS2iOU9n3a7/pkHiXE96jvbNhho3XnWXBQBuKtyIVWQTxN4sV8MV7GTirMHk5QOZJTBsG91eITvPdJBEeQOgN0uNRHwIYtLKWGa1ocNoCzdGUATUA9h2uVdhjPxRGCHAtw5gXyPTMQsRwCn1Lf9XzXv3NqwVN2gGCZDBYWstLj70zgqSyad0fVWPXgJaClGUfB8KGXuG+rl1v3ab0euUOPvjofAlmD/XG8GJBY5YAZCtMa9Ze5MagVZAGKX/FVE4eyMDZtqrdgAq+19zJlWEr/Na0TXjkTx4KLjWzeKbyIjaAJE7aDYpa2tTSO+mvbCrBKo/ryate4Up9KfylnhjumhGEl0SCXzBjB1B9Q/QYhQulrH/fcue6svl1di8BwFFnZKAGTE3mGIalGksliJxTZVqTmvLF6fXxksjhzpkwaqP5s3fMDBMYhRDAtAhUAhcR3uL05YCxbclq7h1dNa+Nc+j4CFBrdN005oVlMN9yBlWeM4TlnrOhqX02j3'
-            click_button 'Next'
-            wait_for_location_change
-          end
-        end
-      end
-
-      it { expect(current_path).to match '/secure/SetupAdminAccount!default.jspa' }
-      it { is_expected.to have_field 'fullname' }
-      it { is_expected.to have_field 'email' }
-      it { is_expected.to have_field 'username' }
-      it { is_expected.to have_field 'password' }
-      it { is_expected.to have_field 'confirm' }
-    end
-
-    context 'when processing administrative account setup' do
-      before :all do
-        within '#jira-setupwizard' do
-          fill_in 'fullname', with: 'Continuous Integration Administrator'
-          fill_in 'email', with: 'jira@circleci.com'
-          fill_in 'username', with: 'admin'
-          fill_in 'password', with: 'admin'
-          fill_in 'confirm', with: 'admin'
-          click_button 'Next'
-        end
-      end
-
-      it { expect(current_path).to match '/secure/SetupAdminAccount.jspa' }
-      it { is_expected.to have_selector :radio_button, 'jira-setupwizard-email-notifications-enabled' }
-      it { is_expected.to have_selector :radio_button, 'jira-setupwizard-email-notifications-disabled' }
-    end
-
-    context 'when processing email notifications setup' do
-      before :all do
-        within '#jira-setupwizard' do
-          choose 'jira-setupwizard-email-notifications-disabled'
-          click_button 'Finish'
-        end
-      end
-
-      it { expect(current_path).to match '/secure/Dashboard.jspa' }
-
-      # The acceptance testing comes to an end here since we got to the
-      # JIRA dashboard without any trouble through the setup.
+    after :all do
+      @container_db.remove force: true, v: true unless @container_db.nil? || ENV['CIRCLECI']
     end
   end
+end
 
-  describe 'Stopping the JIRA instance' do
-    before(:all) { @container.kill_and_wait signal: 'SIGTERM' }
-
-    it 'should shut down successful' do
-      # give the container up to 5 minutes to successfully shutdown
-      # exit code: 128+n Fatal error signal "n", ie. 143 = fatal error signal
-      # SIGTERM
-      #
-      # The following state check has been left out 'ExitCode' => 143 to
-      # suppor CircleCI as CI builder. For some reason whether you send SIGTERM
-      # or SIGKILL, the exit code is always 0, perhaps it's the container
-      # driver
-      is_expected.to include_state 'Running' => false
+describe 'Atlassian JIRA with MySQL 5.6 Database' do
+  include_examples 'an acceptable JIRA instance', 'using a mysql database' do
+    before :all do
+      Docker::Image.create fromImage: 'mysql:5.6'
+      # Create and run a MySQL 5.6 container instance
+      @container_db = Docker::Container.create image: 'mysql:5.6', env: ['MYSQL_ROOT_PASSWORD=mysecretpassword']
+      @container_db.start!
+      # Wait for the MySQL instance to start
+      @container_db.wait_for_output %r{socket:\ '/var/run/mysqld/mysqld\.sock'\ \ port:\ 3306\ \ MySQL\ Community\ Server\ \(GPL\)}
+      # Create Confluence database
+      if ENV['CIRCLECI']
+        %x( docker run --link "#{@container_db.id}:db" mysql:5.6 mysql --host "db" --user=root --password=mysecretpassword --execute 'CREATE DATABASE jiradb CHARACTER SET utf8 COLLATE utf8_bin;' )
+      else
+        @container_db.exec ['mysql', '--user=root', '--password=mysecretpassword', '--execute', 'CREATE DATABASE jiradb CHARACTER SET utf8 COLLATE utf8_bin;']
+      end
     end
-
-    include_examples 'a clean console'
-    include_examples 'a clean logfile', '/var/atlassian/jira/log/atlassian-jira.log'
+    after :all do
+      @container_db.remove force: true, v: true unless @container_db.nil? || ENV['CIRCLECI']
+    end
   end
 end
