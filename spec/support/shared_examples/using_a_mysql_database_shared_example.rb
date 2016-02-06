@@ -10,7 +10,7 @@ shared_examples 'using a mysql database' do
       # fill in database configuration
       # select "PostgreSQL", :from => 'databaseType'
       fill_in 'jira-setup-database-field-database-type-field', with: 'MySQL'
-      fill_in 'jdbcHostname', with: $container_mysql.host
+      fill_in 'jdbcHostname', with: @container_db.host
       fill_in 'jdbcPort', with: '3306'
       fill_in 'jdbcDatabase', with: 'jiradb'
       fill_in 'jdbcUsername', with: 'root'
