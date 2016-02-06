@@ -2,7 +2,7 @@ require 'timeout'
 require 'spec_helper'
 
 shared_examples 'an acceptable JIRA instance' do |database_examples|
-  include_context 'a buildable docker image', '.', Env: ["CATALINA_OPTS=-Xms64m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout} -Datlassian.darkfeature.jira.onboarding.feature.disabled=true"]
+  include_context 'a buildable docker image', '.', Env: ["CATALINA_OPTS=-Xms1024m -Xmx2048m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout} -Datlassian.darkfeature.jira.onboarding.feature.disabled=true"]
 
   describe 'when starting a JIRA instance' do
     before(:all) { @container.start! PublishAllPorts: true }

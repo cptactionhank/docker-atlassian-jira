@@ -19,7 +19,11 @@ module Docker
 
       def description
         described_items = surface_descriptions_in(expected)
+<<<<<<< ours
         improve_hash_formatting "include state#{to_sentence(described_items)}"
+=======
+        improve_hash_formatting "include state #{described_items}"
+>>>>>>> theirs
       end
 
       def failure_message
