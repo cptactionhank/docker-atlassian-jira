@@ -17,7 +17,10 @@ shared_examples 'an acceptable JIRA instance' do |database_examples|
   describe 'Going through the setup process' do
     before :all do
       @container.setup_capybara_url tcp: 8080
-      visit '/'
+      until current_path === '/secure/SetupMode!default.jspa'
+				visit '/'
+				sleep 1
+			end
     end
 
     subject { page }
