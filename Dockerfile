@@ -3,7 +3,7 @@ FROM java:8
 # Configuration variables.
 ENV JIRA_HOME     /var/atlassian/jira
 ENV JIRA_INSTALL  /opt/atlassian/jira
-ENV JIRA_VERSION  7.0.0-rc3
+ENV JIRA_VERSION  7.1.0-m01
 
 # Install Atlassian JIRA and helper tools and setup initial home
 # directory structure.
@@ -26,6 +26,7 @@ RUN set -x \
     && chown -R daemon:daemon  "${JIRA_INSTALL}/logs" \
     && chown -R daemon:daemon  "${JIRA_INSTALL}/temp" \
     && chown -R daemon:daemon  "${JIRA_INSTALL}/work" \
+    && touch --date "@0"       "/opt/atlassian/jira/conf/server.xml" \
     && sed --in-place          "s/java version/openjdk version/g" "${JIRA_INSTALL}/bin/check-java.sh" \
     && echo -e                 "\njira.home=$JIRA_HOME" >> "${JIRA_INSTALL}/atlassian-jira/WEB-INF/classes/jira-application.properties"
 
@@ -43,7 +44,10 @@ EXPOSE 8080
 VOLUME ["/var/atlassian/jira"]
 
 # Set the default working directory as the installation directory.
-WORKDIR ${JIRA_HOME}
+WORKDIR /var/atlassian/jira
+
+COPY "docker-entrypoint.sh" "/"
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 # Run Atlassian JIRA as a foreground process by default.
-CMD ["/opt/atlassian/jira/bin/start-jira.sh", "-fg"]
+CMD ["/opt/atlassian/jira/bin/catalina.sh", "run"]

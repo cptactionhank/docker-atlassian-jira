@@ -12,7 +12,9 @@ REGEX_FILTER  = Regexp.compile (Regexp.union [
   # For some reason when setting up the database the indexing path is not set
   # yielding the following errors.
   /\[c\.a\.jira\.upgrade\.ConsistencyCheckImpl\]\ Indexing\ is\ turned\ on,\ but\ index\ path\ \[null\]\ invalid\ \-\ disabling\ indexing/,
-  /\[c\.a\.j\.issue\.index\.DefaultIndexManager\]\ File\ path\ not\ set\ \-\ not\ indexing/
+  /\[c\.a\.j\.issue\.index\.DefaultIndexManager\]\ File\ path\ not\ set\ \-\ not\ indexing/,
+  /\[o\.o\.c\.entity\.jdbc\.DatabaseUtil\]\ Could\ not\ create\ missing\ indices\ for\ entity/,
+  /\[o\.o\.c\.entity\.jdbc\.DatabaseUtil\]\ SQL\ Exception\ while\ executing\ the\ following/
 ])
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |file| require file }
@@ -23,7 +25,8 @@ RSpec.configure do |config|
   config.include WaitingHelper
 
   # set the default timeout to 10 minutes.
-  timeout = 600
+  timeout = 120
+  timeout = 600 if ENV['CI']
 
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest

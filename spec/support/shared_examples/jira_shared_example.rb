@@ -14,16 +14,15 @@ shared_examples 'an acceptable JIRA instance' do |database_examples|
   describe 'Going through the setup process' do
     before :all do
       @container.setup_capybara_url tcp: 8080
-      visit '/'
+      until current_path === '/secure/SetupMode!default.jspa'
+        visit '/'
+        sleep 1
+      end
     end
 
     subject { page }
 
     context 'when visiting the root page' do
-      it 'Should wait for AJAX loader when present' do
-        wait_for_location_change if current_path == '/startup.jsp'
-        wait_for_page
-      end
       it { expect(current_path).to match '/secure/SetupMode!default.jspa' }
       it { is_expected.to have_css 'form#jira-setup-mode' }
       it { is_expected.to have_css 'div[data-choice-value=classic]' }
@@ -71,7 +70,6 @@ shared_examples 'an acceptable JIRA instance' do |database_examples|
 
     context 'when processing license setup' do
       before :all do
-        choose 'jira-setupwizard-licenseSetupSelectorexistingLicense'
         within '#importLicenseForm' do
           fill_in 'licenseKey', with: 'AAABiQ0ODAoPeNp1kk9TwjAQxe/9FJnxXKYpeoCZHqCtgsqfgaIO4yWELURD0tm0KN/eWOjYdvD68vbtb3dzM9GKTBgS2iOU9n3a7/pkHiXE96jvbNhho3XnWXBQBuKtyIVWQTxN4sV8MV7GTirMHk5QOZJTBsG91eITvPdJBEeQOgN0uNRHwIYtLKWGa1ocNoCzdGUATUA9h2uVdhjPxRGCHAtw5gXyPTMQsRwCn1Lf9XzXv3NqwVN2gGCZDBYWstLj70zgqSyad0fVWPXgJaClGUfB8KGXuG+rl1v3ab0euUOPvjofAlmD/XG8GJBY5YAZCtMa9Ze5MagVZAGKX/FVE4eyMDZtqrdgAq+19zJlWEr/Na0TXjkTx4KLjWzeKbyIjaAJE7aDYpa2tTSO+mvbCrBKo/ryate4Up9KfylnhjumhGEl0SCXzBjB1B9Q/QYhQulrH/fcue6svl1di8BwFFnZKAGTE3mGIalGksliJxTZVqTmvLF6fXxksjhzpkwaqP5s3fMDBMYhRDAtAhUAhcR3uL05YCxbclq7h1dNa+Nc+j4CFBrdN005oVlMN9yBlWeM4TlnrOhqX02j3'
           click_button 'Next'
