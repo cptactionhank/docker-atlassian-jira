@@ -1,4 +1,4 @@
-[![Travis CI Build Status](https://img.shields.io/travis/cptactionhank/docker-atlassian-jira/master.svg?label=Travis%20CI)](https://travis-ci.org/cptactionhank/docker-atlassian-jira/branches) [![CircleCI Build Status](https://img.shields.io/circleci/project/cptactionhank/docker-atlassian-jira/master.svg?label=CircleCI)](https://circleci.com/gh/cptactionhank/docker-atlassian-jira) [![Open Issues](https://img.shields.io/github/issues/cptactionhank/docker-atlassian-jira.svg)](https://github.com/cptactionhank/docker-atlassian-jira/issues) [![Stars on GitHub](https://img.shields.io/github/stars/cptactionhank/docker-atlassian-jira.svg)](https://github.com/cptactionhank/docker-atlassian-jira/stargazers) [![Forks on GitHub](https://img.shields.io/github/forks/cptactionhank/docker-atlassian-jira.svg)](https://github.com/cptactionhank/docker-atlassian-jira/network) [![Stars on Docker Hub](https://img.shields.io/docker/stars/cptactionhank/atlassian-jira.svg)](https://hub.docker.com/r/cptactionhank/atlassian-jira/) [![Pulls on Docker Hub](https://img.shields.io/docker/pulls/cptactionhank/atlassian-jira.svg)](https://hub.docker.com/r/cptactionhank/atlassian-jira/) [![Friends of cptactionhank](https://img.shields.io/badge/donation-PayPal-blue.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=maage@dotmaage.dk&item_name=Friends+of+cptactionhank&item_number=Open+Source+Donation)
+[![Travis CI Build Status](https://img.shields.io/travis/cptactionhank/docker-atlassian-jira/master.svg?label=Travis%20CI)](https://travis-ci.org/cptactionhank/docker-atlassian-jira/branches) [![CircleCI Build Status](https://img.shields.io/circleci/project/cptactionhank/docker-atlassian-jira/master.svg?label=CircleCI)](https://circleci.com/gh/cptactionhank/docker-atlassian-jira) [![Open Issues](https://img.shields.io/github/issues/cptactionhank/docker-atlassian-jira.svg)](https://github.com/cptactionhank/docker-atlassian-jira/issues) [![Stars on GitHub](https://img.shields.io/github/stars/cptactionhank/docker-atlassian-jira.svg)](https://github.com/cptactionhank/docker-atlassian-jira/stargazers) [![Forks on GitHub](https://img.shields.io/github/forks/cptactionhank/docker-atlassian-jira.svg)](https://github.com/cptactionhank/docker-atlassian-jira/network) [![Stars on Docker Hub](https://img.shields.io/docker/stars/cptactionhank/atlassian-jira.svg)](https://hub.docker.com/r/cptactionhank/atlassian-jira/) [![Pulls on Docker Hub](https://img.shields.io/docker/pulls/cptactionhank/atlassian-jira.svg)](https://hub.docker.com/r/cptactionhank/atlassian-jira/) [![Friends of cptactionhank](https://img.shields.io/badge/donation-PayPal-blue.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=maage@dotmaage.dk&item_name=Friends+of+cptactionhank&item_number=oss-docker-atlassian-jira)
 
 # Atlassian JIRA Core in a Docker container
 
@@ -6,7 +6,7 @@ This is a containerized installation of Atlassian JIRA Core with Docker, and it'
 
 * [Atlassian JIRA Core](https://cptactionhank.github.io/docker-atlassian-jira)
 * [Atlassian JIRA Software](https://cptactionhank.github.io/docker-atlassian-jira-software)
-* [Atlassian JIRA ServiceDesk](https://cptactionhank.github.io/docker-atlassian-service-desk)
+* [Atlassian JIRA Service Desk](https://cptactionhank.github.io/docker-atlassian-service-desk)
 * [Atlassian Confluence](https://cptactionhank.github.io/docker-atlassian-confluence)
 
 If you want to help out, you can check out the contribution section further down.
@@ -26,7 +26,7 @@ This image has been created with the best intentions and an expert understanding
 
 Travis CI and CircleCI has been configured to build the Dockerfile and run acceptance tests on the Atlassian JIRA Core image to ensure it is working.
 
-Travis CI has additionally been configured to automatically deploy new version branches when successfully building a new version of Atlassian JIRA in the `master` branch and serves as the base. Furthermore an `eap` branch has been setup to automatically build and commit updates to ensure this branch contains the latest version of Atlassian JIRA Early Access Preview.
+Travis CI has additionally been configured to automatically deploy new version branches when successfully building a new version of Atlassian JIRA Core in the `master` branch and serves as the base. Furthermore an `eap` branch has been setup to automatically build and commit updates to ensure this branch contains the latest version of Atlassian JIRA Core Early Access Program.
 
 If you see out of date documentation, lack of tests, etc., you can help out by either
 - creating an issue and opening a discussion, or

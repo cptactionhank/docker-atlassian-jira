@@ -44,7 +44,7 @@ EXPOSE 8080
 VOLUME ["/var/atlassian/jira", "/opt/atlassian/jira"]
 
 # Set the default working directory as the installation directory.
-WORKDIR ${JIRA_HOME}
+WORKDIR /var/atlassian/jira
 
 COPY "docker-entrypoint.sh" "/"
 ENTRYPOINT ["/docker-entrypoint.sh"]
