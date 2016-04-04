@@ -12,8 +12,7 @@ module Docker
       end
 
       def matches?(actual)
-        @actual = actual.json['NetworkSettings']['Ports']
-                  .select { |_, v| !v.nil? }
+        @actual = actual.json['NetworkSettings']['Ports'].select { |_, v| !v.nil? }
         @actual.key? @expected
       end
 
