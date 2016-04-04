@@ -1,15 +1,18 @@
 require 'docker'
 require 'capybara'
+require 'capybara/dsl'
 require 'capybara/poltergeist'
 require 'poltergeist/suppressor'
 
 REGEX_WARN    = /WARNING|WARN/
 REGEX_ERROR   = /ERROR|ERR/
 REGEX_SEVERE  = /SEVERE|FATAL/
-REGEX_STARTUP = /Server startup in \d+ ms/
-REGEX_FILTER  = Regexp.compile (Regexp.union [
-  /org\.apache\.catalina\.loader\.WebappClassLoaderBase\.checkThreadLocalMapForLeaks\ The\ web\ application\ \[ROOT\]\ created\ a\ ThreadLocal\ with\ key\ of\ type\ \[.*\]\ \(value\ \[.*\]\)\ and\ a\ value\ of\ type\ \[.*\]\ \(value\ \[.*\]\)\ but\ failed\ to\ remove\ it\ when\ the\ web\ application\ was\ stopped\.\ Threads\ are\ going\ to\ be\ renewed\ over\ time\ to\ try\ and\ avoid\ a\ probable\ memory\ leak\./
-])
+REGEX_STARTUP = /Server startup in (\d+ ms)/
+REGEX_FILTER  = Regexp.compile Regexp.union [
+  /org\.apache\.catalina\.loader\.WebappClassLoaderBase\.checkThreadLocalMapForLeaks\ The\ web\ application\ \[.+\]\ created\ a\ ThreadLocal\ with\ key\ of\ type\ \[.*\]\ \(value\ \[.*\]\)\ and\ a\ value\ of\ type\ \[.*\]\ \(value\ \[.*\]\)\ but\ failed\ to\ remove\ it\ when\ the\ web\ application\ was\ stopped\.\ Threads\ are\ going\ to\ be\ renewed\ over\ time\ to\ try\ and\ avoid\ a\ probable\ memory\ leak\./,
+  /\[c\.a\.jira\.upgrade\.ConsistencyCheckImpl\]\ Indexing\ is\ turned\ on,\ but\ index\ path\ \[null\]\ invalid\ \-\ disabling\ indexing/,
+  /\[c\.a\.j\.issue\.index\.DefaultIndexManager\]\ File\ path\ not\ set\ \-\ not\ indexing/
+]
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |file| require file }
 
