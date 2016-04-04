@@ -6,16 +6,12 @@ require 'poltergeist/suppressor'
 REGEX_WARN    = /WARNING|WARN/
 REGEX_ERROR   = /ERROR|ERR/
 REGEX_SEVERE  = /SEVERE|FATAL/
-REGEX_STARTUP = /Server startup in \d+ ms/
-REGEX_FILTER  = Regexp.compile (Regexp.union [
-  /org\.apache\.catalina\.loader\.WebappClassLoaderBase\.checkThreadLocalMapForLeaks\ The\ web\ application\ \[ROOT\]\ created\ a\ ThreadLocal\ with\ key\ of\ type\ \[.*\]\ \(value\ \[.*\]\)\ and\ a\ value\ of\ type\ \[.*\]\ \(value\ \[.*\]\)\ but\ failed\ to\ remove\ it\ when\ the\ web\ application\ was\ stopped\.\ Threads\ are\ going\ to\ be\ renewed\ over\ time\ to\ try\ and\ avoid\ a\ probable\ memory\ leak\./,
-  # For some reason when setting up the database the indexing path is not set
-  # yielding the following errors.
+REGEX_STARTUP = /Server startup in (\d+ ms)/
+REGEX_FILTER  = Regexp.compile Regexp.union [
+  /org\.apache\.catalina\.loader\.WebappClassLoaderBase\.checkThreadLocalMapForLeaks\ The\ web\ application\ \[.+\]\ created\ a\ ThreadLocal\ with\ key\ of\ type\ \[.*\]\ \(value\ \[.*\]\)\ and\ a\ value\ of\ type\ \[.*\]\ \(value\ \[.*\]\)\ but\ failed\ to\ remove\ it\ when\ the\ web\ application\ was\ stopped\.\ Threads\ are\ going\ to\ be\ renewed\ over\ time\ to\ try\ and\ avoid\ a\ probable\ memory\ leak\./,
   /\[c\.a\.jira\.upgrade\.ConsistencyCheckImpl\]\ Indexing\ is\ turned\ on,\ but\ index\ path\ \[null\]\ invalid\ \-\ disabling\ indexing/,
-  /\[c\.a\.j\.issue\.index\.DefaultIndexManager\]\ File\ path\ not\ set\ \-\ not\ indexing/,
-  /\[o\.o\.c\.entity\.jdbc\.DatabaseUtil\]\ Could\ not\ create\ missing\ indices\ for\ entity/,
-  /\[o\.o\.c\.entity\.jdbc\.DatabaseUtil\]\ SQL\ Exception\ while\ executing\ the\ following/
-])
+  /\[c\.a\.j\.issue\.index\.DefaultIndexManager\]\ File\ path\ not\ set\ \-\ not\ indexing/
+]
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |file| require file }
 
@@ -25,8 +21,7 @@ RSpec.configure do |config|
   config.include WaitingHelper
 
   # set the default timeout to 10 minutes.
-  timeout = 120
-  timeout = 600 if ENV['CI']
+  timeout = 600
 
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest

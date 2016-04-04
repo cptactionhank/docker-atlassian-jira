@@ -8,7 +8,7 @@ module Docker
 
     class ExposePort < RSpec::Matchers::BuiltIn::BaseMatcher
       def initialize(expected)
-        @expected = (expected.first.reverse.join '/')
+        @expected = expected.first.reverse.join '/'
       end
 
       def matches?(actual)

@@ -1,4 +1,4 @@
-shared_examples 'using a mysql database' do
+shared_examples 'using a MySQL database' do
   before :all do
     within 'form#jira-setup-database' do
       # select using external database
@@ -6,7 +6,6 @@ shared_examples 'using a mysql database' do
       # allow some time for the DOM to change
       sleep 1
       # fill in database configuration
-      # select "MySQL", from: 'jira-setup-database-field-database-type'
       fill_in 'jira-setup-database-field-database-type-field', with: 'MySQL'
       fill_in 'jdbcHostname', with: @container_db.host
       fill_in 'jdbcPort', with: '3306'
