@@ -35,6 +35,6 @@ module WaitingHelper
   end
 
   def location_changed?(url)
-    not url.eql? current_url
+    !url.eql? current_url
   end
 end
