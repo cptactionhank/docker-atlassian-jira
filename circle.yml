@@ -6,11 +6,11 @@ machine:
 
 dependencies:
   pre:
-    - docker version
-    - docker info
+    - docker pull nginx:alpine
     - docker pull postgres:9.3
     - docker pull mysql:5.6
     - docker pull java:8
+    - docker build .
 
 test:
   pre:
