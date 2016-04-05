@@ -1,6 +1,3 @@
-require 'docker'
-require 'spec_helper'
-
 describe 'Docker image building' do
   context 'when validating host software' do
     it 'should supported version' do
@@ -15,7 +12,7 @@ describe 'Docker image building' do
     it { is_expected.to have_exposed_port tcp: 8080 }
     it { is_expected.to_not have_exposed_port udp: 8080 }
     it { is_expected.to have_volume '/var/atlassian/jira' }
-    it { is_expected.to have_volume '/opt/atlassian/jira' }
+    it { is_expected.to have_volume '/opt/atlassian/jira/logs' }
     it { is_expected.to have_working_directory '/var/atlassian/jira' }
   end
 end
