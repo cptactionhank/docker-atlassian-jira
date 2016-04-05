@@ -7,18 +7,18 @@ require 'poltergeist/suppressor'
 REGEX_WARN    = /WARNING|WARN/
 REGEX_ERROR   = /ERROR|ERR/
 REGEX_SEVERE  = /SEVERE|FATAL/
-REGEX_STARTUP = /Server startup in \d+ ms/
-REGEX_FILTER  = Regexp.compile (Regexp.union [
+REGEX_STARTUP = /Server startup in (\d+ ms)/
+REGEX_FILTER  = Regexp.compile Regexp.union [
   # For some reason when setting up the database the indexing path is not set
   # yielding the following errors.
-  %r{\[atlassian\.jira\.upgrade\.ConsistencyCheckImpl\]\ Indexing\ is\ turned\ on,\ but\ index\ path\ \[null\]\ invalid\ \-\ disabling\ indexing},
-  %r{\[jira\.issue\.index\.DefaultIndexManager\]\ File\ path\ not\ set\ \-\ not\ indexing},
+  /\[atlassian\.jira\.upgrade\.ConsistencyCheckImpl\]\ Indexing\ is\ turned\ on,\ but\ index\ path\ \[null\]\ invalid\ \-\ disabling\ indexing/,
+  /\[jira\.issue\.index\.DefaultIndexManager\]\ File\ path\ not\ set\ \-\ not\ indexing/,
   # This error message is excused since we're using a Continuous Integration
   # agent.
-  %r{\[atlassian\.labs\.botkiller\.BotKiller\]\ Error\ occurred\ when\ figuring\ out\ if\ the\ session\ has\ a\ user,\ assuming\ there\ is\ no\ user\.},
+  /\[atlassian\.labs\.botkiller\.BotKiller\]\ Error\ occurred\ when\ figuring\ out\ if\ the\ session\ has\ a\ user,\ assuming\ there\ is\ no\ user\./,
   # ignore this error?
-  %r{\[atlassian\.event\.internal\.AsynchronousAbleEventDispatcher\]\ There\ was\ an\ exception\ thrown\ trying\ to\ dispatch\ event\ \[com\.atlassian\.plugin\.event\.events\.PluginModuleUnavailableEvent@.+\]\ from\ the\ invoker\ \[SingleParameterMethodListenerInvoker\{method=public\ void\ com\.atlassian\.plugin\.manager\.DefaultPluginManager\.onPluginModuleUnavailable\(com\.atlassian\.plugin\.event\.events\.PluginModuleUnavailableEvent\),\ listener=com\.atlassian\.jira\.plugin\.JiraPluginManager@.+\}\]}
-])
+  /\[atlassian\.event\.internal\.AsynchronousAbleEventDispatcher\]\ There\ was\ an\ exception\ thrown\ trying\ to\ dispatch\ event\ \[com\.atlassian\.plugin\.event\.events\.PluginModuleUnavailableEvent@.+\]\ from\ the\ invoker\ \[SingleParameterMethodListenerInvoker\{method=public\ void\ com\.atlassian\.plugin\.manager\.DefaultPluginManager\.onPluginModuleUnavailable\(com\.atlassian\.plugin\.event\.events\.PluginModuleUnavailableEvent\),\ listener=com\.atlassian\.jira\.plugin\.JiraPluginManager@.+\}\]/
+]
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |file| require file }
 
