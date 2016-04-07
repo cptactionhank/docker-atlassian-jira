@@ -19,7 +19,7 @@ module Docker
         @actual = []
         exception_filter = @options[:filter]
         read_lines_from_files actual do |file, chunk|
-          @actual << "[#{file}] #{chunk}" if @actual << chunk if (chunk =~ @expected) and (not chunk =~ exception_filter)
+          @actual << "[#{file}] #{chunk}" if (chunk =~ @expected) && (chunk !~ exception_filter)
         end
         !@actual.empty?
       end
@@ -30,14 +30,14 @@ module Docker
 
       private
 
-      def read_lines_from_files(actual, &block)
+      def read_lines_from_files(actual)
         stringio = StringIO.new
         actual.copy(@file) { |chunk| stringio.write chunk }
         stringio.rewind
         input = Archive::Tar::Minitar::Input.new(stringio)
         input.each do |entry|
           (String entry.read).each_line do |chunk|
-            block.call entry.name, chunk if entry.file?
+            yield entry.name, chunk if entry.file?
           end
         end
       end
