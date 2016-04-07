@@ -16,7 +16,7 @@ RUN set -x \
     && chown -R daemon:daemon  "${JIRA_HOME}" \
     && mkdir -p                "${JIRA_INSTALL}/conf/Catalina" \
     && curl -Ls                "http://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-${JIRA_VERSION}.tar.gz" | tar -xz --directory "${JIRA_INSTALL}" --strip-components=1 --no-same-owner \
-    && curl -Ls                "http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.36.tar.gz" | tar -xz --directory "${JIRA_INSTALL}/lib" --strip-components=1 --no-same-owner "mysql-connector-java-5.1.36/mysql-connector-java-5.1.36-bin.jar" \
+    && curl -Ls                "http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.38.tar.gz" | tar -xz --directory "${JIRA_INSTALL}/lib" --strip-components=1 --no-same-owner "mysql-connector-java-5.1.38/mysql-connector-java-5.1.38-bin.jar" \
     && chmod -R 700            "${JIRA_INSTALL}/conf" \
     && chmod -R 700            "${JIRA_INSTALL}/logs" \
     && chmod -R 700            "${JIRA_INSTALL}/temp" \
@@ -25,8 +25,8 @@ RUN set -x \
     && chown -R daemon:daemon  "${JIRA_INSTALL}/logs" \
     && chown -R daemon:daemon  "${JIRA_INSTALL}/temp" \
     && chown -R daemon:daemon  "${JIRA_INSTALL}/work" \
-    && touch -d "@0"           "${JIRA_INSTALL}/conf/server.xml" \
-    && echo -e                 "\njira.home=$JIRA_HOME" >> "${JIRA_INSTALL}/atlassian-jira/WEB-INF/classes/jira-application.properties"
+    && echo -e                 "\njira.home=$JIRA_HOME" >> "${JIRA_INSTALL}/atlassian-jira/WEB-INF/classes/jira-application.properties" \
+    && touch -d "@0"           "${JIRA_INSTALL}/conf/server.xml"
 
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but
@@ -39,10 +39,10 @@ EXPOSE 8080
 # Set volume mount points for installation and home directory. Changes to the
 # home directory needs to be persisted as well as parts of the installation
 # directory due to eg. logs.
-VOLUME ["/var/local/atlassian/jira", "/usr/local/atlassian/jira"]
+VOLUME ["/var/local/atlassian/jira", "/usr/local/atlassian/jira/logs"]
 
 # Set the default working directory as the installation directory.
-WORKDIR ${JIRA_HOME}
+WORKDIR /var/local/atlassian/jira
 
 COPY "docker-entrypoint.sh" "/"
 ENTRYPOINT ["/docker-entrypoint.sh"]
