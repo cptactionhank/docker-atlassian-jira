@@ -7,14 +7,14 @@ require 'poltergeist/suppressor'
 REGEX_WARN    = /WARNING|WARN/
 REGEX_ERROR   = /ERROR|ERR/
 REGEX_SEVERE  = /SEVERE|FATAL/
-REGEX_STARTUP = /Server startup in \d+ ms/
-REGEX_FILTER  = Regexp.compile (Regexp.union [
+REGEX_STARTUP = /Server startup in (\d+ ms)/
+REGEX_FILTER  = Regexp.compile Regexp.union [
   # when `dbconfig.xml` does not exists when starting up instance
   /no\ defaultDS\ datasource/,
   /Didn't\ find\ any\ configuration\ service\ for\ bundle\ com\.atlassian\.jira\.plugins\.webhooks\.jira\-webhooks\-plugin\ nor\ any\ entities\ scanning\ for\ default\ AO\ packages/,
   /from\ the\ invoker\ 'java\.lang\.RuntimeException:\ service\ proxy\ has\ been\ destroyed'/,
   /\[atlassian\.jira\.upgrade\.ConsistencyCheckImpl\]\ Indexing\ is\ turned\ on,\ but\ index\ path\ \[null\]\ invalid\ \-\ disabling\ indexing/
-])
+]
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |file| require file }
 

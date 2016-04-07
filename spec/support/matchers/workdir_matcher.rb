@@ -7,7 +7,7 @@ module Docker
     extend RSpec::Matchers::DSL
 
     class WorkingDirectory < RSpec::Matchers::BuiltIn::Eq
-      alias_method :parent_matches?, :matches?
+      alias parent_matches? matches?
 
       def matches?(actual)
         parent_matches? actual.json['Config']['WorkingDir']

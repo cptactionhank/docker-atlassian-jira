@@ -14,11 +14,11 @@ module Docker
       end
 
       def matches?(actual)
-        actual.wait_for_output @expected
+        @value = actual.wait_for_output @expected
       end
 
       def description
-        "wait for match #{@expected.inspect} in console output"
+        "wait for match #{@expected.inspect} in console output #{@value}"
       end
     end
 
