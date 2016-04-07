@@ -1,14 +1,11 @@
-require 'timeout'
-require 'spec_helper'
-
-shared_examples 'using a mysql database' do
+shared_examples 'using a MySQL database' do
   before :all do
     within 'form#jira-setupwizard' do
       # select using external database
       choose 'jira-setupwizard-database-external'
-      wait_for_page
+      # allow some time for the DOM to change
+      sleep 1
       # fill in database configuration
-      # select "PostgreSQL", :from => 'databaseType'
       fill_in 'databaseType-field', with: 'MySQL'
       fill_in 'jdbcHostname', with: @container_db.host
       fill_in 'jdbcPort', with: '3306'
@@ -17,7 +14,6 @@ shared_examples 'using a mysql database' do
       fill_in 'jdbcPassword', with: 'mysecretpassword'
       # continue database setup
       click_button 'Next'
-      wait_for_page
     end
   end
 end
