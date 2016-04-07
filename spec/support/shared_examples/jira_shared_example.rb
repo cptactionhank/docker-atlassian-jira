@@ -1,49 +1,36 @@
-require 'timeout'
-require 'spec_helper'
-
 shared_examples 'an acceptable JIRA instance' do |database_examples|
-  include_context 'a buildable docker image', '.', Env: ["CATALINA_OPTS=-Xms1024m -Xmx2048m -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout} -Datlassian.darkfeature.jira.onboarding.feature.disabled=true"]
-
-  describe 'when starting a JIRA instance' do
-    before(:all) { @container.start! PublishAllPorts: true }
-
-    it { is_expected.to_not be_nil }
-    it { is_expected.to be_running }
-    it { is_expected.to have_mapped_ports tcp: 8080 }
-    it { is_expected.not_to have_mapped_ports udp: 8080 }
-    it { is_expected.to wait_until_output_matches REGEX_STARTUP }
-  end
-
   describe 'Going through the setup process' do
     before :all do
-      @container.setup_capybara_url tcp: 8080
       visit '/'
     end
 
     subject { page }
 
-    context 'when visiting root page' do
-      it { expect(current_path).to match 'secure/SetupMode!default.jspa' }
+    context 'when visiting the root page' do
+      it { is_expected.to have_current_path %r{/secure/SetupMode!default.jspa} }
       it { is_expected.to have_css 'form#jira-setup-mode' }
       it { is_expected.to have_css 'div[data-choice-value=classic]' }
     end
 
-    context 'when processing welcome setup' do
+    context 'when manually setting up the instance' do
       before :all do
         within 'form#jira-setup-mode' do
           find(:css, 'div[data-choice-value=classic]').trigger('click')
           click_button 'Next'
+          wait_for_ajax
         end
       end
 
-      it { expect(current_path).to match '/secure/SetupDatabase!default.jspa' }
+      it { is_expected.to have_current_path %r{/secure/SetupDatabase!default.jspa} }
       it { is_expected.to have_css 'form#jira-setup-database' }
+      it { is_expected.to have_selector :radio_button, 'jira-setup-database-field-database-internal' }
+      it { is_expected.to have_button 'Next' }
     end
 
     context 'when processing database setup' do
       include_examples database_examples
 
-      it { expect(current_path).to match '/secure/SetupApplicationProperties!default.jspa' }
+      it { is_expected.to have_current_path %r{/secure/SetupApplicationProperties!default.jspa} }
       it { is_expected.to have_css 'form#jira-setupwizard' }
       it { is_expected.to have_field 'title' }
       it { is_expected.to have_selector :radio_button, 'jira-setupwizard-mode-public' }
@@ -59,10 +46,9 @@ shared_examples 'an acceptable JIRA instance' do |database_examples|
         end
       end
 
-      it { expect(current_path).to match '/secure/SetupProductBundle!default.jspa' }
+      it { is_expected.to have_current_path %r{/secure/SetupProductBundle!default.jspa} }
       it { is_expected.to have_css 'form#jira-setup-product-bundle' }
       it { is_expected.to have_css 'div[data-choice-value=TRACKING]' }
-      # it { is_expected.to have_button 'Next' }
     end
 
     context 'when processing product bundle setup' do
@@ -73,7 +59,7 @@ shared_examples 'an acceptable JIRA instance' do |database_examples|
         end
       end
 
-      it { expect(current_path).to match '/secure/SetupLicense!default.jspa' }
+      it { is_expected.to have_current_path %r{/secure/SetupLicense!default.jspa} }
       it { is_expected.to have_css 'form#jira-setupwizard' }
       it { is_expected.to have_css '#jira-setupwizard-licenseSetupSelectorexistingLicense' }
     end
@@ -90,7 +76,7 @@ shared_examples 'an acceptable JIRA instance' do |database_examples|
         end
       end
 
-      it { expect(current_path).to match '/secure/SetupAdminAccount!default.jspa' }
+      it { is_expected.to have_current_path %r{/secure/SetupAdminAccount!default.jspa} }
       it { is_expected.to have_field 'fullname' }
       it { is_expected.to have_field 'email' }
       it { is_expected.to have_field 'username' }
@@ -110,7 +96,7 @@ shared_examples 'an acceptable JIRA instance' do |database_examples|
         end
       end
 
-      it { expect(current_path).to match '/secure/SetupAdminAccount.jspa' }
+      it { is_expected.to have_current_path %r{/secure/SetupAdminAccount.jspa} }
       it { is_expected.to have_selector :radio_button, 'jira-setupwizard-email-notifications-enabled' }
       it { is_expected.to have_selector :radio_button, 'jira-setupwizard-email-notifications-disabled' }
     end
@@ -123,7 +109,7 @@ shared_examples 'an acceptable JIRA instance' do |database_examples|
         end
       end
 
-      it { expect(current_path).to match '/secure/Dashboard.jspa' }
+      it { is_expected.to have_current_path %r{/secure/Dashboard.jspa} }
 
       # The acceptance testing comes to an end here since we got to the
       # JIRA dashboard without any trouble through the setup.
@@ -132,6 +118,8 @@ shared_examples 'an acceptable JIRA instance' do |database_examples|
 
   describe 'Stopping the JIRA instance' do
     before(:all) { @container.kill_and_wait signal: 'SIGTERM' }
+
+    subject { @container }
 
     it 'should shut down successful' do
       # give the container up to 5 minutes to successfully shutdown
