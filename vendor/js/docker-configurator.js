@@ -31,13 +31,15 @@ app.filter('formatEnvironment', function() {
 app.run(function($rootScope) {
 
   $rootScope.container = {
-    // env: {
-    //   X_PROXY_NAME: 'pname',
-    //   X_PROXY_PORT: 123,
-    //   CATALINA_OPTS: {
-    //     Datlassian_plugins_enable_wait: 300
-    //   }
-    // }
+    env: {
+      // X_PROXY_NAME: 'pname',
+      // X_PROXY_PORT: 123,
+      CATALINA_OPTS: {
+        'Xms': '1024m',
+        'Xmx': '1024m',
+        'Datlassian_plugins_enable_wait': 300
+      }
+    }
   }
 
   // configuration constants for the various Atlassian JIRA docker images
@@ -65,16 +67,16 @@ app.run(function($rootScope) {
   $rootScope.jira = {
     home: 'not set',
     install: 'not set',
-    version: 'latest',
+    version: { name:'latest' },
     java: 'latest',
     port: 8080
   };
 
   $rootScope.update = function(tag) {
     var args = Object.keys($rootScope.configurations).filter(function(item) {
-      return item === tag || !!(item.match(/^|([0-9]+(\.[0-9]+)+)$/));
+      return item === tag.name || !! item.match(/^|([0-9]+(\.[0-9]+)+)$/);
     }).filter(function(item) {
-      return String.naturalCompare(item, tag) <= 0;
+      return String.naturalCompare(item, tag.name) <= 0;
     }).map(function(item) {
       return $rootScope.configurations[item];
     });
@@ -85,26 +87,26 @@ app.run(function($rootScope) {
 });
 
 app.controller('ConfigurationController', function($rootScope, $scope, $http) {
-  // $scope.tags = [];
-  // $scope.status = 'loading';
+  $scope.tags = [];
+  $scope.status = 'loading';
   // populate the controllers model with the first 1000 available tags from
   // the Docker Hub repository.
-  // $http
-  //   .get('//crossorigin.me/https://hub.docker.com/v2/repositories/cptactionhank/atlassian-jira/tags/?page_size=1000')
-  //   .success(function(data, status) {
-  //     $scope.tags = data.results.sort(function(a, b) {
-  //       return String.naturalCompare(a.name, b.name);
-  //     });
-  //     // set the latest tag as the default selected
-  //     $rootScope.jira.version = $scope.tags.filter(function(item) {
-  //       return item.name === 'latest';
-  //     }).pop();
-  //     // update the bindings with the latest version tag
-  //     $scope.update($rootScope.jira.version);
-  //     $scope.status = '';
-  // }).error(function(data, status) {
-  //   $scope.status = "error"
-  // });
+  $http
+    .get('//github-pages-cors-proxy.herokuapp.com/https://hub.docker.com/v2/repositories/cptactionhank/atlassian-jira/tags/?page_size=1000')
+    .success(function(data, status) {
+      $scope.tags = data.results.sort(function(a, b) {
+        return String.naturalCompare(a.name, b.name);
+      });
+      // set the latest tag as the default selected
+      $rootScope.jira.version = $scope.tags.filter(function(item) {
+        return item.name === 'latest';
+      }).pop();
+      // update the bindings with the latest version tag
+      $scope.update($rootScope.jira.version);
+      $scope.status = '';
+  }).error(function(data, status) {
+    $scope.status = "error"
+  });
 });
 
 // it is needed to first perform syntax highlighting and only after this

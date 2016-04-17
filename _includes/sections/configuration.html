@@ -7,47 +7,7 @@
     <div class="form-group">
       <label for="jira-version" class="col-sm-3 control-label">JIRA version:</label>
       <div class="col-sm-9">
-        <select name="jira-version" class="form-control" data-ng-model="jira.version" data-ng-change="update(jira.version)">
-          <option>6.3</option>
-          <option>6.3.1</option>
-          <option>6.3.3</option>
-          <option>6.3.4</option>
-          <option>6.3.5</option>
-          <option>6.3.6</option>
-          <option>6.3.7</option>
-          <option>6.3.8</option>
-          <option>6.3.9</option>
-          <option>6.3.10</option>
-          <option>6.3.11</option>
-          <option>6.3.12</option>
-          <option>6.3.13</option>
-          <option>6.3.14</option>
-          <option>6.3.15</option>
-          <option>6.4</option>
-          <option>6.4.1</option>
-          <option>6.4.2</option>
-          <option>6.4.3</option>
-          <option>6.4.4</option>
-          <option>6.4.5</option>
-          <option>6.4.6</option>
-          <option>6.4.7</option>
-          <option>6.4.8</option>
-          <option>6.4.9</option>
-          <option>6.4.10</option>
-          <option>6.4.11</option>
-          <option>6.4.12</option>
-          <option>6.4.13</option>
-          <option>7.0.0</option>
-          <option>7.0.2</option>
-          <option>7.0.4</option>
-          <option>7.0.5</option>
-          <option>7.0.9</option>
-          <option>7.0.10</option>
-          <option>7.1.0</option>
-          <option>7.1.1</option>
-          <option>7.1.2</option>
-          <option>eap</option>
-          <option selected>latest</option>
+        <select name="jira-version" class="form-control" ng-model="jira.version" ng-change="update(jira.version)" ng-options="tag.name for tag in tags">
         </select>
         <span class="help-block">
           <i class="fa fa-circle-o-notch fa-spin" ng-show="status == 'loading'"></i>

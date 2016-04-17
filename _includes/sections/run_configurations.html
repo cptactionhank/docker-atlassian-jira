@@ -17,11 +17,11 @@
 
   <p>The first thing you need to do is creating the container instance that should be managed by a process manager. This is done by performing the following command below and after this, you should configure your service with the process manager of your choice. You can use the configuration file examples below for systemd and upstart.</p>
 
-  <pre><code code class="bash">{% raw %}docker pull cptactionhank/atlassian-jira:{{ jira.version }}
+  <pre><code code class="bash">{% raw %}docker pull cptactionhank/atlassian-jira:{{ jira.version.name }}
 docker create --restart=no --name "{{ container.name }}" \
     --publish "{{ jira.port }}:8080" \
     {{ container.env|formatEnvironment }}\
-    cptactionhank/atlassian-jira:{{ jira.version }}
+    cptactionhank/atlassian-jira:{{ jira.version.name }}
 {% endraw %}</code></pre>
 
   <h2>Systemd</h2>
