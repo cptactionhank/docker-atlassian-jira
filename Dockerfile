@@ -9,7 +9,7 @@ ENV JIRA_VERSION  7.1.4
 # directory structure.
 RUN set -x \
     && apt-get update --quiet \
-    && apt-get install --quiet --yes --no-install-recommends libtcnative-1 xmlstarlet \
+    && apt-get install --quiet --yes --no-install-recommends ed libtcnative-1 xmlstarlet \
     && apt-get clean \
     && mkdir -p                "${JIRA_HOME}" \
     && mkdir -p                "${JIRA_HOME}/caches/indexes" \
@@ -26,8 +26,10 @@ RUN set -x \
     && chown -R daemon:daemon  "${JIRA_INSTALL}/logs" \
     && chown -R daemon:daemon  "${JIRA_INSTALL}/temp" \
     && chown -R daemon:daemon  "${JIRA_INSTALL}/work" \
+    && chown daemon:daemon     "${JIRA_INSTALL}/bin/setenv.sh" \
     && sed --in-place          "s/java version/openjdk version/g" "${JIRA_INSTALL}/bin/check-java.sh" \
     && echo -e                 "\njira.home=$JIRA_HOME" >> "${JIRA_INSTALL}/atlassian-jira/WEB-INF/classes/jira-application.properties" \
+    && touch -d "@0"           "${JIRA_INSTALL}/bin/setenv.sh" \
     && touch -d "@0"           "${JIRA_INSTALL}/conf/server.xml"
 
 # Use the default unprivileged account. This could be considered bad practice
