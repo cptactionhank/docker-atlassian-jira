@@ -18,7 +18,11 @@ app.filter('formatEnvironment', function() {
       if (angular.isObject(value)) {
         var string = [];
         angular.forEach(value, function(value, key) {
-          string.push('-' + key.replace(/_/g, '.') + '=' + value)
+          if (key === 'Xmx' || key === 'Xms') {
+            string.push('-' + key.replace(/_/g, '.') + value)  
+          } else {
+            string.push('-' + key.replace(/_/g, '.') + '=' + value)
+          }
         });
         value = string.join(' ');
       }
