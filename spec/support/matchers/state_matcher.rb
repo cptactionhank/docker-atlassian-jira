@@ -7,27 +7,12 @@ module Docker
     extend RSpec::Matchers::DSL
 
     class StateMatcher < RSpec::Matchers::BuiltIn::Include
-      alias parent_matches? matches?
-
-      def initialize(*expected)
-        @expected = expected
-      end
-
       def matches?(actual)
-        parent_matches?(actual.json['State'])
+        perform_match(actual.json['State']) { |v| v }
       end
 
       def description
-        described_items = surface_descriptions_in(expected)
-        improve_hash_formatting "include state #{described_items}"
-      end
-
-      def failure_message
-        "expected container state to #{description}"
-      end
-
-      def failure_message_when_negated
-        "expected container state not to #{description}"
+        improve_hash_formatting "include state#{readable_list_of(expecteds)}"
       end
     end
 
