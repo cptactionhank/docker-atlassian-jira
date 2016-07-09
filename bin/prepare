@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-echo "Obtaining Altassian JIRA version information..."
+echo "Obtaining Altassian JIRA Core version information..."
 
 # Obtain the currently latest version of Atlassian JIRA version defined by the
 # Dockerfile in this repository.
@@ -9,20 +9,31 @@ CURRENT_VERSION=$(sed -nr 's/ENV JIRA_VERSION[[:space:]]*(.+)/\1/p' Dockerfile)
 # Obtain the latest Atlassian JIRA version by going to the JSON version feed
 # information to get a JSONP formatted response, strip the output to retrieve
 # the actual content and then get the version number from the first entry.
-VERSION=$(curl -Ls 'https://my.atlassian.com/download/feeds/eap/jira-core.json' | sed 's/downloads(\(.*\))/\1/g' | jq -r '.[0].version')
+curl -Ls 'https://my.atlassian.com/download/feeds/eap/jira-core.json' | sed 's/downloads(\(.*\))/\1/g' | jq -r '.[] | select(.description | test("TAR\\.GZ Archive")) | ("" + .zipUrl + " " + .version)' | head -n 1 | while read -r URL VERSION
+do
 
-echo "Found versions:"
-echo "  Current: ${CURRENT_VERSION}"
-echo "  Latest:  ${VERSION}"
-echo ""
+	if [ "x${CURRENT_VERSION}" == "x" ]; then
+		echo "No EAP versions found... exitting..."
+		exit 0
+	fi
 
-echo "Preparing branch for version new Atlassian JIRA version"
+	echo "Found versions:"
+	echo "  Current: ${CURRENT_VERSION}"
+	echo "  Latest:  ${VERSION}"
+	echo ""
 
-# Edit the `Dockerfile` by changing the current version to the new obtained
-# version from the Atlassian JIRA version feed.
-sed --in-place "s/${CURRENT_VERSION}/${VERSION}/g" Dockerfile
+	echo "Preparing branch for version new Atlassian JIRA Software version"
 
-# Edit the `README.md` by changing the announced version in the content
-sed --in-place "s/> Version ${CURRENT_VERSION}/> Version ${VERSION}/g" README.md
 
-echo "Ready for acceptance testing"
+	# Edit the `Dockerfile` by changing the current version to the new obtained
+	# version from the Atlassian JIRA version feed.
+	sed --in-place "s/${CURRENT_VERSION}/${VERSION}/g" Dockerfile
+	NAME="${URL#https://www.atlassian.com/software/jira/downloads/binary/}"
+	sed --in-place "s/atlassian-jira-core-.*.tar.gz/${NAME}/g" Dockerfile
+
+	# Edit the `README.md` by changing the announced version in the content
+	sed --in-place "s/> Version ${CURRENT_VERSION}/> Version ${VERSION}/g" README.md
+
+	echo "Ready for acceptance testing"
+
+done

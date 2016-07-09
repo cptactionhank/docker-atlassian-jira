@@ -3,7 +3,7 @@ FROM java:8
 # Configuration variables.
 ENV JIRA_HOME     /var/atlassian/jira
 ENV JIRA_INSTALL  /opt/atlassian/jira
-ENV JIRA_VERSION  7.2.0-RC-20160629075822
+ENV JIRA_VERSION  7.2.0-RC01
 
 # Install Atlassian JIRA and helper tools and setup initial home
 # directory structure.
@@ -16,7 +16,7 @@ RUN set -x \
     && chmod -R 700            "${JIRA_HOME}" \
     && chown -R daemon:daemon  "${JIRA_HOME}" \
     && mkdir -p                "${JIRA_INSTALL}/conf/Catalina" \
-    && curl -Ls                "http://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-core-${JIRA_VERSION}.tar.gz" | tar -xz --directory "${JIRA_INSTALL}" --strip-components=1 --no-same-owner \
+    && curl -Ls                "http://www.atlassian.com/software/jira/downloads/binary/atlassian-jira-core-7.2.0-RC-20160629075822.tar.gz" | tar -xz --directory "${JIRA_INSTALL}" --strip-components=1 --no-same-owner \
     && curl -Ls                "https://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.38.tar.gz" | tar -xz --directory "${JIRA_INSTALL}/lib" --strip-components=1 --no-same-owner "mysql-connector-java-5.1.38/mysql-connector-java-5.1.38-bin.jar" \
     && chmod -R 700            "${JIRA_INSTALL}/conf" \
     && chmod -R 700            "${JIRA_INSTALL}/logs" \

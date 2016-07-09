@@ -16,7 +16,7 @@ module Docker
 
     def setup_capybara_url(port, path = '')
       docker_url        = URI.parse Docker.url
-      docker_url.host   = Docker.info['Name']
+      docker_url.host   = 'localhost' # Docker.info['Name']
       docker_url.scheme = 'http'
       docker_url.path   = path
       docker_url.port   = mapped_port port

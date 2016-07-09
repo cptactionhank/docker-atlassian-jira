@@ -1,5 +1,6 @@
 require 'docker'
 require 'capybara'
+require 'capybara/dsl'
 require 'capybara/poltergeist'
 require 'poltergeist/suppressor'
 

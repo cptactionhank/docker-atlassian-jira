@@ -66,7 +66,7 @@ describe 'Atlassian JIRA Core behind reverse proxy' do
   include_examples 'a buildable Docker image', '.',
     env: [
       "CATALINA_OPTS=-Xms1024m -Xmx1024m -XX:+UseG1GC -Datlassian.plugins.enable.wait=#{Docker::DSL.timeout} -Datlassian.darkfeature.jira.onboarding.feature.disabled=true",
-      "X_PROXY_NAME=#{Docker.info['Name']}",
+      "X_PROXY_NAME=localhost",
       'X_PROXY_PORT=1234',
       'X_PROXY_SCHEME=http',
       'X_PATH=/jira-path'
