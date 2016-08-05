@@ -19,7 +19,7 @@ app.filter('formatEnvironment', function() {
         var string = [];
         angular.forEach(value, function(value, key) {
           if (key === 'Xmx' || key === 'Xms') {
-            string.push('-' + key.replace(/_/g, '.') + value)  
+            string.push('-' + key.replace(/_/g, '.') + value)
           } else {
             string.push('-' + key.replace(/_/g, '.') + '=' + value)
           }
@@ -77,15 +77,17 @@ app.run(function($rootScope) {
   };
 
   $rootScope.update = function(tag) {
-    var args = Object.keys($rootScope.configurations).filter(function(item) {
+    var args = Object.keys($rootScope.configurations
+    ).filter(function(item) {
       return item === tag.name || !! item.match(/^|([0-9]+(\.[0-9]+)+)$/);
     }).filter(function(item) {
+      console.log("comparing '" + item + "' to '" + tag.name + "' => " + (String.naturalCompare(item, tag.name) <= 0));
       return String.naturalCompare(item, tag.name) <= 0;
     }).map(function(item) {
       return $rootScope.configurations[item];
     });
     args.unshift($rootScope.jira);
-    $rootScope.jira = angular.merge.apply(undefined, args);
+    angular.merge.apply(undefined, args);
   };
 
 });
@@ -96,11 +98,13 @@ app.controller('ConfigurationController', function($rootScope, $scope, $http) {
   // populate the controllers model with the first 1000 available tags from
   // the Docker Hub repository.
   $http
-    .get('//github-pages-cors-proxy.herokuapp.com/https://hub.docker.com/v2/repositories/cptactionhank/atlassian-jira/tags/?page_size=1000')
+    .get('https://api.github.com/repos/cptactionhank/docker-atlassian-jira/branches')
     .success(function(data, status) {
-      $scope.tags = data.results.sort(function(a, b) {
+      $scope.tags = data.sort(function(a, b) {
         return String.naturalCompare(a.name, b.name);
       });
+      $scope.tags.push({ name: 'latest' });
+
       // set the latest tag as the default selected
       $rootScope.jira.version = $scope.tags.filter(function(item) {
         return item.name === 'latest';
