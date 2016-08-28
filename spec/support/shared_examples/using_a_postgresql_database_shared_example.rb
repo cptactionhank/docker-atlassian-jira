@@ -4,9 +4,10 @@ shared_examples 'using a PostgreSQL database' do
       # select using external database
       choose 'jira-setup-database-field-database-external'
       # allow some time for the DOM to change
-      sleep 1
+      # sleep 1
       # fill in database configuration
-      select 'PostgreSQL', from: 'jira-setup-database-field-database-type'
+      fill_in 'jira-setup-database-field-database-type-field', with: 'PostgreSQL'
+      # select 'PostgreSQL', from: 'jira-setup-database-field-database-type'
       fill_in 'jdbcHostname', with: @container_db.host
       fill_in 'jdbcPort', with: '5432'
       fill_in 'jdbcDatabase', with: 'jiradb'
