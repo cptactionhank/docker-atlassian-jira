@@ -1,0 +1,23 @@
+machine:
+  pre:
+    - sudo apt-get install jq
+  services:
+    - docker
+
+dependencies:
+  pre:
+    - docker pull nginx:alpine
+    - docker pull postgres:9.3
+    - docker pull mysql:5.6
+    - docker pull java:8
+    - docker build .
+
+test:
+  pre:
+    - bin/prepare
+
+deployment:
+  newest-version:
+    branch: master
+    commands:
+      - bin/deploy
