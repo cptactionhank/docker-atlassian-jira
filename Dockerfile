@@ -1,4 +1,4 @@
-FROM java:7
+FROM openjdk:7
 
 # Configuration variables.
 ENV JIRA_HOME     /var/local/atlassian/jira
