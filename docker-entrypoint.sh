@@ -18,4 +18,14 @@ if [ "$(stat --format "%Y" "${JIRA_INSTALL}/conf/server.xml")" -eq "0" ]; then
   fi
 fi
 
+# do the same for setenv.sh which sets heapsize among other things
+if [ "$(stat --format "%Y" "${JIRA_INSTALL}/bin/setenv.sh")" -eq "0" ]; then
+  if [ -n "${JIRA_MINIMUM_MEMORY}" ]; then
+    printf "%s\n" ",s/JVM_MINIMUM_MEMORY=.*/JVM_MINIMUM_MEMORY=\"${JIRA_MINIMUM_MEMORY}\"/" wq | ed -s "${JIRA_INSTALL}/bin/setenv.sh"
+  fi
+  if [ -n "${JIRA_MAXIMUM_MEMORY}" ]; then
+    printf "%s\n" ",s/JVM_MAXIMUM_MEMORY=.*/JVM_MAXIMUM_MEMORY=\"${JIRA_MAXIMUM_MEMORY}\"/" wq | ed -s "${JIRA_INSTALL}/bin/setenv.sh"
+  fi
+fi
+
 exec "$@"
