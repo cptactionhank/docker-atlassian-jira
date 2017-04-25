@@ -15,6 +15,7 @@ dependencies:
 test:
   pre:
     - bin/prepare
+    - while true; do echo "PING"; sleep 5; done &
 
 deployment:
   newest-version:
