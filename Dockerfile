@@ -8,6 +8,7 @@ ENV JIRA_VERSION  7.4.0
 # Install Atlassian JIRA and helper tools and setup initial home
 # directory structure.
 RUN set -x \
+    && echo "deb http://ftp.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list \
     && apt-get update --quiet \
     && apt-get install --quiet --yes --no-install-recommends xmlstarlet \
     && apt-get install --quiet --yes --no-install-recommends -t jessie-backports libtcnative-1 \
