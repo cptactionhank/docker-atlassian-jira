@@ -22,4 +22,9 @@ if [ "$(stat --format "%Y" "${JIRA_INSTALL}/conf/server.xml")" -eq "0" ]; then
   fi
 fi
 
+# Copy cacerts if any was created manually or by the add-on 'JIRA SSL'
+if [ -e "${JIRA_HOME}/cacerts" ]; then
+  cp "${JIRA_HOME}/cacerts" "${JAVA_HOME}/jre/lib/security/cacerts"
+fi
+
 exec "$@"
