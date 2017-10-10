@@ -5,9 +5,12 @@ ENV JIRA_HOME     /var/atlassian/jira
 ENV JIRA_INSTALL  /opt/atlassian/jira
 ENV JIRA_VERSION  7.5.0
 
+ADD config/atlassian.crt     /root/atlassian.crt
+
 # Install Atlassian JIRA and helper tools and setup initial home
 # directory structure.
 RUN set -x \
+    && keytool -import -alias atlassian -keystore /etc/ssl/certs/java/cacerts -file /root/atlassian.crt -storepass changeit -noprompt \
     && echo "deb http://ftp.debian.org/debian jessie-backports main" > /etc/apt/sources.list.d/jessie-backports.list \
     && apt-get update --quiet \
     && apt-get install --quiet --yes --no-install-recommends xmlstarlet \
@@ -35,7 +38,7 @@ RUN set -x \
     && touch -d "@0"           "${JIRA_INSTALL}/conf/server.xml" \
     && mv "${JIRA_INSTALL}/conf/server.xml" "${JIRA_INSTALL}/conf/server.xml.orig"
 
-ADD configs/server.xml         "${JIRA_INSTALL}/conf/server.xml"
+ADD config/server.xml         "${JIRA_INSTALL}/conf/server.xml"
 RUN chown daemon:daemon        "${JIRA_INSTALL}/conf/server.xml" \
     && touch -d "@0"           "${JIRA_INSTALL}/conf/server.xml"
 
