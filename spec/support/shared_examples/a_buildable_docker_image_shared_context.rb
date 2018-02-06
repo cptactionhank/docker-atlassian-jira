@@ -15,7 +15,7 @@ shared_examples 'a buildable Docker image' do |path, options = {}|
     end
   end
 
-  describe 'when starting a JIRA Software container' do
+  describe 'when starting a JIRA container' do
     subject { @container }
 
     it { is_expected.to_not be_nil }

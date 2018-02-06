@@ -1,4 +1,4 @@
-shared_examples 'an acceptable JIRA Core instance' do |database_examples|
+shared_examples 'an acceptable JIRA instance' do |database_examples|
   describe 'Going through the setup process' do
     before :all do
       until current_path =~ %r{/secure/SetupMode!default.jspa}
