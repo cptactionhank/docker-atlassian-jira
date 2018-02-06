@@ -55,15 +55,16 @@ RSpec.configure do |config|
   Excon.defaults[:write_timeout] = timeout
   Excon.defaults[:read_timeout]  = timeout
 
+  Capybara.register_driver :poltergeist_debug do |app|
+    Capybara::Poltergeist::Driver.new app, timeout: timeout,
+    # we should't care about javascript errors since we did not make any
+    # implementation, but only deliver the software packages as best
+    # effort and this is more an Atlassian problem.
+    js_errors: false,
+    phantomjs_logger: Capybara::Poltergeist::Suppressor.new
+  end
+
   Capybara.configure do |conf|
-    conf.register_driver :poltergeist_debug do |app|
-      Capybara::Poltergeist::Driver.new app, timeout: timeout,
-        # we should't care about javascript errors since we did not make any
-        # implementation, but only deliver the software packages as best
-        # effort and this is more an Atlassian problem.
-        js_errors: false,
-        phantomjs_logger: Capybara::Poltergeist::Suppressor.new
-    end
 
     # Since we're connecting to a running Docker container, Capybara should
     # not startup a Rails server.
