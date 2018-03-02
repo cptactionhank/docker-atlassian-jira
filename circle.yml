@@ -23,7 +23,7 @@ test:
   pre:
     - bin/prepare
   override:
-    - bundle exec rspec spec/acceptance/000_docker_spec.rb spec/acceptance/100_integration_spec.rb
+    - bundle exec rspec spec/acceptance/000_docker_spec.rb
 
 deployment:
   newest-version:
