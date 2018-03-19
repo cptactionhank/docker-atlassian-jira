@@ -1,0 +1,19 @@
+branches:
+  only:
+  - master
+  - eap
+
+sudo: required
+
+language: ruby
+
+services:
+  - docker
+
+addons:
+  apt:
+    packages:
+      - docker-ce
+
+script:
+  - bundle exec rspec
