@@ -16,4 +16,4 @@ addons:
       - docker-ce
 
 script:
-  - bundle exec rspec
+  - bundle exec rspec spec/acceptance/000_docker_spec.rb spec/acceptance/100_integration_spec.rb
