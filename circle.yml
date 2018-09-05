@@ -1,0 +1,32 @@
+general:
+  branches:
+    only:
+     - master
+     - eap
+
+machine:
+  pre:
+    - sudo apt-get install jq
+    - sudo curl --output /usr/local/bin/phantomjs https://s3.amazonaws.com/circle-downloads/phantomjs-2.1.1
+  services:
+    - docker
+
+dependencies:
+  pre:
+    - docker pull nginx:alpine
+    - docker pull postgres:9.3
+    - docker pull mysql:5.6
+    - docker pull openjdk:8-alpine
+    - docker build .
+
+test:
+  pre:
+    - bin/prepare
+  override:
+    - bundle exec rspec spec/acceptance/000_docker_spec.rb
+
+deployment:
+  newest-version:
+    branch: master
+    commands:
+      - bin/deploy
