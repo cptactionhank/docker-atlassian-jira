@@ -21,19 +21,18 @@ jobs:
       # deploy the new version
       - run: bin/deploy
 
-# nightly building
 workflows:
   version: 2
-  default:
+  commit:
     jobs:
       - build
   nightly:
     triggers:
       - schedule:
-        cron: "0 0 * * *"
-        filters:
-          branches:
-            only:
-              - master
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
     jobs:
-    - build
+      - build
