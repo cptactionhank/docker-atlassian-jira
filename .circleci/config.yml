@@ -25,13 +25,13 @@ jobs:
 # nightly building
 workflows:
   version: 2
-    nightly:
-      triggers:
-        - schedule:
-          cron: "0 0 * * *"
-          filters:
-            branches:
-              only:
-                - master
-      jobs:
-      - build
+  nightly:
+    triggers:
+      - schedule:
+        cron: "0 0 * * *"
+        filters:
+          branches:
+            only:
+              - master
+    jobs:
+    - build
