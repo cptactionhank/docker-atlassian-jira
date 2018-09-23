@@ -21,11 +21,11 @@ jobs:
       # deploy the new version
       - run: bin/deploy
 
-workflows:
-  version: 2
-  commit:
-    jobs:
-      - build
+# workflows:
+#   version: 2
+#   commit:
+#     jobs:
+#       - build
   # nightly:
   #   triggers:
   #     - schedule:
