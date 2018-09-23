@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # Prepare Git committer information
 git config --global user.email "circleci@circleci"

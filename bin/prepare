@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # Usage: bin/prepare [VERSION]
 #
@@ -22,7 +22,7 @@ CURRENT_VERSION=$(sed -nr 's/ENV JIRA_VERSION[[:space:]]*(.+)/\1/p' Dockerfile)
 # Obtain the latest Atlassian JIRA version by going to the JSON version feed
 # information to get a JSONP formatted response, strip the output to retrieve
 # the actual content and then get the version number from the first entry.
-VERSION="${1:-"$(curl --location --silent 'https://my.atlassian.com/download/feeds/current/jira-core.json' | sed 's/downloads(\(.*\))/\1/g' | jq -r '.[0].version')"}"
+VERSION="${1:-"$(curl --location --silent 'https://my.atlassian.com/download/feeds/jira-core.rss' | sed -n 's/.*\([0-9]\{1,\}\.[0-9]\{1,\}\.[0-9]\{1,\}.*\).tar.gz.*/\1/p' | head -n 1)"}"
 
 echo "Found versions:"
 echo "  Current: ${CURRENT_VERSION}"

@@ -1,0 +1,25 @@
+version: 2
+jobs:
+  build:
+    # machine: true
+    # limit to specific brances
+    branches:
+      only:
+       - master
+    # download docker images
+    docker:
+      - image: docker:git
+    # do stuff
+    steps:
+      - checkout
+      - setup_remote_docker
+      - add_ssh_keys:
+          fingerprints:
+            - e4:dc:86:b8:9a:43:07:2c:de:2b:fc:ae:9e:06:bd:b6
+      - run: apk add curl
+      # update Dockerfile to latest version
+      - run: bin/prepare
+      # build the image
+      - run: docker build .
+      # deploy the new version
+      - run: bin/deploy
