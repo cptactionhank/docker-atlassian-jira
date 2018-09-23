@@ -13,9 +13,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - add_ssh_keys:
-          fingerprints:
-            - e4:dc:86:b8:9a:43:07:2c:de:2b:fc:ae:9e:06:bd:b6
+      - add_ssh_keys
       - run: apk add curl
       # update Dockerfile to latest version
       - run: bin/prepare
@@ -23,3 +21,17 @@ jobs:
       - run: docker build .
       # deploy the new version
       - run: bin/deploy
+
+# nightly building
+workflows:
+  version: 2
+    nightly:
+      triggers:
+        - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+      jobs:
+      - build
