@@ -24,6 +24,9 @@ jobs:
 # nightly building
 workflows:
   version: 2
+  default:
+    jobs:
+      - build
   nightly:
     triggers:
       - schedule:
