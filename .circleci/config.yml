@@ -1,10 +1,6 @@
 version: 2
 jobs:
   build:
-    # limit to specific brances
-    branches:
-      only:
-       - master
     # download docker images
     docker:
       - image: docker:git
@@ -25,7 +21,12 @@ workflows:
   version: 2
   commit:
     jobs:
-      - build
+      - build:
+        filters:
+          # limit to specific brances
+          branches:
+            only:
+              - master
   # nightly:
   #   triggers:
   #     - schedule:
