@@ -22,11 +22,11 @@ workflows:
   commit:
     jobs:
       - build:
-        filters:
-          # limit to specific brances
-          branches:
-            only:
-              - master
+          filters:
+            # limit to specific brances
+            branches:
+              only:
+                - master
   # nightly:
   #   triggers:
   #     - schedule:
