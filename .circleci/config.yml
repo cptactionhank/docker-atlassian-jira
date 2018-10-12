@@ -1,0 +1,39 @@
+version: 2
+jobs:
+  build:
+    # download docker images
+    docker:
+      - image: docker:git
+    # do stuff
+    steps:
+      - checkout
+      - setup_remote_docker
+      - add_ssh_keys
+      - run: apk add curl
+      # update Dockerfile to latest version
+      - run: bin/prepare
+      # build the image
+      - run: docker build .
+      # deploy the new version
+      - run: bin/deploy
+
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - build:
+          filters:
+            # limit to specific brances
+            branches:
+              only:
+                - master
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - build
