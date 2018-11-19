@@ -27,6 +27,7 @@ RUN set -x \
     && chown -R daemon:daemon  "${JIRA_INSTALL}/temp" \
     && chown -R daemon:daemon  "${JIRA_INSTALL}/work" \
     && sed --in-place          "s/java version/openjdk version/g" "${JIRA_INSTALL}/bin/check-java.sh" \
+    && sed -i 's/JVM_SUPPORT_RECOMMENDED_ARGS=""//g' "${JIRA_INSTALL}/bin/setenv.sh" \
     && echo -e                 "\njira.home=$JIRA_HOME" >> "${JIRA_INSTALL}/atlassian-jira/WEB-INF/classes/jira-application.properties" \
     && touch -d "@0"           "${JIRA_INSTALL}/conf/server.xml"
 
@@ -41,10 +42,10 @@ EXPOSE 8080
 # Set volume mount points for installation and home directory. Changes to the
 # home directory needs to be persisted as well as parts of the installation
 # directory due to eg. logs.
-VOLUME ["/var/atlassian/jira", "/opt/atlassian/jira/logs"]
+VOLUME ["${JIRA_HOME}", "/opt/atlassian/jira/logs"]
 
 # Set the default working directory as the installation directory.
-WORKDIR /var/atlassian/jira
+WORKDIR /opt/atlassian/jira
 
 COPY "docker-entrypoint.sh" "/"
 ENTRYPOINT ["/docker-entrypoint.sh"]
