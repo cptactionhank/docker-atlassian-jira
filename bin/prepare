@@ -7,7 +7,7 @@ set +o pipefail
 # VERSION. If no VERSION information is specified the latest version is
 # retrieved from the Atlassian JIRA download feed.
 
-if [[ "$(git rev-parse --abbrev-ref HEAD)" != "testing" && -z "$1" ]]; then
+if [[ "$(git rev-parse --abbrev-ref HEAD)" != "master" && -z "$1" ]]; then
 	echo "Not master branch and therefore nothing to prepare"
 	exit 0
 elif [[ -n "${1}" ]]; then

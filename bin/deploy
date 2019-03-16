@@ -25,10 +25,10 @@ else
 
 	# add changes made to current branch
 	git add --all
-	git commit --message "Updated Atlassian JIRA Core master branch to latest version ${VERSION}"
+	git commit --message "Updated master branch to latest version ${VERSION}"
 
 	# push changes made to current branch
-	git push origin testing
+	git push origin master
 
 fi
 
