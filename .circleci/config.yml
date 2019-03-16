@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  test:
+  test-building-container:
     docker: # run the steps with Docker
       - image: circleci/ruby
     # do stuff
@@ -34,7 +34,7 @@ jobs:
       - run:
           name: Prepare for latest version
           command: bin/prepare
-      # build the image
+      # build the image, ensures we do not commit an unbuildable image
       - run:
           name: Build the latest version
           command: docker build .
@@ -47,14 +47,8 @@ workflows:
   version: 2
   commit:
     jobs:
-      # run tests on all branches
-      # - test
-      - build-and-update:
-          filters:
-            # limit to specific brances
-            branches:
-              only:
-                - testing
+      - test-building-container
+
   nightly:
     triggers:
       - schedule:
