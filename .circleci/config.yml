@@ -3,7 +3,6 @@ jobs:
   build:
     docker: # run the steps with Docker
       - image: circleci/ruby
-
     # do stuff
     steps:
       # checkout sourcecode on to working_directory
