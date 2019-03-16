@@ -6,13 +6,6 @@ jobs:
     # do stuff
     steps:
       # checkout sourcecode on to working_directory
-      - run: echo 'master build'
-  testing:
-    docker: # run the steps with Docker
-      - image: circleci/ruby
-    # do stuff
-    steps:
-      # checkout sourcecode on to working_directory
       - checkout
       # Once setup_remote_docker is called, a new remote environment is created,
       # and your primary container is configured to use it. This is a way to solve
@@ -37,7 +30,7 @@ workflows:
   version: 2
   commit:
     jobs:
-      - testing:
+      - build:
           filters:
             # limit to specific brances
             branches:
