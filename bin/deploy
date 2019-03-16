@@ -1,5 +1,6 @@
-#!/usr/bin/env sh
-  
+#!/usr/bin/env bash
+set +o pipefail
+
 # Prepare Git committer information
 git config --global user.email "circleci@circleci"
 git config --global user.name "Circle CI Automated Builder"
