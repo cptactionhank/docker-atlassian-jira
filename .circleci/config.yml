@@ -12,7 +12,6 @@ jobs:
       # Docker-in-Docker problem described below:
       # https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/
       - setup_remote_docker
-      - add_ssh_keys
       # build the image
       - run:
           name: Build the latest version
@@ -49,7 +48,7 @@ workflows:
   commit:
     jobs:
       # run tests on all branches
-      - test
+      # - test
       - build-and-update:
           filters:
             # limit to specific brances
