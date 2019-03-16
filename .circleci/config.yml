@@ -1,32 +1,54 @@
 version: 2
 jobs:
-  build:
-    # download docker images
-    docker:
-      - image: docker:git
+  test-building-container:
+    docker: # run the steps with Docker
+      - image: circleci/ruby
     # do stuff
     steps:
+      # checkout sourcecode on to working_directory
       - checkout
+      # Once setup_remote_docker is called, a new remote environment is created,
+      # and your primary container is configured to use it. This is a way to solve
+      # Docker-in-Docker problem described below:
+      # https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/
+      - setup_remote_docker
+      # build the image
+      - run:
+          name: Build the latest version
+          command: docker build .
+
+  build-and-update:
+    docker: # run the steps with Docker
+      - image: circleci/ruby
+    # do stuff
+    steps:
+      # checkout sourcecode on to working_directory
+      - checkout
+      # Once setup_remote_docker is called, a new remote environment is created,
+      # and your primary container is configured to use it. This is a way to solve
+      # Docker-in-Docker problem described below:
+      # https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/
       - setup_remote_docker
       - add_ssh_keys
-      - run: apk add curl
       # update Dockerfile to latest version
-      - run: bin/prepare
-      # build the image
-      - run: docker build .
+      - run:
+          name: Prepare for latest version
+          command: bin/prepare
+      # build the image, ensures we do not commit an unbuildable image
+      - run:
+          name: Build the latest version
+          command: docker build .
       # deploy the new version
-      - run: bin/deploy
+      - run:
+          name: Commit and push the latest buildable version
+          command: bin/deploy
 
 workflows:
   version: 2
   commit:
     jobs:
-      - build:
-          filters:
-            # limit to specific brances
-            branches:
-              only:
-                - master
+      - test-building-container
+
   nightly:
     triggers:
       - schedule:
@@ -36,4 +58,4 @@ workflows:
               only:
                 - master
     jobs:
-      - build
+      - build-and-update
