@@ -6,7 +6,7 @@ jobs:
     # do stuff
     steps:
       # checkout sourcecode on to working_directory
-      - checkout
+      - run: echo 'master build'
   testing:
     docker: # run the steps with Docker
       - image: circleci/ruby
