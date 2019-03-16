@@ -37,7 +37,7 @@ workflows:
   version: 2
   commit:
     jobs:
-      - build:
+      - testing:
           filters:
             # limit to specific brances
             branches:
