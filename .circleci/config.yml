@@ -1,5 +1,12 @@
 version: 2
 jobs:
+  build:
+    docker: # run the steps with Docker
+      - image: circleci/ruby
+    # do stuff
+    steps:
+      # checkout sourcecode on to working_directory
+      - checkout
   testing:
     docker: # run the steps with Docker
       - image: circleci/ruby
@@ -23,7 +30,7 @@ jobs:
           command: docker build .
       # deploy the new version
       - run:
-          name: Commit and push the latest buildable version 
+          name: Commit and push the latest buildable version
           command: bin/deploy
 
 workflows:
