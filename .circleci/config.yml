@@ -1,6 +1,24 @@
 version: 2
 jobs:
-  build:
+  test:
+    docker: # run the steps with Docker
+      - image: circleci/ruby
+    # do stuff
+    steps:
+      # checkout sourcecode on to working_directory
+      - checkout
+      # Once setup_remote_docker is called, a new remote environment is created,
+      # and your primary container is configured to use it. This is a way to solve
+      # Docker-in-Docker problem described below:
+      # https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/
+      - setup_remote_docker
+      - add_ssh_keys
+      # build the image
+      - run:
+          name: Build the latest version
+          command: docker build .
+
+  build-and-update:
     docker: # run the steps with Docker
       - image: circleci/ruby
     # do stuff
@@ -30,7 +48,9 @@ workflows:
   version: 2
   commit:
     jobs:
-      - build:
+      # run tests on all branches
+      - test
+      - build-and-update:
           filters:
             # limit to specific brances
             branches:
@@ -45,4 +65,4 @@ workflows:
               only:
                 - master
     jobs:
-      - build
+      - build-and-update
