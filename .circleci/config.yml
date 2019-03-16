@@ -8,9 +8,9 @@ jobs:
     steps:
       # checkout sourcecode on to working_directory
       - checkout
-      - setup_remote_docker:
+      - setup_remote_docker
           # docker_layer_caching: true
-          version: 18.06.0-ce
+          # version: 18.06.0-ce
       - run: echo 'hello, world'
       - run: docker version
       - run: docker run hello-world
