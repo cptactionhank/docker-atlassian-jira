@@ -2,7 +2,7 @@ version: 2
 jobs:
   test-building-container:
     docker: # run the steps with Docker
-      - image: circleci/ruby
+      - image: circleci/ruby:2.6
     # do stuff
     steps:
       # checkout sourcecode on to working_directory

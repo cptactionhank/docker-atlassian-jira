@@ -31,7 +31,7 @@ module Docker
 
     def wait_for_output(regex)
       thread = Thread.new do
-        timeout(Docker::DSL.timeout) do
+        Timeout.timeout(Docker::DSL.timeout) do
           Thread.handle_interrupt(TimeoutError => :on_blocking) do
             streaming_logs stdout: true, stderr: true, follow: true do |_, chunk|
               if chunk =~ regex
