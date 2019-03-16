@@ -21,7 +21,7 @@ jobs:
       # build the image
       - run:
           name: Build the latest version
-          command: id; docker version
+          command: docker build .
       # deploy the new version
       # - run: bin/deploy
 
