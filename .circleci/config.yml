@@ -8,27 +8,20 @@ jobs:
     steps:
       # checkout sourcecode on to working_directory
       - checkout
-      - setup_remote_docker
-          # docker_layer_caching: true
-          # version: 18.06.0-ce
-      - run: echo 'hello, world'
-      - run: docker version
-      - run: docker run hello-world
       # Once setup_remote_docker is called, a new remote environment is created,
       # and your primary container is configured to use it. This is a way to solve
       # Docker-in-Docker problem described below:
       # https://jpetazzo.github.io/2015/09/03/do-not-use-docker-in-docker-for-ci/
-      # - setup_remote_docker
-      # - add_ssh_keys
-      # - run: apk add curl
+      - setup_remote_docker
+      - add_ssh_keys
       # update Dockerfile to latest version
-      # - run:
-      #     name: Prepare for latest version
-      #     command: bin/prepare
+      - run:
+          name: Prepare for latest version
+          command: bin/prepare
       # build the image
-      # - run:
-      #     name: Build the latest version
-      #     command: id; docker version
+      - run:
+          name: Build the latest version
+          command: id; docker version
       # deploy the new version
       # - run: bin/deploy
 
