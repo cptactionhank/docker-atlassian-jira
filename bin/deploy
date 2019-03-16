@@ -28,7 +28,7 @@ else
 	git commit --message "Updated Atlassian JIRA Core master branch to latest version ${VERSION}"
 
 	# push changes made to current branch
-	git push origin master
+	git push origin testing
 
 fi
 
@@ -44,7 +44,7 @@ if [[ $? == 0 ]]; then
 	echo "Branch '${VERSION}' already exist. Skipping..."
 
 else
-
+exit
 	# Create a new orphaned version branch to the repository with the current
 	# changes performed in the master repository and thereby keeps the `master`
 	# and latest version branch in sync.
