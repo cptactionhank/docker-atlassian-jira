@@ -12,7 +12,7 @@ echo "Checking if there has been made any modifications"
 
 git diff --exit-code .
 
-if [ $? == 0 ]; then
+if [ "$?" -eq "0" ]; then
 
 	# The specific branch already exists, consider committing a patch if there
 	# was actual changes to the repository.
@@ -36,7 +36,7 @@ echo "Checking if branch is already available?"
 git fetch --all &> /dev/null
 git show-branch "origin/${VERSION}" &> /dev/null
 
-if [ $? == 0 ]; then
+if [ "$?" -eq "0" ]; then
 
 	# The specific branch already exists, consider committing a patch if there
 	# was actual changes to the repository.
