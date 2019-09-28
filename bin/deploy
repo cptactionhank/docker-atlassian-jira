@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-  
+
 # Prepare Git committer information
 git config --global user.email "circleci@circleci"
 git config --global user.name "Circle CI Automated Builder"
@@ -55,7 +55,7 @@ else
 	# built branch from the Docker Hub will use that README.md which could be
 	# misleading. Contributing is also taken out to ensure a single place for
 	# the most up-to-date information.
-	rm --recursive --force "README.md" "CONTRIBUTING.md"
+	# DISABLED: rm --recursive --force "README.md" "CONTRIBUTING.md"
 
 	# Perform initial commit with the current directory as is (ie. prepared for
 	# the new version branch).

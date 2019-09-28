@@ -1,6 +1,6 @@
 version: 2
 jobs:
-  test-building-container:
+  build-container:
     docker: # run the steps with Docker
       - image: circleci/ruby:2.6
     # do stuff
@@ -15,9 +15,9 @@ jobs:
       # build the image
       - run:
           name: Build the latest version
-          command: docker build .
+          command: sudo docker build .
 
-  build-and-update:
+  update-and-build:
     docker: # run the steps with Docker
       - image: circleci/ruby
     # do stuff
@@ -37,7 +37,7 @@ jobs:
       # build the image, ensures we do not commit an unbuildable image
       - run:
           name: Build the latest version
-          command: docker build .
+          command: sudo docker build .
       # deploy the new version
       - run:
           name: Commit and push the latest buildable version
@@ -47,7 +47,7 @@ workflows:
   version: 2
   commit:
     jobs:
-      - test-building-container
+      - build-container
 
   nightly:
     triggers:
@@ -58,4 +58,4 @@ workflows:
               only:
                 - master
     jobs:
-      - build-and-update
+      - update-and-build

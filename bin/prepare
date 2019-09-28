@@ -35,4 +35,4 @@ echo "Preparing branch for version new Atlassian JIRA version"
 # version from the Atlassian JIRA version feed.
 sed --in-place "s/${CURRENT_VERSION}/${VERSION}/g" Dockerfile
 
-echo "Ready for acceptance testing"
+echo "Ready for testing"
