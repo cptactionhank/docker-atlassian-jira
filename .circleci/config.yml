@@ -15,7 +15,7 @@ jobs:
       # build the image
       - run:
           name: Build the latest version
-          command: sudo docker build .
+          command: docker build .
 
   update-and-build:
     docker: # run the steps with Docker
@@ -37,7 +37,7 @@ jobs:
       # build the image, ensures we do not commit an unbuildable image
       - run:
           name: Build the latest version
-          command: sudo docker build .
+          command: docker build .
       # deploy the new version
       - run:
           name: Commit and push the latest buildable version
