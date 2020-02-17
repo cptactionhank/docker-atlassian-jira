@@ -1,4 +1,4 @@
-FROM openjdk:8-alpine
+FROM adoptopenjdk/openjdk8:alpine-slim
 
 # Configuration variables.
 ENV JIRA_HOME     /var/atlassian/jira
@@ -8,7 +8,7 @@ ENV JIRA_VERSION  8.7.1
 # Install Atlassian JIRA and helper tools and setup initial home
 # directory structure.
 RUN set -x \
-    && apk add --no-cache curl xmlstarlet bash ttf-dejavu libc6-compat \
+    && apk add --no-cache curl xmlstarlet bash ttf-dejavu \
     && mkdir -p                "${JIRA_HOME}" \
     && mkdir -p                "${JIRA_HOME}/caches/indexes" \
     && chmod -R 700            "${JIRA_HOME}" \
