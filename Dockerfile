@@ -4,6 +4,8 @@ FROM openjdk:8-alpine
 ENV JIRA_HOME     /var/atlassian/jira
 ENV JIRA_INSTALL  /opt/atlassian/jira
 ENV JIRA_VERSION  8.20.2
+ENV JVM_MINIMUM_MEMORY 4096
+ENV JVM_MAXIMUM_MEMORY 8192
 
 # Install Atlassian JIRA and helper tools and setup initial home
 # directory structure.
@@ -28,7 +30,9 @@ RUN set -x \
     && chown -R daemon:daemon  "${JIRA_INSTALL}/work" \
     && sed --in-place          "s/java version/openjdk version/g" "${JIRA_INSTALL}/bin/check-java.sh" \
     && echo -e                 "\njira.home=$JIRA_HOME" >> "${JIRA_INSTALL}/atlassian-jira/WEB-INF/classes/jira-application.properties" \
-    && touch -d "@0"           "${JIRA_INSTALL}/conf/server.xml"
+    && touch -d "@0"           "${JIRA_INSTALL}/conf/server.xml" \
+    && sed -i -Ee 's/^[\s#]*(JVM_MINIMUM_MEMORY[\s]*=).+$/\1"'${JVM_MINIMUM_MEMORY}'m"/' ${JIRA_INSTALL}/bin/setenv.sh \
+    && sed -i -Ee 's/^[\s#]*(JVM_MAXIMUM_MEMORY[\s]*=).+$/\1"'${JVM_MAXIMUM_MEMORY}'m"/' ${JIRA_INSTALL}/bin/setenv.sh
 
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but
