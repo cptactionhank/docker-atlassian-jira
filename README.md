@@ -22,6 +22,8 @@ docker run --detach --publish 8080:8080 cptactionhank/atlassian-jira:latest
 
 Then simply navigate your preferred browser to `http://[dockerhost]:8080` and finish the configuration.
 
+Run without installation [![TeamCode try-it-now](https://static01.teamcode.com/badge/demo.svg)](https://www.teamcode.com/tin/clone?applicationId=273430983350841344)
+
 ## Configuration
 
 You can configure a small set of things by supplying the following environment variables
