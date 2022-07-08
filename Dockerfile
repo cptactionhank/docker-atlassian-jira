@@ -3,8 +3,7 @@ FROM openjdk:8-alpine
 # Configuration variables.
 ENV JIRA_HOME     /var/atlassian/jira
 ENV JIRA_INSTALL  /opt/atlassian/jira
-
-ENV JIRA_VERSION  8.22.2
+ENV JIRA_VERSION  9.0.0
 
 # If you need to override Jira's default memory allocation, you can control the minimum heap (Xms) and maximum heap (Xmx) via the below environment variables.
 ENV JVM_MINIMUM_MEMORY 384
