@@ -8,7 +8,7 @@ This is a containerized installation of Atlassian JIRA Core with Docker, and it'
 
 * [Atlassian JIRA Core](https://cptactionhank.github.io/docker-atlassian-jira)
 * [Atlassian JIRA Software](https://cptactionhank.github.io/docker-atlassian-jira-software)
-* [Atlassian JIRA Service Desk](https://cptactionhank.github.io/docker-atlassian-service-desk)
+* [Atlassian JIRA Service Desk](https://cptactionhank.github.io/docker-atlassian-jira-service-desk)
 * [Atlassian Confluence](https://cptactionhank.github.io/docker-atlassian-confluence)
 
 If you want to help out, you can check out the contribution section further down.
